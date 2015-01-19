@@ -46,7 +46,7 @@ namespace GitFlow.VS.Tests
         {
             
             var gf = new GitFlowWrapper();
-            gf.Init(sampleRepoPath, "master", "dev", "feature", "release", "hotfix", "support", "v");
+            gf.Init(sampleRepoPath, new GitFlowRepoSettings());
         }
 
         [TestMethod]
@@ -55,7 +55,7 @@ namespace GitFlow.VS.Tests
             try
             {
                 var gf = new GitFlowWrapper();
-                gf.Init(@"C:\Users\jakobe\Source\Repos\GitFlowTest", "master2", "dev", "feature", "release", "hotfix", "support", "v");
+                gf.Init(sampleRepoPath, new GitFlowRepoSettings() {MasterBranch = "master2"});
             }
             catch (Exception e)
             {

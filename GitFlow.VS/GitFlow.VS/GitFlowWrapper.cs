@@ -11,7 +11,7 @@ namespace GitFlow.VS
         public static StringBuilder Error = new StringBuilder("");
         private const string GitFlowDefaultValueRegExp = @"\[(.*?)\]";
 
-        public void Init(string repoDirectory, string masterBranch, string developBranch, string featureBranch, string releaseBranch, string hotfixBranch, string supportBranch, string versionTag)
+        public void Init(string repoDirectory, GitFlowRepoSettings settings)
         {
             // Start the child process.
             using (var p = CreateProcess(repoDirectory))
@@ -34,37 +34,37 @@ namespace GitFlow.VS
                     }
                     if (IsMasterBranchQuery(input.ToString()))
                     {
-                        p.StandardInput.WriteLine(masterBranch);
+                        p.StandardInput.WriteLine(settings.MasterBranch);
                         input = new StringBuilder();
                     }
                     else if (IsDevelopBranchQuery(input.ToString()))
                     {
-                        p.StandardInput.WriteLine(developBranch);
+                        p.StandardInput.WriteLine(settings.DevelopBranch);
                         input = new StringBuilder();
                     }
                     else if (IsFeatureBranchQuery(input.ToString()))
                     {
-                        p.StandardInput.WriteLine(featureBranch);
+                        p.StandardInput.WriteLine(settings.FeatureBranch);
                         input = new StringBuilder();
                     }
                     else if (IsReleaseBranchQuery(input.ToString()))
                     {
-                        p.StandardInput.WriteLine(releaseBranch);
+                        p.StandardInput.WriteLine(settings.ReleaseBranch);
                         input = new StringBuilder();
                     }
                     else if (IsHotfixBranchQuery(input.ToString()))
                     {
-                        p.StandardInput.WriteLine(hotfixBranch);
+                        p.StandardInput.WriteLine(settings.HotfixBranch);
                         input = new StringBuilder();
                     }
                     else if (IsSupportBranchQuery(input.ToString()))
                     {
-                        p.StandardInput.WriteLine(hotfixBranch);
+                        p.StandardInput.WriteLine(settings.SupportBranch);
                         input = new StringBuilder();
                     }
                     else if (IsVersionTagPrefixQuery(input.ToString()))
                     {
-                        p.StandardInput.WriteLine(versionTag);
+                        p.StandardInput.WriteLine(settings.VersionTag);
                         input = new StringBuilder();
                     }
                     else if (IsHooksAndFiltersQuery(input.ToString()))
