@@ -1,14 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
-using System.ComponentModel.Composition;
 using System.Linq;
 using Microsoft.TeamFoundation.Controls;
 using Microsoft.TeamFoundation.Controls.WPF.TeamExplorer;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TeamFoundation.Git.Extensibility;
-using Cursor = System.Windows.Forms.Cursor;
-using Cursors = System.Windows.Forms.Cursors;
 
 namespace GitFlowVS.Extension
 {
@@ -26,9 +23,6 @@ namespace GitFlowVS.Extension
         private IGitExt gitService;
         private IGitRepositoryInfo activeRepo;
 
-        public GitFlowSection()
-        {
-        }
         public override void Initialize(object sender, SectionInitializeEventArgs e)
         {
             base.Initialize(sender, e);
