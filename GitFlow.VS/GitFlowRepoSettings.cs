@@ -14,10 +14,10 @@ namespace GitFlow.VS
         {
             MasterBranch = "master";
             DevelopBranch = "develop";
-            FeatureBranch = "feature";
-            ReleaseBranch = "release";
-            HotfixBranch = "hotfix";
-            SupportBranch = "support";
+            FeatureBranch = "feature/";
+            ReleaseBranch = "release/";
+            HotfixBranch = "hotfix/";
+            SupportBranch = "support/";
             VersionTag = "";
         }
     }

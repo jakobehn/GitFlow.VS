@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Reflection;
+using System.Runtime.Remoting;
 using System.Runtime.Remoting.Contexts;
+using LibGit2Sharp;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GitFlow.VS.Tests
@@ -18,8 +22,8 @@ namespace GitFlow.VS.Tests
             sampleRepoPath = Path.Combine(Directory.GetCurrentDirectory(), SampleGitRepoName);
         }
 
-        [AssemblyInitialize]
-        public static void AssemblyInit(TestContext context)
+        [TestInitialize]
+        public void TestInitialize()
         {
             if (Directory.Exists(SampleGitRepoName))
             {
@@ -42,11 +46,101 @@ namespace GitFlow.VS.Tests
         }
 
         [TestMethod]
-        public void GitFlowInit()
+        public void Init()
         {
-            
+            var gf = new GitFlowWrapper();
+            var result = gf.Init(sampleRepoPath, new GitFlowRepoSettings());
+            Assert.IsTrue(result.Success);
+            Debug.Write(result.CommandOutput);
+
+            using (var repo = new Repository(sampleRepoPath))
+            {
+                var branches = repo.Branches.Where(b => !b.IsRemote);
+                Assert.AreEqual(2, branches.Count());
+                Assert.IsTrue(branches.Any(b => b.Name == "master"));
+                Assert.IsTrue(branches.Any(b => b.Name == "develop"));
+            }
+        }
+
+        [TestMethod]
+        public void StartFeature()
+        {
             var gf = new GitFlowWrapper();
             gf.Init(sampleRepoPath, new GitFlowRepoSettings());
+            gf.StartFeature(sampleRepoPath, "X");
+
+            using (var repo = new Repository(sampleRepoPath))
+            {
+                Assert.IsTrue(repo.Branches.Any(b => !b.IsRemote && b.Name == "feature/X"));
+            }
+        }
+
+        [TestMethod]
+        public void FinishFeature()
+        {
+            var gf = new GitFlowWrapper();
+            gf.Init(sampleRepoPath, new GitFlowRepoSettings());
+            gf.StartFeature(sampleRepoPath, "X");
+            gf.FinishFeature(sampleRepoPath, "X");
+            using (var repo = new Repository(sampleRepoPath))
+            {
+                //Feature branch should be deleted (default option)
+                Assert.IsFalse(repo.Branches.Any(b => !b.IsRemote && b.Name == "feature/X"));
+            }
+        }
+
+        [TestMethod]
+        public void StartRelease()
+        {
+            var gf = new GitFlowWrapper();
+            gf.Init(sampleRepoPath, new GitFlowRepoSettings());
+            gf.StartRelease(sampleRepoPath, "1.0");
+
+            using (var repo = new Repository(sampleRepoPath))
+            {
+                Assert.IsTrue(repo.Branches.Any(b => !b.IsRemote && b.Name == "release/1.0"));
+            }
+        }
+
+        [TestMethod]
+        public void FinishRelease()
+        {
+            var gf = new GitFlowWrapper();
+            gf.Init(sampleRepoPath, new GitFlowRepoSettings());
+            gf.StartRelease(sampleRepoPath, "1.0");
+            gf.FinishRelease(sampleRepoPath, "1.0");
+            using (var repo = new Repository(sampleRepoPath))
+            {
+                //Release branch should be deleted (default option)
+                Assert.IsFalse(repo.Branches.Any(b => !b.IsRemote && b.Name == "release/1.0"));
+            }
+        }
+
+        [TestMethod]
+        public void StartHotfix()
+        {
+            var gf = new GitFlowWrapper();
+            gf.Init(sampleRepoPath, new GitFlowRepoSettings());
+            gf.StartHotfix(sampleRepoPath, "hf1");
+
+            using (var repo = new Repository(sampleRepoPath))
+            {
+                Assert.IsTrue(repo.Branches.Any(b => !b.IsRemote && b.Name == "hotfix/hf1"));
+            }
+        }
+
+        [TestMethod]
+        public void FinishHotfix()
+        {
+            var gf = new GitFlowWrapper();
+            gf.Init(sampleRepoPath, new GitFlowRepoSettings());
+            gf.StartHotfix(sampleRepoPath, "hf1");
+            gf.FinishHotfix(sampleRepoPath, "hf1");
+            using (var repo = new Repository(sampleRepoPath))
+            {
+                //Hotfix branch should be deleted (default option)
+                Assert.IsFalse(repo.Branches.Any(b => !b.IsRemote && b.Name == "hotfix/hf1"));
+            }
         }
 
         [TestMethod]

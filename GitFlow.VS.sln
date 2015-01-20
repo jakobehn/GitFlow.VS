@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitFlow.VS", "GitFlow.VS\Gi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitFlow.VS.Tests", "GitFlow.VS.Tests\GitFlow.VS.Tests.csproj", "{AED3FCED-BD51-4B0D-821F-5502C350F27E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitFlow.VS.Extension", "GitFlow.VS.Extension\GitFlow.VS.Extension.csproj", "{B5F05374-4507-4ACE-A4F5-7AF90ABE9ED4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamExplorer.Common", "TeamExplorer.Common\TeamExplorer.Common.csproj", "{388AC013-C628-4A32-ABBC-A28A68C3A112}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{AED3FCED-BD51-4B0D-821F-5502C350F27E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AED3FCED-BD51-4B0D-821F-5502C350F27E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AED3FCED-BD51-4B0D-821F-5502C350F27E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5F05374-4507-4ACE-A4F5-7AF90ABE9ED4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5F05374-4507-4ACE-A4F5-7AF90ABE9ED4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5F05374-4507-4ACE-A4F5-7AF90ABE9ED4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5F05374-4507-4ACE-A4F5-7AF90ABE9ED4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{388AC013-C628-4A32-ABBC-A28A68C3A112}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{388AC013-C628-4A32-ABBC-A28A68C3A112}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{388AC013-C628-4A32-ABBC-A28A68C3A112}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{388AC013-C628-4A32-ABBC-A28A68C3A112}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
