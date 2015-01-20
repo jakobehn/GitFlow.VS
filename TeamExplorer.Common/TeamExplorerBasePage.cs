@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.TeamFoundation.Controls;
 
-namespace Inmeta.TeamExplorer.Extensions.Common
+namespace TeamExplorer.Common
 {
     /// <summary>
     /// Team Explorer page base class.

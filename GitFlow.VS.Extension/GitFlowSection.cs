@@ -2,14 +2,13 @@
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Linq;
-using System.Windows.Input;
 using Microsoft.TeamFoundation.Controls;
 using Microsoft.TeamFoundation.Controls.WPF.TeamExplorer;
 using Microsoft.VisualStudio.TeamFoundation.Git.Extensibility;
 using Cursor = System.Windows.Forms.Cursor;
 using Cursors = System.Windows.Forms.Cursors;
 
-namespace JakobEhn.GitFlow_VS_Extension
+namespace GitFlowVS.Extension
 {
     [TeamExplorerSection(GuidList.sampleTeamExplorerSection, TeamExplorerPageIds.Home, 100)]
     public class GitFlowSection : TeamExplorerSectionBase
@@ -95,26 +94,5 @@ namespace JakobEhn.GitFlow_VS_Extension
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-    }
-
-    public class WaitCursor : IDisposable
-    {
-        private System.Windows.Input.Cursor _previousCursor;
-
-        public WaitCursor()
-        {
-            _previousCursor = Mouse.OverrideCursor;
-
-            Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
-        }
-
-        #region IDisposable Members
-
-        public void Dispose()
-        {
-            Mouse.OverrideCursor = _previousCursor;
-        }
-
-        #endregion
     }
 }

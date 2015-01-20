@@ -2,7 +2,7 @@
 // MUST match guids.h
 using System;
 
-namespace JakobEhn.GitFlow_VS_Extension
+namespace GitFlowVS.Extension
 {
     static class GuidList
     {

@@ -11,7 +11,7 @@ using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
 
-namespace JakobEhn.GitFlow_VS_Extension
+namespace GitFlowVS.Extension
 {
     /// <summary>
     /// This is the class that implements the package exposed by this assembly.

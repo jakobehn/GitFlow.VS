@@ -16,7 +16,7 @@ using GitFlow.VS;
 using Microsoft.VisualStudio.TeamFoundation.Git.Extensibility;
 using MessageBox = System.Windows.Forms.MessageBox;
 
-namespace JakobEhn.GitFlow_VS_Extension
+namespace GitFlowVS.Extension
 {
     /// <summary>
     /// Interaction logic for GitFlowSectionUI.xaml
