@@ -1,13 +1,17 @@
 ﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
-using System.Windows.Forms;
+using System.Linq;
+using System.Windows.Input;
 using Microsoft.TeamFoundation.Controls;
 using Microsoft.TeamFoundation.Controls.WPF.TeamExplorer;
+using Microsoft.VisualStudio.TeamFoundation.Git.Extensibility;
+using Cursor = System.Windows.Forms.Cursor;
+using Cursors = System.Windows.Forms.Cursors;
 
 namespace JakobEhn.GitFlow_VS_Extension
 {
-    [TeamExplorerSection(GuidList.sampleTeamExplorerSection, TeamExplorerPageIds.Home, 10)]
+    [TeamExplorerSection(GuidList.sampleTeamExplorerSection, TeamExplorerPageIds.Home, 100)]
     public class GitFlowSection : TeamExplorerSectionBase
     {
         private IServiceProvider serviceProvider;
@@ -17,15 +21,29 @@ namespace JakobEhn.GitFlow_VS_Extension
         private bool isExpanded = true;
 
         private bool isVisible = true;
+        private IGitExt gitService;
+        private IGitRepositoryInfo activeRepo;
 
         public GitFlowSection()
         {
-            this.SectionContent = new GitFlowUI();
         }
         public override void Initialize(object sender, SectionInitializeEventArgs e)
         {
             base.Initialize(sender, e);
-            this.serviceProvider = e.ServiceProvider;            
+            this.serviceProvider = e.ServiceProvider;
+            this.gitService = (IGitExt)e.ServiceProvider.GetService(typeof(IGitExt));
+            gitService.PropertyChanged += GitServiceOnPropertyChanged;
+            activeRepo = gitService.ActiveRepositories.FirstOrDefault();
+
+             var ui = new GitFlowSectionUI();
+            ui.ActiveRepo = activeRepo;
+            this.SectionContent = ui;
+
+        }
+
+        private void GitServiceOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+        {
+            throw new NotImplementedException();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -77,5 +95,26 @@ namespace JakobEhn.GitFlow_VS_Extension
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+    }
+
+    public class WaitCursor : IDisposable
+    {
+        private System.Windows.Input.Cursor _previousCursor;
+
+        public WaitCursor()
+        {
+            _previousCursor = Mouse.OverrideCursor;
+
+            Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
+        }
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            Mouse.OverrideCursor = _previousCursor;
+        }
+
+        #endregion
     }
 }

@@ -5,49 +5,80 @@ using System.Text.RegularExpressions;
 
 namespace GitFlow.VS
 {
+    public class CommandOutputEventArgs : EventArgs
+    {
+        public CommandOutputEventArgs()
+        {
+            
+        }
+
+        public CommandOutputEventArgs(string output)
+        {
+            Output = output;
+        }
+        public string Output { get; set; }
+    }
+
     public class GitFlowWrapper
     {
+        public delegate void CommandOutputReceivedEventHandler(object sender, CommandOutputEventArgs args);
+
+        private readonly string repoDirectory;
         public static StringBuilder Output = new StringBuilder("");
         public static StringBuilder Error = new StringBuilder("");
         private const string GitFlowDefaultValueRegExp = @"\[(.*?)\]";
 
-        public void StartFeature(string repoDirectory, string featureName)
+        public event CommandOutputReceivedEventHandler CommandOutputDataReceived;
+
+        protected virtual void OnCommandOutputDataReceived(CommandOutputEventArgs e)
+        {
+            CommandOutputReceivedEventHandler handler = CommandOutputDataReceived;
+            if (handler != null) handler(this, e);
+        }
+
+        public GitFlowWrapper(string repoDirectory)
+        {
+            this.repoDirectory = repoDirectory;
+        }
+
+        public GitFlowCommandResult StartFeature(string featureName)
         {
             string gitArguments = "feature start \"" + featureName + "\"";
-            RunGit(repoDirectory, gitArguments);
+            return RunGitFlow(gitArguments);
         }
 
-        public void FinishFeature(string repoDirectory, string featureName)
+        public GitFlowCommandResult FinishFeature(string featureName)
         {
             string gitArguments = "feature finish \"" + featureName + "\"";
-            RunGit(repoDirectory, gitArguments);
+            return RunGitFlow(gitArguments);
+
         }
 
-        public void StartRelease(string repoDirectory, string releaseName)
+        public GitFlowCommandResult StartRelease(string releaseName)
         {
             string gitArguments = "release start \"" + releaseName + "\"";
-            RunGit(repoDirectory, gitArguments);
+            return RunGitFlow(gitArguments);
         }
 
-        public void FinishRelease(string repoDirectory, string releaseName)
+        public GitFlowCommandResult FinishRelease(string releaseName)
         {
             string gitArguments = "release finish -n \"" + releaseName + "\"";
-            RunGit(repoDirectory, gitArguments);
+            return RunGitFlow(gitArguments);
         }
 
-        public void StartHotfix(string repoDirectory, string hotfixName)
+        public GitFlowCommandResult StartHotfix(string hotfixName)
         {
             string gitArguments = "hotfix start \"" + hotfixName + "\"";
-            RunGit(repoDirectory, gitArguments);
+            return RunGitFlow(gitArguments);
         }
 
-        public void FinishHotfix(string repoDirectory, string hotfixName)
+        public GitFlowCommandResult FinishHotfix(string hotfixName)
         {
             string gitArguments = "hotfix finish -n \"" + hotfixName + "\"";
-            RunGit(repoDirectory, gitArguments);
+            return RunGitFlow(gitArguments);
         }
 
-        public GitFlowCommandResult Init(string repoDirectory, GitFlowRepoSettings settings)
+        public GitFlowCommandResult Init(GitFlowRepoSettings settings)
         {
             Error = new StringBuilder("");
             Output = new StringBuilder("");
@@ -66,57 +97,64 @@ namespace GitFlow.VS
                     input.Append(inputChar);
                     if (StringBuilderEndsWith(input, Environment.NewLine))
                     {
-                        Output.Append(input);
-                        var line = input.ToString();
+                        Output.AppendLine(input.ToString());
+                        OnCommandOutputDataReceived(new CommandOutputEventArgs(input.ToString()));
                         input = new StringBuilder();
-                        Debug.WriteLine(line);
                     }
                     if (IsMasterBranchQuery(input.ToString()))
                     {
                         p.StandardInput.WriteLine(settings.MasterBranch);
                         Output.Append(input);
+                        OnCommandOutputDataReceived(new CommandOutputEventArgs(input + Environment.NewLine));
                         input = new StringBuilder();
                     }
                     else if (IsDevelopBranchQuery(input.ToString()))
                     {
                         p.StandardInput.WriteLine(settings.DevelopBranch);
                         Output.Append(input);
+                        OnCommandOutputDataReceived(new CommandOutputEventArgs(input + Environment.NewLine));
                         input = new StringBuilder();
                     }
                     else if (IsFeatureBranchQuery(input.ToString()))
                     {
                         p.StandardInput.WriteLine(settings.FeatureBranch);
                         Output.Append(input);
+                        OnCommandOutputDataReceived(new CommandOutputEventArgs(input + Environment.NewLine));
                         input = new StringBuilder();
                     }
                     else if (IsReleaseBranchQuery(input.ToString()))
                     {
                         p.StandardInput.WriteLine(settings.ReleaseBranch);
                         Output.Append(input);
+                        OnCommandOutputDataReceived(new CommandOutputEventArgs(input + Environment.NewLine));
                         input = new StringBuilder();
                     }
                     else if (IsHotfixBranchQuery(input.ToString()))
                     {
                         p.StandardInput.WriteLine(settings.HotfixBranch);
                         Output.Append(input);
+                        OnCommandOutputDataReceived(new CommandOutputEventArgs(input + Environment.NewLine));
                         input = new StringBuilder();
                     }
                     else if (IsSupportBranchQuery(input.ToString()))
                     {
                         p.StandardInput.WriteLine(settings.SupportBranch);
                         Output.Append(input);
+                        OnCommandOutputDataReceived(new CommandOutputEventArgs(input + Environment.NewLine));
                         input = new StringBuilder();
                     }
                     else if (IsVersionTagPrefixQuery(input.ToString()))
                     {
                         p.StandardInput.WriteLine(settings.VersionTag);
                         Output.Append(input);
+                        OnCommandOutputDataReceived(new CommandOutputEventArgs(input + Environment.NewLine));
                         input = new StringBuilder();
                     }
                     else if (IsHooksAndFiltersQuery(input.ToString()))
                     {
                         p.StandardInput.WriteLine("");
                         Output.Append(input);
+                        OnCommandOutputDataReceived(new CommandOutputEventArgs(input + Environment.NewLine));
                         input = new StringBuilder();
                     }
                 }
@@ -153,6 +191,7 @@ namespace GitFlow.VS
             {
                 Output.Append(dataReceivedEventArgs.Data);
                 Debug.WriteLine(dataReceivedEventArgs.Data);
+                OnCommandOutputDataReceived(new CommandOutputEventArgs(dataReceivedEventArgs.Data));
             }
         }
         private void OnErrorReceived(object sender, DataReceivedEventArgs dataReceivedEventArgs)
@@ -236,7 +275,7 @@ namespace GitFlow.VS
             return true;
         }
 
-        private void RunGit(string repoDirectory, string gitArguments)
+        private GitFlowCommandResult RunGitFlow(string gitArguments)
         {
             Error = new StringBuilder("");
             Output = new StringBuilder("");
@@ -252,8 +291,9 @@ namespace GitFlow.VS
 
                 if (Error != null && Error.Length > 0)
                 {
-                    throw new Exception(Error.ToString());
+                    return new GitFlowCommandResult(false, Error.ToString());
                 }
+                return new GitFlowCommandResult(true, Output.ToString());
             }
         }
     }
