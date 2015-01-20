@@ -60,6 +60,8 @@ namespace GitFlowVS.Extension
             Debug.WriteLine (string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", this.ToString()));
             base.Initialize();
 
+
+
         }
         #endregion
 

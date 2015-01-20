@@ -7,8 +7,6 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Button x:Name="Init" Content="Init" HorizontalAlignment="Left" Margin="94,10,0,0" VerticalAlignment="Top" Width="90" Click="Button_Click"/>
-        <TextBox x:Name="CommandOutput" Height="165" Margin="0,135,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" AcceptsReturn="True" VerticalScrollBarVisibility="Visible"/>
-        <Label Content="Output" HorizontalAlignment="Left" Margin="-1,113,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.132,0.115"/>
         <Button x:Name="StartFeature" Content="Start Feature" HorizontalAlignment="Left" Margin="94,35,0,0" VerticalAlignment="Top" Width="90" Click="StartFeature_Click"/>
         <Button x:Name="FinishFeature" Content="Finish Feature" HorizontalAlignment="Left" Margin="94,60,0,0" VerticalAlignment="Top" Width="90" Click="FinishFeature_Click"/>
         <TextBox x:Name="FeatureName" HorizontalAlignment="Left" Height="23" Margin="198,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="92"/>

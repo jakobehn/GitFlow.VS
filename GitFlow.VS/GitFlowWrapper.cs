@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Text;
 using System.Text.RegularExpressions;
+using LibGit2Sharp;
 
 namespace GitFlow.VS
 {
@@ -29,6 +30,66 @@ namespace GitFlow.VS
         private const string GitFlowDefaultValueRegExp = @"\[(.*?)\]";
 
         public event CommandOutputReceivedEventHandler CommandOutputDataReceived;
+
+        public bool IsOnFeatureBranch
+        {
+            get
+            {
+                using (var repo = new Repository(repoDirectory))
+                {
+                    var featurePrefix = repo.Config.Get<string>("gitflow.prefix.feature");
+                    return repo.Head.Name.StartsWith(featurePrefix.Value);
+                }
+            }
+        }
+
+        public bool IsOnHotfixBranch
+        {
+            get
+            {
+                using (var repo = new Repository(repoDirectory))
+                {
+                    var hotfixPrefix = repo.Config.Get<string>("gitflow.prefix.hotfix");
+                    return repo.Head.Name.StartsWith(hotfixPrefix.Value);
+                }
+            }
+        }
+
+        public bool IsOnMasterBranch
+        {
+            get
+            {
+                using (var repo = new Repository(repoDirectory))
+                {
+                    var masterBranch = repo.Config.Get<string>("gitflow.branch.master");
+                    return repo.Head.Name == masterBranch.Value;
+                }
+            }
+        }
+
+        public bool IsOnDevelopBranch
+        {
+            get
+            {
+                using (var repo = new Repository(repoDirectory))
+                {
+                    var developBranch = repo.Config.Get<string>("gitflow.branch.develop");
+                    return repo.Head.Name == developBranch.Value;
+                }
+            }
+        }
+
+        public bool IsOnReleaseBranch
+        {
+            get
+            {
+                using (var repo = new Repository(repoDirectory))
+                {
+                    var releasePrefix = repo.Config.Get<string>("gitflow.prefix.release");
+                    return repo.Head.Name.StartsWith(releasePrefix.Value);
+                }
+            }
+        }
 
         protected virtual void OnCommandOutputDataReceived(CommandOutputEventArgs e)
         {
@@ -191,7 +252,7 @@ namespace GitFlow.VS
             {
                 Output.Append(dataReceivedEventArgs.Data);
                 Debug.WriteLine(dataReceivedEventArgs.Data);
-                OnCommandOutputDataReceived(new CommandOutputEventArgs(dataReceivedEventArgs.Data));
+                OnCommandOutputDataReceived(new CommandOutputEventArgs(dataReceivedEventArgs.Data + Environment.NewLine));
             }
         }
         private void OnErrorReceived(object sender, DataReceivedEventArgs dataReceivedEventArgs)

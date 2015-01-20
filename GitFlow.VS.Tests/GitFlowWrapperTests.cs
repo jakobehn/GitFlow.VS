@@ -43,14 +43,44 @@ namespace GitFlow.VS.Tests
         }
 
         [TestMethod]
+        public void StartFeatureShouldPutUsOnFeatureBranch()
+        {
+            var gf = new GitFlowWrapper(sampleRepoPath);
+            gf.Init(new GitFlowRepoSettings());
+            gf.StartFeature("X");
+
+            Assert.IsTrue(gf.IsOnFeatureBranch);
+        }
+
+        [TestMethod]
+        public void StartReleaseShouldPutUsOnReleaseBranch()
+        {
+            var gf = new GitFlowWrapper(sampleRepoPath);
+            gf.Init(new GitFlowRepoSettings());
+            gf.StartRelease("2.0");
+
+            Assert.IsTrue(gf.IsOnReleaseBranch);
+        }
+
+        [TestMethod]
+        public void StartHotfixShouldPutUsOnHotfixBranch()
+        {
+            var gf = new GitFlowWrapper(sampleRepoPath);
+            gf.Init(new GitFlowRepoSettings());
+            gf.StartHotfix("hf1");
+
+            Assert.IsTrue(gf.IsOnHotfixBranch);
+        }
+
+        [TestMethod]
         public void Init()
         {
             var gf = new GitFlowWrapper(sampleRepoPath);
             gf.CommandOutputDataReceived += (sender, args) => { Console.Write(args.Output); };
             var result = gf.Init(new GitFlowRepoSettings());
             Assert.IsTrue(result.Success);
-            //Debug.Write(result.CommandOutput);
 
+            Assert.IsTrue(gf.IsOnDevelopBranch);
             using (var repo = new Repository(sampleRepoPath))
             {
                 var branches = repo.Branches.Where(b => !b.IsRemote).ToList();
