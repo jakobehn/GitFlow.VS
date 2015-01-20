@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using LibGit2Sharp;
@@ -229,6 +230,7 @@ namespace GitFlow.VS
 
         private static Process CreateGitFlowProcess(string arguments, string repoDirectory)
         {
+            string pathToGit = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86),@"git\bin\git.exe");
             return new Process
             {
                 StartInfo =
@@ -238,7 +240,7 @@ namespace GitFlow.VS
                     RedirectStandardInput = true,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
-                    FileName = "git",
+                    FileName = pathToGit,
                     Arguments = "flow " + arguments,
                     WorkingDirectory = repoDirectory
                 }
