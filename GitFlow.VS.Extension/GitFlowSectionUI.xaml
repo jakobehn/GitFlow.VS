@@ -4,12 +4,71 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <Button x:Name="Init" Content="Init" HorizontalAlignment="Left" Margin="94,10,0,0" VerticalAlignment="Top" Width="90" Click="Button_Click"/>
-        <Button x:Name="StartFeature" Content="Start Feature" HorizontalAlignment="Left" Margin="94,35,0,0" VerticalAlignment="Top" Width="90" Click="StartFeature_Click"/>
-        <Button x:Name="FinishFeature" Content="Finish Feature" HorizontalAlignment="Left" Margin="94,60,0,0" VerticalAlignment="Top" Width="90" Click="FinishFeature_Click"/>
-        <TextBox x:Name="FeatureName" HorizontalAlignment="Left" Height="23" Margin="198,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="92"/>
+             d:DesignWidth="300">
+    <StackPanel>
+        <Label>Choose Next Flow Action</Label>
+        <Label Name="CurrentState">Current state: </Label>
+        <Label>Recommended actions:</Label>
+        <DockPanel VerticalAlignment="Stretch" Height="Auto" LastChildFill="False">
+            <Button DockPanel.Dock="Top" x:Name="Init" Content="Init" Margin="0,0,0,0" Click="Button_Click"/>
 
-    </Grid>
+            <Grid Name="InitGrid" DockPanel.Dock="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Grid.ColumnSpan="2">Create / use the following branches:</Label>
+                <Label Grid.Row="1" Grid.Column="0">Production branch:</Label>
+                <TextBox Grid.Row="1" Grid.Column="1" Name="MasterBranch">master</TextBox>
+                <Label Grid.Row="2">Develop branch:</Label>
+                <TextBox Grid.Row="2" Grid.Column="1" Name="DevelopBranch">develop</TextBox>
+                <Label Grid.ColumnSpan="2" Grid.Row="3">Use the following prefixes in future:</Label>
+                <Label Grid.Row="4">Feature branch prefix:</Label>
+                <TextBox Grid.Row="4" Grid.Column="1" Name="FeatureBranchPrefix">feature/</TextBox>
+                <Label Grid.Row="5">Release branch prefix:</Label>
+                <TextBox Grid.Row="5" Grid.Column="1" Name="ReleaseBranchPrefix">release/</TextBox>
+                <Label Grid.Row="6">Hotfix branch prefix:</Label>
+                <TextBox Grid.Row="6" Grid.Column="1" Name="HotfixBranchPrefix">hotfix/</TextBox>
+                <Label Grid.Row="7">Version branch prefix:</Label>
+                <TextBox Grid.Row="7" Grid.Column="1" Name="VersionTagPrefix"></TextBox>
+                <StackPanel Grid.Row="8" Grid.ColumnSpan="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" >
+                    <Button Name="OK" Width="50" Click="OK_Click">OK</Button>
+                    <Button Name="Cancel" IsDefault="True" Width="50" Margin="20,0,0,0" Click="Cancel_Click">Cancel</Button>
+                </StackPanel>
+            </Grid>
+            <Button DockPanel.Dock="Top" x:Name="StartFeature" Content="Start Feature" Margin="0,5,0,0" Click="StartFeature_Click"/>
+            <Grid DockPanel.Dock="Top" Name="FeatureGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label>Feature Name:</Label>
+                <TextBox Grid.Column="1" Name="FeatureName"></TextBox>
+                <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" >
+                    <Button Name="Feature_OK" Width="50" Click="OnCreateFeature">OK</Button>
+                    <Button Name="Feature_Cancel" IsDefault="True" Width="50" Margin="20,0,0,0" Click="OnCancelFeature">Cancel</Button>
+                </StackPanel>
+            </Grid>
+            <Button DockPanel.Dock="Top" x:Name="FinishFeature" Content="Finish Feature" Margin="0,5,0,0" Click="FinishFeature_Click"/>
+            <Button DockPanel.Dock="Top" x:Name="StartRelease" Content="Start Release" Margin="0,5,0,0" Click="StartRelease_Click"/>
+            <Button DockPanel.Dock="Top" x:Name="FinishRelease" Content="Finish Release" Margin="0,5,0,0" Click="FinishRelease_Click"/>
+            <Button DockPanel.Dock="Top" x:Name="StartHotfix" Content="Start Hotfix" Margin="0,5,0,0" Click="StartHotfix_Click"/>
+            <Button DockPanel.Dock="Top" x:Name="FinishHotfix" Content="Finish Hotfix" Margin="0,5,0,0" Click="FinishHotfix_Click"/>
+        </DockPanel>
+    </StackPanel>
 </UserControl>

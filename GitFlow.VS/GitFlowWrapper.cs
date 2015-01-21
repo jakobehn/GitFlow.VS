@@ -68,6 +68,24 @@ namespace GitFlow.VS
             }
         }
 
+        public string CurrentStatus
+        {
+            get
+            {
+                string status = "";
+                using (var repo = new Repository(repoDirectory))
+                {
+                    if (IsOnDevelopBranch)
+                        status = "Develop: " + repo.Head.Name;
+                    else if (IsOnFeatureBranch)
+                        status = "Feature: " + repo.Head.Name;
+                    else if (IsOnHotfixBranch)
+                        status = "Hotfix: " + repo.Head.Name;
+                }
+                return status;
+            }
+        }
+
         public bool IsOnDevelopBranch
         {
             get
