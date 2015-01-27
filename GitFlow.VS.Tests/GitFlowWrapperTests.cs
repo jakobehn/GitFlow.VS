@@ -73,6 +73,15 @@ namespace GitFlow.VS.Tests
         }
 
         [TestMethod]
+        public void CheckNotInitialized()
+        {
+            var gf = new GitFlowWrapper(sampleRepoPath);
+            Assert.IsFalse(gf.IsInitialized);
+            gf.Init(new GitFlowRepoSettings());
+            Assert.IsTrue(gf.IsInitialized);
+        }
+
+        [TestMethod]
         public void Init()
         {
             var gf = new GitFlowWrapper(sampleRepoPath);

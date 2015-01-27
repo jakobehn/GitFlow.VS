@@ -202,6 +202,10 @@
       <Project>{109C6173-0DBF-43D7-9EEE-AA404561B4F0}</Project>
       <Name>GitFlow.VS</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TeamExplorer.Common\TeamExplorer.Common.csproj">
+      <Project>{388ac013-c628-4a32-abbc-a28a68c3a112}</Project>
+      <Name>TeamExplorer.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="FinishFeatureUI.xaml">

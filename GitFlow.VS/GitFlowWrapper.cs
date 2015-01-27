@@ -71,6 +71,17 @@ namespace GitFlow.VS
             }
         }
 
+        public bool IsInitialized
+        {
+            get
+            {
+                using (var repo = new Repository(repoDirectory))
+                {
+                    return repo.Config.Any(c => c.Key.StartsWith("gitflow."));
+                }
+            }
+        }
+
         public string CurrentStatus
         {
             get
@@ -208,9 +219,26 @@ namespace GitFlow.VS
             return RunGitFlow(gitArguments);
         }
 
-        public GitFlowCommandResult FinishHotfix(string hotfixName)
+        public GitFlowCommandResult FinishHotfix(string releaseName, string tagMessage = null, bool deleteBranch = true, bool forceDeletion = false, bool pushChanges = false)
         {
-            string gitArguments = "hotfix finish -n \"" + hotfixName + "\"";
+            string gitArguments = "hotfix finish -n \"" + releaseName + "\"";
+            if (!String.IsNullOrEmpty(tagMessage))
+            {
+                gitArguments += " -m  + \"" + tagMessage + "\"";
+            }
+            if (!deleteBranch)
+            {
+                gitArguments += " -k";
+                if (forceDeletion)
+                {
+                    gitArguments += " -D";
+                }
+            }
+            if (pushChanges)
+            {
+                gitArguments += " -p";
+            }
+
             return RunGitFlow(gitArguments);
         }
 

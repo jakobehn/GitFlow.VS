@@ -16,8 +16,8 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Label>Feature Name:</Label>
-        <Label Grid.Column="1" Name="CurrentFeature"></Label>
+        <TextBlock>Feature Name:</TextBlock>
+        <TextBlock Grid.Column="1" Name="CurrentFeature"></TextBlock>
         <CheckBox Grid.Row="1" Name="RebaseOnDevelopment" IsChecked="False">Rebase on development branch</CheckBox>
         <CheckBox Grid.Row="2" Name="DeleteBranch" IsChecked="True">Delete branch</CheckBox>
         <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" >

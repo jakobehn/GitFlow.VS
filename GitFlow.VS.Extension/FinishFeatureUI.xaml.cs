@@ -38,8 +38,8 @@ namespace GitFlowVS.Extension
                     var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow);
                     gf.FinishFeature(gf.CurrentBranchLeafName, model.RebaseOnDevelopment, model.DeleteBranch);
                 }
+                parent.FinishAction();
 
-                FinishFeatureGrid.Visibility = Visibility.Collapsed;
             }
         }
     }

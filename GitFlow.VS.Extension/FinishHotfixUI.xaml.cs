@@ -35,7 +35,7 @@ namespace GitFlowVS.Extension
                 using (new WaitCursor())
                 {
                     var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow);
-                    gf.FinishRelease(gf.CurrentBranch, model.TagMessage, model.DeleteBranch, model.ForceDeletion, model.PushChanges);
+                    gf.FinishHotfix(gf.CurrentBranch, model.TagMessage, model.DeleteBranch, model.ForceDeletion, model.PushChanges);
                 }
                 parent.FinishAction();
             }

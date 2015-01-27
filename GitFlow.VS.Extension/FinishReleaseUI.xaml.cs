@@ -5,13 +5,10 @@ using Microsoft.VisualStudio.TeamFoundation.Git.Extensibility;
 
 namespace GitFlowVS.Extension
 {
-    /// <summary>
-    /// Interaction logic for FinishReleaseUI.xaml
-    /// </summary>
     public partial class FinishReleaseUI : UserControl
     {
        private readonly GitFlowSection parent;
-        private FinishReleaseModel model;
+        private readonly FinishReleaseModel model;
         public IGitRepositoryInfo ActiveRepo { get; set; }
         public IVsOutputWindowPane OutputWindow { get; set; }
         public FinishReleaseUI(GitFlowSection parent)
