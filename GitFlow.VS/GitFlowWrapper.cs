@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using LibGit2Sharp;
@@ -78,11 +79,11 @@ namespace GitFlow.VS
                 using (var repo = new Repository(repoDirectory))
                 {
                     if (IsOnDevelopBranch)
-                        status = "Develop: " + repo.Head.Name;
+                        status = "Develop: " + CurrentBranchLeafName;
                     else if (IsOnFeatureBranch)
-                        status = "Feature: " + repo.Head.Name;
+                        status = "Feature: " + CurrentBranchLeafName;
                     else if (IsOnHotfixBranch)
-                        status = "Hotfix: " + repo.Head.Name;
+                        status = "Hotfix: " + CurrentBranchLeafName;
                 }
                 return status;
             }
@@ -122,6 +123,20 @@ namespace GitFlow.VS
                 }                
             }
         }
+
+        public string CurrentBranchLeafName
+        {
+            get
+            {
+                using (var repo = new Repository(repoDirectory))
+                {
+                    string fullBranchName = repo.Head.Name;
+                    var parts = fullBranchName.Split('/');
+                    return parts.Last();
+                }
+            }
+        }
+
 
         protected virtual void OnCommandOutputDataReceived(CommandOutputEventArgs e)
         {

@@ -36,7 +36,7 @@ namespace GitFlowVS.Extension
                 using (new WaitCursor())
                 {
                     var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow);
-                    gf.FinishFeature(gf.CurrentBranch, model.RebaseOnDevelopment, model.DeleteBranch);
+                    gf.FinishFeature(gf.CurrentBranchLeafName, model.RebaseOnDevelopment, model.DeleteBranch);
                 }
 
                 FinishFeatureGrid.Visibility = Visibility.Collapsed;

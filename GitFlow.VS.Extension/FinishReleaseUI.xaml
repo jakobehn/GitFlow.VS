@@ -21,7 +21,7 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Label>Release Name:</Label>
+        <TextBlock Foreground="{Binding Source={x:Static wpf:TeamFoundationColors.Instance}, Path=SubduedTextColor, Mode=OneWay}">Release Name:</TextBlock>
         <Label Grid.Row="0" Grid.Column="1" Name="CurrentFeature"></Label>
         <Label Grid.Row="1">Options</Label>
         <CheckBox Grid.Row="2" Name="TagWithMessage" IsChecked="True">Tag with this message:</CheckBox>

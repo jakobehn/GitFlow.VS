@@ -104,6 +104,16 @@ namespace GitFlow.VS.Tests
         }
 
         [TestMethod]
+        public void GetStatus()
+        {
+            var gf = new GitFlowWrapper(sampleRepoPath);
+            gf.Init(new GitFlowRepoSettings());
+            gf.StartFeature("X");
+            Assert.AreEqual("X", gf.CurrentBranchLeafName);
+            Assert.AreEqual(gf.CurrentStatus, "Feature: X");
+        }
+
+        [TestMethod]
         public void StartTwoFeaturesInParallel()
         {
             var gf = new GitFlowWrapper(sampleRepoPath);

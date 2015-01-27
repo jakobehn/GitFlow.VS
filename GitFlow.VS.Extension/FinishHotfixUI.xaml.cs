@@ -11,7 +11,7 @@ namespace GitFlowVS.Extension
     public partial class FinishHotfixUI : UserControl
     {
        private readonly GitFlowSection parent;
-        private FinishHotfixModel model;
+        private readonly FinishHotfixModel model;
         public IGitRepositoryInfo ActiveRepo { get; set; }
         public IVsOutputWindowPane OutputWindow { get; set; }
         public FinishHotfixUI(GitFlowSection parent)

@@ -5,16 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary Source="/GitFlowVS.Extension;component/Resources/Dictionary.xaml" />
+    </UserControl.Resources>
+
     <StackPanel>
-        <Label Name="CurrentState">Current state: </Label>
-        <Label>Recommended actions:</Label>
+        <TextBlock Foreground="{StaticResource SubduedTextBrushKey}">Current state: </TextBlock>
+        <TextBlock Foreground="{StaticResource SubduedTextBrushKey}" Text="{Binding CurrentState}"></TextBlock>
+        
         <DockPanel VerticalAlignment="Stretch" Height="Auto" LastChildFill="False">
             <Button DockPanel.Dock="Top" x:Name="Init" Content="Init" Margin="0,0,0,0" Click="Button_Click" Width="100px"/>
-
             <Button DockPanel.Dock="Top" x:Name="StartFeature" Content="Start Feature" Margin="0,5,0,0" Click="StartFeature_Click" Width="100px"/>
-            
             <Button DockPanel.Dock="Top" x:Name="FinishFeature" Content="Finish Feature" Margin="0,5,0,0" Click="FinishFeature_Click" Width="100px"/>
-
             <Button DockPanel.Dock="Top" x:Name="StartRelease" Content="Start Release" Margin="0,5,0,0" Click="StartRelease_Click" Width="100px"/>
             <Button DockPanel.Dock="Top" x:Name="FinishRelease" Content="Finish Release" Margin="0,5,0,0" Click="FinishRelease_Click" Width="100px"/>
             <Button DockPanel.Dock="Top" x:Name="StartHotfix" Content="Start Hotfix" Margin="0,5,0,0" Click="StartHotfix_Click" Width="100px"/>

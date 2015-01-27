@@ -4,9 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             Height="260px" >
 
-    <Grid Name="InitGrid" DockPanel.Dock="Top" >
+    <UserControl.Resources>
+        <ResourceDictionary Source="/GitFlowVS.Extension;component/Resources/Dictionary.xaml" />
+    </UserControl.Resources>
+
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -16,29 +20,29 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="130"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Label Grid.ColumnSpan="2" FontWeight="Bold">Create / use the following branches:</Label>
-        <Label Grid.Row="1" Grid.Column="0" Margin="5,0,0,0">Production branch:</Label>
+        <TextBlock Grid.ColumnSpan="2" FontWeight="Bold" Foreground="{StaticResource SubduedTextBrushKey}">Create / use the following branches:</TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="0" Margin="5,0,0,0" Foreground="{StaticResource SubduedTextBrushKey}">Production branch:</TextBlock>
         <TextBox Grid.Row="1" Grid.Column="1" Name="MasterBranch" Text="{Binding Master}" Width="100" HorizontalAlignment="Left" ></TextBox>
-        <Label Grid.Row="2" Margin="5,0,0,0">Develop branch:</Label>
+        <TextBlock Grid.Row="2" Margin="5,0,0,0" Foreground="{StaticResource SubduedTextBrushKey}">Develop branch:</TextBlock>
         <TextBox Grid.Row="2" Grid.Column="1" Name="DevelopBranch" Text="{Binding Develop}" Width="100" HorizontalAlignment="Left"></TextBox>
-        <Label Grid.ColumnSpan="2" Grid.Row="3" FontWeight="Bold">Use the following prefixes in future:</Label>
-        <Label Grid.Row="4" Margin="5,0,0,0">Feature branch prefix:</Label>
+        <TextBlock Grid.ColumnSpan="2" Grid.Row="3" FontWeight="Bold" Foreground="{StaticResource SubduedTextBrushKey}" Margin="0,5,0,0">Use the following prefixes in future:</TextBlock>
+        <TextBlock Grid.Row="4" Margin="5,0,0,0" Foreground="{StaticResource SubduedTextBrushKey}">Feature branch prefix:</TextBlock>
         <TextBox Grid.Row="4" Grid.Column="1" Name="FeatureBranchPrefix" Text="{Binding FeaturePrefix}" Width="100" HorizontalAlignment="Left"></TextBox>
-        <Label Grid.Row="5" Margin="5,0,0,0">Release branch prefix:</Label>
+        <TextBlock Grid.Row="5" Margin="5,0,0,0" Foreground="{StaticResource SubduedTextBrushKey}">Release branch prefix:</TextBlock>
         <TextBox Grid.Row="5" Grid.Column="1" Name="ReleaseBranchPrefix" Text="{Binding ReleasePrefix}" Width="100" HorizontalAlignment="Left"></TextBox>
-        <Label Grid.Row="6" Margin="5,0,0,0">Hotfix branch prefix:</Label>
+        <TextBlock Grid.Row="6" Margin="5,0,0,0" Foreground="{StaticResource SubduedTextBrushKey}">Hotfix branch prefix:</TextBlock>
         <TextBox Grid.Row="6" Grid.Column="1" Name="HotfixBranchPrefix" Text="{Binding HotfixPrefix}" Width="100" HorizontalAlignment="Left"></TextBox>
-        <Label Grid.Row="7" Margin="5,0,0,0">Version branch prefix:</Label>
+        <TextBlock Grid.Row="7" Margin="5,0,0,0" Foreground="{StaticResource SubduedTextBrushKey}">Version branch prefix:</TextBlock>
         <TextBox Grid.Row="7" Grid.Column="1" Name="VersionTagPrefix" Text="{Binding VersionTagPrefix}" Width="100" HorizontalAlignment="Left"></TextBox>
-        <StackPanel Grid.Row="8" Grid.ColumnSpan="2" Grid.Column="0" Orientation="Horizontal" Margin="0,5,0,0" >
-            <Button Name="OK" Width="50" Click="OK_Click" VerticalAlignment="Bottom">OK</Button>
-            <Button Name="Cancel" Width="50" Margin="20,0,0,0" VerticalAlignment="Bottom" Click="Cancel_Click">Cancel</Button>
+        <StackPanel Grid.Row="8" Grid.ColumnSpan="2" Grid.Column="0" Orientation="Horizontal" Margin="0,10,0,0">
+            <Button Name="OK" Width="50" Click="OK_Click" Height="20">OK</Button>
+            <Button Name="Cancel" Width="50" Margin="20,0,0,0" Height="20" Click="Cancel_Click">Cancel</Button>
         </StackPanel>
     </Grid>
 

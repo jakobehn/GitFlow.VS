@@ -14,15 +14,29 @@ namespace GitFlowVS.Extension
     public partial class GitFlowSectionUI : UserControl
     {
         private readonly GitFlowSection parent;
+        public IGitRepositoryInfo ActiveRepo { get; set; }
+        public IVsOutputWindowPane OutputWindow { get; set; }
 
         public GitFlowSectionUI(GitFlowSection parent)
         {
             this.parent = parent;
             InitializeComponent();
+
+            DataContext = this;
         }
 
-        public IGitRepositoryInfo ActiveRepo { get; set; }
-        public IVsOutputWindowPane OutputWindow { get; set; }
+        public string CurrentState
+        {
+            get
+            {
+                if (ActiveRepo != null)
+                {
+                    var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow);
+                    return gf.CurrentStatus;
+                }
+                return "";
+            }
+        }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {

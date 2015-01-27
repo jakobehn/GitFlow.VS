@@ -7,9 +7,6 @@ using Microsoft.VisualStudio.TeamFoundation.Git.Extensibility;
 
 namespace GitFlowVS.Extension
 {
-    /// <summary>
-    /// Interaction logic for InitUI.xaml
-    /// </summary>
     public partial class InitUI : UserControl
     {
         private readonly GitFlowSection parent;
@@ -22,7 +19,6 @@ namespace GitFlowVS.Extension
             this.model = new InitModel();
             this.parent = parent;
             InitializeComponent();
-
             this.DataContext = model;
         }
 
@@ -38,11 +34,8 @@ namespace GitFlowVS.Extension
                 OutputWindow.Activate();
                 using (new WaitCursor())
                 {
-                    var gf = new GitFlowWrapper(ActiveRepo.RepositoryPath);
-                    gf.CommandOutputDataReceived += (o, args) =>
-                    {
-                        OutputWindow.OutputStringThreadSafe(args.Output);
-                    };
+
+                    var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow);
                     gf.Init(new GitFlowRepoSettings()
                     {
                         DevelopBranch = model.Develop,
@@ -54,7 +47,7 @@ namespace GitFlowVS.Extension
                     });
                 }
             }
-            parent.FinishInit();
+            parent.FinishAction();
         }
     }
 }

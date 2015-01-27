@@ -31,6 +31,9 @@ namespace GitFlowVS.Extension
         {
             this.parent = parent;
             InitializeComponent();
+
+            model = new StartHotfixModel();
+            DataContext = model;
         }
 
         private void HotfixCancel_Click(object sender, RoutedEventArgs e)

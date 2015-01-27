@@ -39,6 +39,7 @@ namespace GitFlowVS.Extension
                     var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow);
                     gf.StartFeature(model.FeatureName);
                 }
+                parent.FinishAction();
             }
         }
     }
