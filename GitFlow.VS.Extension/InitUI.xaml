@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="GitFlowVS.Extension.InitUI"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:wpf="clr-namespace:Microsoft.TeamFoundation.Controls.WPF;assembly=Microsoft.TeamFoundation.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+
+    <Grid Name="InitGrid" DockPanel.Dock="Top" >
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="130"></ColumnDefinition>
+            
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label Grid.ColumnSpan="2" FontWeight="Bold">Create / use the following branches:</Label>
+        <Label Grid.Row="1" Grid.Column="0" Margin="5,0,0,0">Production branch:</Label>
+        <wpf:LabeledTextBox Grid.Row="1" Grid.Column="1" Name="MasterBranch" Text="{Binding Master}" Width="100" HorizontalAlignment="Left" ></wpf:LabeledTextBox>
+        <Label Grid.Row="2" Margin="5,0,0,0">Develop branch:</Label>
+        <wpf:LabeledTextBox Grid.Row="2" Grid.Column="1" Name="DevelopBranch" Text="{Binding Develop}" Width="100" HorizontalAlignment="Left"></wpf:LabeledTextBox>
+        <Label Grid.ColumnSpan="2" Grid.Row="3" FontWeight="Bold">Use the following prefixes in future:</Label>
+        <Label Grid.Row="4" Margin="5,0,0,0">Feature branch prefix:</Label>
+        <wpf:LabeledTextBox Grid.Row="4" Grid.Column="1" Name="FeatureBranchPrefix" Text="{Binding FeaturePrefix}" Width="100" HorizontalAlignment="Left"></wpf:LabeledTextBox>
+        <Label Grid.Row="5" Margin="5,0,0,0">Release branch prefix:</Label>
+        <wpf:LabeledTextBox Grid.Row="5" Grid.Column="1" Name="ReleaseBranchPrefix" Text="{Binding ReleasePrefix}" Width="100" HorizontalAlignment="Left"></wpf:LabeledTextBox>
+        <Label Grid.Row="6" Margin="5,0,0,0">Hotfix branch prefix:</Label>
+        <wpf:LabeledTextBox Grid.Row="6" Grid.Column="1" Name="HotfixBranchPrefix" Text="{Binding HotfixPrefix}" Width="100" HorizontalAlignment="Left"></wpf:LabeledTextBox>
+        <Label Grid.Row="7" Margin="5,0,0,0">Version branch prefix:</Label>
+        <wpf:LabeledTextBox Grid.Row="7" Grid.Column="1" Name="VersionTagPrefix" Text="{Binding VersionTagPrefix}" Width="100" HorizontalAlignment="Left"></wpf:LabeledTextBox>
+        <StackPanel Grid.Row="8" Grid.ColumnSpan="2" Grid.Column="0" Orientation="Horizontal" Margin="0,5,0,0" >
+            <Button Name="OK" Width="50" Click="OK_Click" VerticalAlignment="Bottom">OK</Button>
+            <Button Name="Cancel" Width="50" Margin="20,0,0,0" VerticalAlignment="Bottom" Click="Cancel_Click">Cancel</Button>
+        </StackPanel>
+    </Grid>
+
+</UserControl>

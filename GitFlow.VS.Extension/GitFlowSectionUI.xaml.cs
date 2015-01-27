@@ -13,10 +13,12 @@ namespace GitFlowVS.Extension
     /// </summary>
     public partial class GitFlowSectionUI : UserControl
     {
-        public GitFlowSectionUI()
+        private readonly GitFlowSection parent;
+
+        public GitFlowSectionUI(GitFlowSection parent)
         {
+            this.parent = parent;
             InitializeComponent();
-            InitGrid.Visibility = Visibility.Collapsed;
             StartFeatureGrid.Visibility = Visibility.Collapsed;
             FinishFeatureGrid.Visibility = Visibility.Collapsed;
         }
@@ -26,7 +28,8 @@ namespace GitFlowVS.Extension
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            InitGrid.Visibility = Visibility.Visible;
+         //   InitGrid.Visibility = Visibility.Visible;
+            parent.Init();
         }
 
         private void StartFeature_Click(object sender, RoutedEventArgs e)
@@ -72,37 +75,6 @@ private void StartRelease_Click(object sender, RoutedEventArgs e)
         private void FinishHotfix_Click(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
-        }
-
-        private void Cancel_Click(object sender, RoutedEventArgs e)
-        {
-            InitGrid.Visibility = Visibility.Collapsed;
-        }
-
-        private void OK_Click(object sender, RoutedEventArgs e)
-        {
-            if (ActiveRepo != null)
-            {
-                OutputWindow.Activate();
-                using (new WaitCursor())
-                {
-                    var gf = new GitFlowWrapper(ActiveRepo.RepositoryPath);
-                    gf.CommandOutputDataReceived += (o, args) =>
-                    {
-                        OutputWindow.OutputStringThreadSafe(args.Output);
-                    };
-                    gf.Init(new GitFlowRepoSettings()
-                    {
-                        DevelopBranch = DevelopBranch.Text,
-                        MasterBranch = MasterBranch.Text,
-                        FeatureBranch = FeatureBranchPrefix.Text,
-                        ReleaseBranch = ReleaseBranchPrefix.Text,
-                        HotfixBranch = HotfixBranchPrefix.Text,
-                        VersionTag = VersionTagPrefix.Text
-                    });
-                    InitGrid.Visibility = Visibility.Collapsed;
-                }
-            }
         }
 
         private void OnCreateFeature(object sender, RoutedEventArgs e)

@@ -41,7 +41,7 @@ namespace GitFlowVS.Extension
             
             outWindow.GetPane(ref customGuid, out customPane);
 
-            var ui = new GitFlowSectionUI();
+            var ui = new GitFlowSectionUI(this);
             ui.ActiveRepo = activeRepo;
             ui.OutputWindow = customPane;
             this.SectionContent = ui;
@@ -55,6 +55,13 @@ namespace GitFlowVS.Extension
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public void Init()
+        {
+            var ui = new InitUI(this);
+            ui.ActiveRepo = activeRepo;
+            ui.OutputWindow = customPane;
+            this.SectionContent = ui;
+        }
         public void Cancel()
         {
         }
@@ -101,6 +108,22 @@ namespace GitFlowVS.Extension
             {
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        public void CancelInit()
+        {
+            var ui = new GitFlowSectionUI(this);
+            ui.ActiveRepo = activeRepo;
+            ui.OutputWindow = customPane;
+            this.SectionContent = ui;
+        }
+
+        public void FinishInit()
+        {
+            var ui = new GitFlowSectionUI(this);
+            ui.ActiveRepo = activeRepo;
+            ui.OutputWindow = customPane;
+            this.SectionContent = ui;
         }
     }
 }

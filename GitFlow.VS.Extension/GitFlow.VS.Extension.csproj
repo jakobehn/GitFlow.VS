@@ -136,6 +136,10 @@
       <DependentUpon>GitFlowSectionUI.xaml</DependentUpon>
     </Compile>
     <Compile Include="Guids.cs" />
+    <Compile Include="InitModel.cs" />
+    <Compile Include="InitUI.xaml.cs">
+      <DependentUpon>InitUI.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -177,6 +181,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="GitFlowSectionUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InitUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
