@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="GitFlowVS.Extension.FinishFeatureUI"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="300">
+    <Grid DockPanel.Dock="Top" Name="FinishFeatureGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label>Feature Name:</Label>
+        <Label Grid.Column="1" Name="CurrentFeature"></Label>
+        <CheckBox Grid.Row="1" Name="RebaseOnDevelopment" IsChecked="False">Rebase on development branch</CheckBox>
+        <CheckBox Grid.Row="2" Name="DeleteBranch" IsChecked="True">Delete branch</CheckBox>
+        <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" >
+            <Button Name="FinishFeature_OK" Width="50" Click="FinishFeature_OK_Click">OK</Button>
+            <Button Name="FinishFeature_Cancel" IsDefault="True" Width="50" Margin="20,0,0,0" Height="25" VerticalAlignment="Bottom" Click="FinishFeature_Cancel_Click" >Cancel</Button>
+        </StackPanel>
+    </Grid>
+
+</UserControl>

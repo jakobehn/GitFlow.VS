@@ -24,6 +24,7 @@ namespace GitFlow.VS
     public class GitFlowWrapper
     {
         public delegate void CommandOutputReceivedEventHandler(object sender, CommandOutputEventArgs args);
+        public delegate void CommandErrorReceivedEventHandler(object sender, CommandOutputEventArgs args);
 
         private readonly string repoDirectory;
         public static StringBuilder Output = new StringBuilder("");
@@ -31,6 +32,7 @@ namespace GitFlow.VS
         private const string GitFlowDefaultValueRegExp = @"\[(.*?)\]";
 
         public event CommandOutputReceivedEventHandler CommandOutputDataReceived;
+        public event CommandErrorReceivedEventHandler CommandErrorDataReceived;
 
         public bool IsOnFeatureBranch
         {
@@ -127,6 +129,12 @@ namespace GitFlow.VS
             if (handler != null) handler(this, e);
         }
 
+        protected virtual void OnCommandErrorDataReceived(CommandOutputEventArgs e)
+        {
+            CommandErrorReceivedEventHandler handler = CommandErrorDataReceived;
+            if (handler != null) handler(this, e);
+        }
+
         public GitFlowWrapper(string repoDirectory)
         {
             this.repoDirectory = repoDirectory;
@@ -156,9 +164,26 @@ namespace GitFlow.VS
             return RunGitFlow(gitArguments);
         }
 
-        public GitFlowCommandResult FinishRelease(string releaseName)
+        public GitFlowCommandResult FinishRelease(string releaseName, string tagMessage = null, bool deleteBranch = true, bool forceDeletion=false, bool pushChanges = false)
         {
             string gitArguments = "release finish -n \"" + releaseName + "\"";
+            if (!String.IsNullOrEmpty(tagMessage))
+            {
+                gitArguments += " -m  + \"" + tagMessage + "\"";
+            }
+            if (!deleteBranch)
+            {
+                gitArguments += " -k";
+                if (forceDeletion)
+                {
+                    gitArguments += " -D";
+                }
+            }
+            if (pushChanges)
+            {
+                gitArguments += " -p";
+            }
+
             return RunGitFlow(gitArguments);
         }
 
@@ -296,6 +321,7 @@ namespace GitFlow.VS
             Error = new StringBuilder();
             Error.Append(dataReceivedEventArgs.Data);
             Debug.WriteLine(dataReceivedEventArgs.Data);
+            OnCommandErrorDataReceived(new CommandOutputEventArgs(dataReceivedEventArgs.Data + Environment.NewLine));
         }
 
         public bool IsMasterBranchQuery(string input)

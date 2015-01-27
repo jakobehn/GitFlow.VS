@@ -12,43 +12,8 @@
             <Button DockPanel.Dock="Top" x:Name="Init" Content="Init" Margin="0,0,0,0" Click="Button_Click" Width="100px"/>
 
             <Button DockPanel.Dock="Top" x:Name="StartFeature" Content="Start Feature" Margin="0,5,0,0" Click="StartFeature_Click" Width="100px"/>
-            <Grid DockPanel.Dock="Top" Name="StartFeatureGrid">
-                <Grid.RowDefinitions>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Label>Feature Name:</Label>
-                <TextBox Grid.Column="1" Name="FeatureName" ></TextBox>
-                <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" >
-                    <Button Name="Feature_OK" Width="50" Click="OnCreateFeature">OK</Button>
-                    <Button Name="Feature_Cancel" IsDefault="True" Width="50" Margin="20,0,0,0" Click="OnCancelFeature">Cancel</Button>
-                </StackPanel>
-            </Grid>
+            
             <Button DockPanel.Dock="Top" x:Name="FinishFeature" Content="Finish Feature" Margin="0,5,0,0" Click="FinishFeature_Click" Width="100px"/>
-            <Grid DockPanel.Dock="Top" Name="FinishFeatureGrid">
-                <Grid.RowDefinitions>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Label>Feature Name:</Label>
-                <Label Grid.Column="1" Name="CurrentFeature"></Label>
-                <CheckBox Grid.Row="1" Name="RebaseOnDevelopment" IsChecked="False">Rebase on development branch</CheckBox>
-                <CheckBox Grid.Row="2" Name="DeleteBranch" IsChecked="True">Delete branch</CheckBox>
-                <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" >
-                    <Button Name="FinishFeature_OK" Width="50" Click="OnFinishFeature">OK</Button>
-                    <Button Name="FinishFeature_Cancel" IsDefault="True" Width="50" Margin="20,0,0,0" Click="OnCancelFinishFeature">Cancel</Button>
-                </StackPanel>
-            </Grid>
 
             <Button DockPanel.Dock="Top" x:Name="StartRelease" Content="Start Release" Margin="0,5,0,0" Click="StartRelease_Click" Width="100px"/>
             <Button DockPanel.Dock="Top" x:Name="FinishRelease" Content="Finish Release" Margin="0,5,0,0" Click="FinishRelease_Click" Width="100px"/>

@@ -19,33 +19,28 @@ namespace GitFlowVS.Extension
 
         private bool isExpanded = true;
 
-        private bool isVisible = true;
         private IGitExt gitService;
         private IGitRepositoryInfo activeRepo;
 
         public override void Initialize(object sender, SectionInitializeEventArgs e)
         {
             base.Initialize(sender, e);
-            this.serviceProvider = e.ServiceProvider;
-            this.gitService = (IGitExt)e.ServiceProvider.GetService(typeof(IGitExt));
+            serviceProvider = e.ServiceProvider;
+            gitService = (IGitExt)e.ServiceProvider.GetService(typeof(IGitExt));
             gitService.PropertyChanged += GitServiceOnPropertyChanged;
             activeRepo = gitService.ActiveRepositories.FirstOrDefault();
 
             IVsOutputWindow outWindow = Package.GetGlobalService(typeof(SVsOutputWindow)) as IVsOutputWindow;
 
-            // Use e.g. Tools -> Create GUID to make a stable, but unique GUID for your pane.
-            // Also, in a real project, this should probably be a static constant, and not a local variable
             Guid customGuid = new Guid("B85225F6-B15E-4A8A-AF6E-2BE96A4FE672");
             string customTitle = "GitFlow.VS";
-            outWindow.CreatePane(ref customGuid, customTitle, 1, 1);
-            
+            outWindow.CreatePane(ref customGuid, customTitle, 1, 1);            
             outWindow.GetPane(ref customGuid, out customPane);
 
             var ui = new GitFlowSectionUI(this);
             ui.ActiveRepo = activeRepo;
             ui.OutputWindow = customPane;
-            this.SectionContent = ui;
-
+            SectionContent = ui;
         }
 
         private void GitServiceOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
@@ -55,13 +50,8 @@ namespace GitFlowVS.Extension
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void Init()
-        {
-            var ui = new InitUI(this);
-            ui.ActiveRepo = activeRepo;
-            ui.OutputWindow = customPane;
-            this.SectionContent = ui;
-        }
+
+
         public void Cancel()
         {
         }
@@ -73,21 +63,21 @@ namespace GitFlowVS.Extension
 
         public bool IsBusy
         {
-            get { return this.isBusy; }
+            get { return isBusy; }
             private set
             {
-                this.isBusy = value;
-                this.FirePropertyChanged("IsBusy");
+                isBusy = value;
+                FirePropertyChanged("IsBusy");
             }
         }
 
         public bool IsExpanded
         {
-            get { return this.isExpanded; }
+            get { return isExpanded; }
             set
             {
-                this.isExpanded = value;
-                this.FirePropertyChanged("IsExpanded");
+                isExpanded = value;
+                FirePropertyChanged("IsExpanded");
             }
         }
 
@@ -104,18 +94,10 @@ namespace GitFlowVS.Extension
 
         private void FirePropertyChanged(string propertyName)
         {
-            if (this.PropertyChanged != null)
+            if (PropertyChanged != null)
             {
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
-        }
-
-        public void CancelInit()
-        {
-            var ui = new GitFlowSectionUI(this);
-            ui.ActiveRepo = activeRepo;
-            ui.OutputWindow = customPane;
-            this.SectionContent = ui;
         }
 
         public void FinishInit()
@@ -123,7 +105,80 @@ namespace GitFlowVS.Extension
             var ui = new GitFlowSectionUI(this);
             ui.ActiveRepo = activeRepo;
             ui.OutputWindow = customPane;
-            this.SectionContent = ui;
+            SectionContent = ui;
+        }
+
+        public void CancelAction()
+        {
+            var ui = new GitFlowSectionUI(this);
+            ui.ActiveRepo = activeRepo;
+            ui.OutputWindow = customPane;
+            SectionContent = ui;
+        }
+
+
+        public void Init()
+        {
+            var ui = new InitUI(this);
+            ui.ActiveRepo = activeRepo;
+            ui.OutputWindow = customPane;
+            SectionContent = ui;
+        }
+
+        public void StartFeature()
+        {
+            var ui = new StartFeatureUI(this);
+            ui.ActiveRepo = activeRepo;
+            ui.OutputWindow = customPane;
+            SectionContent = ui;
+        }
+
+        public void FinishFeature()
+        {
+            var ui = new FinishFeatureUI(this);
+            ui.ActiveRepo = activeRepo;
+            ui.OutputWindow = customPane;
+            SectionContent = ui;
+        }
+
+        public void StartRelease()
+        {
+            var ui = new StartReleaseUI(this);
+            ui.ActiveRepo = activeRepo;
+            ui.OutputWindow = customPane;
+            SectionContent = ui;
+        }
+
+        public void FinishRelease()
+        {
+            var ui = new FinishReleaseUI(this);
+            ui.ActiveRepo = activeRepo;
+            ui.OutputWindow = customPane;
+            SectionContent = ui;
+        }
+
+        public void StartHotfix()
+        {
+            var ui = new StartHotfixUI(this);
+            ui.ActiveRepo = activeRepo;
+            ui.OutputWindow = customPane;
+            SectionContent = ui;
+        }
+
+        public void FinishHotfix()
+        {
+            var ui = new FinishHotfixUI(this);
+            ui.ActiveRepo = activeRepo;
+            ui.OutputWindow = customPane;
+            SectionContent = ui;
+        }
+
+        public void FinishAction()
+        {
+            var ui = new GitFlowSectionUI(this);
+            ui.ActiveRepo = activeRepo;
+            ui.OutputWindow = customPane;
+            SectionContent = ui;
         }
     }
 }

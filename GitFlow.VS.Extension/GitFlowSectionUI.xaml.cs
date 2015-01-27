@@ -19,8 +19,6 @@ namespace GitFlowVS.Extension
         {
             this.parent = parent;
             InitializeComponent();
-            StartFeatureGrid.Visibility = Visibility.Collapsed;
-            FinishFeatureGrid.Visibility = Visibility.Collapsed;
         }
 
         public IGitRepositoryInfo ActiveRepo { get; set; }
@@ -28,106 +26,39 @@ namespace GitFlowVS.Extension
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-         //   InitGrid.Visibility = Visibility.Visible;
             parent.Init();
         }
 
         private void StartFeature_Click(object sender, RoutedEventArgs e)
         {
-            StartFeatureGrid.Visibility = Visibility.Visible;
+            parent.StartFeature();
         }
 
         private void FinishFeature_Click(object sender, RoutedEventArgs e)
         {
-            FinishFeatureGrid.Visibility = Visibility.Visible;
+            parent.FinishFeature();
         }
 
-        private GitFlowWrapper GetWrapper()
+        private void StartRelease_Click(object sender, RoutedEventArgs e)
         {
-            if (ActiveRepo != null)
-            {
-                OutputWindow.Activate();
-                var gf = new GitFlowWrapper(ActiveRepo.RepositoryPath);
-                gf.CommandOutputDataReceived += (o, args) =>
-                {
-                    OutputWindow.OutputStringThreadSafe(args.Output);
-                };
-                return gf;
-            }
-            return null;
-        }
-
-private void StartRelease_Click(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
+            parent.StartRelease();
         }
 
         private void FinishRelease_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            parent.FinishRelease();
         }
 
         private void StartHotfix_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            parent.StartHotfix();
         }
 
         private void FinishHotfix_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            parent.FinishHotfix();
         }
 
-        private void OnCreateFeature(object sender, RoutedEventArgs e)
-        {
-            if (ActiveRepo != null)
-            {
-                OutputWindow.Activate();
-                using (new WaitCursor())
-                {
-                    var gf = new GitFlowWrapper(ActiveRepo.RepositoryPath);
-                    gf.CommandOutputDataReceived += (o, args) =>
-                    {
-                        OutputWindow.OutputStringThreadSafe(args.Output);
-                    };
-                    gf.StartFeature(FeatureName.Text);
-                }
-            }
-        }
 
-        private void OnCancelFeature(object sender, RoutedEventArgs e)
-        {
-            StartFeatureGrid.Visibility = Visibility.Collapsed;
-        }
-
-        private void OnFinishFeature(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (ActiveRepo != null)
-                {
-                    OutputWindow.Activate();
-                    using (new WaitCursor())
-                    {
-                        var gf = new GitFlowWrapper(ActiveRepo.RepositoryPath);
-                        gf.CommandOutputDataReceived += (o, args) =>
-                        {
-                            OutputWindow.OutputStringThreadSafe(args.Output);
-                        };
-                        gf.FinishFeature(gf.CurrentBranch, RebaseOnDevelopment.IsChecked.Value, DeleteBranch.IsChecked.Value);
-                    }
-                    FeatureName.Clear();
-                    FinishFeatureGrid.Visibility = Visibility.Collapsed;
-                }
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show("Error: " + exception.ToString());
-            }
-        }
-
-        private void OnCancelFinishFeature(object sender, RoutedEventArgs e)
-        {
-            FinishFeatureGrid.Visibility = Visibility.Collapsed;
-        }
     }
 }
