@@ -110,6 +110,17 @@ namespace GitFlow.VS
             }
         }
 
+        public string CurrentBranch
+        {
+            get
+            {
+                using (var repo = new Repository(repoDirectory))
+                {
+                    return repo.Head.Name;
+                }                
+            }
+        }
+
         protected virtual void OnCommandOutputDataReceived(CommandOutputEventArgs e)
         {
             CommandOutputReceivedEventHandler handler = CommandOutputDataReceived;
@@ -127,9 +138,14 @@ namespace GitFlow.VS
             return RunGitFlow(gitArguments);
         }
 
-        public GitFlowCommandResult FinishFeature(string featureName)
+        public GitFlowCommandResult FinishFeature(string featureName, bool rebaseOnDevelopment = false, bool deleteBranch = true)
         {
             string gitArguments = "feature finish \"" + featureName + "\"";
+            if (rebaseOnDevelopment)
+                gitArguments += " -r";
+            if (!deleteBranch)
+                gitArguments += " -k";
+
             return RunGitFlow(gitArguments);
 
         }

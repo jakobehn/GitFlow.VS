@@ -13,22 +13,12 @@ namespace GitFlowVS.Extension
     /// </summary>
     public partial class GitFlowSectionUI : UserControl
     {
-        private readonly GitFlowViewModel model;
-
         public GitFlowSectionUI()
         {
             InitializeComponent();
-
             InitGrid.Visibility = Visibility.Collapsed;
-            FeatureGrid.Visibility = Visibility.Collapsed;
-        }
-
-        public GitFlowSectionUI(GitFlowViewModel model)
-        {
-            this.model = model;
-            InitializeComponent();
-
-            DataContext = model;
+            StartFeatureGrid.Visibility = Visibility.Collapsed;
+            FinishFeatureGrid.Visibility = Visibility.Collapsed;
         }
 
         public IGitRepositoryInfo ActiveRepo { get; set; }
@@ -41,27 +31,30 @@ namespace GitFlowVS.Extension
 
         private void StartFeature_Click(object sender, RoutedEventArgs e)
         {
-            FeatureGrid.Visibility = Visibility.Visible;
+            StartFeatureGrid.Visibility = Visibility.Visible;
         }
 
         private void FinishFeature_Click(object sender, RoutedEventArgs e)
         {
+            FinishFeatureGrid.Visibility = Visibility.Visible;
+        }
+
+        private GitFlowWrapper GetWrapper()
+        {
             if (ActiveRepo != null)
             {
                 OutputWindow.Activate();
-                using (new WaitCursor())
+                var gf = new GitFlowWrapper(ActiveRepo.RepositoryPath);
+                gf.CommandOutputDataReceived += (o, args) =>
                 {
-                    var gf = new GitFlowWrapper(ActiveRepo.RepositoryPath);
-                    gf.CommandOutputDataReceived += (o, args) =>
-                    {
-                        OutputWindow.OutputStringThreadSafe(args.Output);
-                    };
-                    gf.FinishFeature("TEST");
-                }
+                    OutputWindow.OutputStringThreadSafe(args.Output);
+                };
+                return gf;
             }
+            return null;
         }
 
-        private void StartRelease_Click(object sender, RoutedEventArgs e)
+private void StartRelease_Click(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
         }
@@ -114,35 +107,55 @@ namespace GitFlowVS.Extension
 
         private void OnCreateFeature(object sender, RoutedEventArgs e)
         {
-                try
+            if (ActiveRepo != null)
+            {
+                OutputWindow.Activate();
+                using (new WaitCursor())
                 {
-                    if (ActiveRepo != null)
+                    var gf = new GitFlowWrapper(ActiveRepo.RepositoryPath);
+                    gf.CommandOutputDataReceived += (o, args) =>
                     {
-                        OutputWindow.Activate();
-                        using (new WaitCursor())
-                        {
-                            var gf = new GitFlowWrapper(ActiveRepo.RepositoryPath);
-                            gf.CommandOutputDataReceived += (o, args) =>
-                            {
-                                OutputWindow.OutputStringThreadSafe(args.Output);
-                            };
-                            gf.StartFeature(FeatureName.Text);
-                        }
-                        FeatureName.Clear();
-                        FeatureGrid.Visibility = Visibility.Collapsed;
-                    }
+                        OutputWindow.OutputStringThreadSafe(args.Output);
+                    };
+                    gf.StartFeature(FeatureName.Text);
                 }
-                catch (Exception exception)
-                {
-                    MessageBox.Show("Error: " + exception.ToString());
-                }
+            }
         }
 
         private void OnCancelFeature(object sender, RoutedEventArgs e)
         {
-            FeatureGrid.Visibility = Visibility.Collapsed;  
-
+            StartFeatureGrid.Visibility = Visibility.Collapsed;
         }
 
+        private void OnFinishFeature(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (ActiveRepo != null)
+                {
+                    OutputWindow.Activate();
+                    using (new WaitCursor())
+                    {
+                        var gf = new GitFlowWrapper(ActiveRepo.RepositoryPath);
+                        gf.CommandOutputDataReceived += (o, args) =>
+                        {
+                            OutputWindow.OutputStringThreadSafe(args.Output);
+                        };
+                        gf.FinishFeature(gf.CurrentBranch, RebaseOnDevelopment.IsChecked.Value, DeleteBranch.IsChecked.Value);
+                    }
+                    FeatureName.Clear();
+                    FinishFeatureGrid.Visibility = Visibility.Collapsed;
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show("Error: " + exception.ToString());
+            }
+        }
+
+        private void OnCancelFinishFeature(object sender, RoutedEventArgs e)
+        {
+            FinishFeatureGrid.Visibility = Visibility.Collapsed;
+        }
     }
 }

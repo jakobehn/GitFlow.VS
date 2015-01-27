@@ -135,7 +135,6 @@
     <Compile Include="GitFlowSectionUI.xaml.cs">
       <DependentUpon>GitFlowSectionUI.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GitFlowViewModel.cs" />
     <Compile Include="Guids.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Resources.Designer.cs">
