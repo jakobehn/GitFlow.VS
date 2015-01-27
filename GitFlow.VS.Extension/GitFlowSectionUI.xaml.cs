@@ -1,10 +1,7 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using GitFlow.VS;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TeamFoundation.Git.Extensibility;
-using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace GitFlowVS.Extension
 {
@@ -14,15 +11,47 @@ namespace GitFlowVS.Extension
     public partial class GitFlowSectionUI : UserControl
     {
         private readonly GitFlowSection parent;
+        private GitFlowViewModel model;
         public IGitRepositoryInfo ActiveRepo { get; set; }
         public IVsOutputWindowPane OutputWindow { get; set; }
 
-        public GitFlowSectionUI(GitFlowSection parent)
+        public GitFlowSectionUI(GitFlowSection parent, IGitRepositoryInfo activeRepo, IVsOutputWindowPane outputWindow)
         {
             this.parent = parent;
+            ActiveRepo = activeRepo;
+            OutputWindow = outputWindow;
             InitializeComponent();
 
-            DataContext = this;
+            this.model = new GitFlowViewModel();
+            DataContext = model;
+
+            model.CurrentState = CurrentState;
+            UpdateModel();
+        }
+
+        public void UpdateModel()
+        {
+            if (ActiveRepo != null)
+            {
+                var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow);
+                model.InitVisible = gf.IsInitialized ? Visibility.Collapsed : Visibility.Visible;
+                model.StartFeatureVisible = gf.IsInitialized && (gf.IsOnDevelopBranch || gf.IsOnMasterBranch)
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
+                model.FinishFeatureVisible = gf.IsInitialized && gf.IsOnFeatureBranch
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
+                model.StartReleaseVisible = gf.IsInitialized && (gf.IsOnDevelopBranch || gf.IsOnMasterBranch)
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
+                model.FinishReleaseVisible = gf.IsInitialized && gf.IsOnReleaseBranch
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
+                model.StartHotfixVisible = gf.IsInitialized && (gf.IsOnDevelopBranch || gf.IsOnMasterBranch)
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
+                model.FinishHotfixVisible = gf.IsInitialized && gf.IsOnHotfixBranch ? Visibility.Visible : Visibility.Collapsed;
+            }
         }
 
         public string CurrentState
@@ -72,7 +101,5 @@ namespace GitFlowVS.Extension
         {
             parent.FinishHotfix();
         }
-
-
     }
 }

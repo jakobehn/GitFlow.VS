@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Linq;
 using Microsoft.TeamFoundation.Controls;
-using Microsoft.TeamFoundation.Controls.WPF.TeamExplorer;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TeamFoundation.Git.Extensibility;
@@ -18,6 +17,7 @@ namespace GitFlowVS.Extension
 
         private IGitExt gitService;
         private IGitRepositoryInfo activeRepo;
+        private GitFlowSectionUI ui;
 
         public override void Initialize(object sender, SectionInitializeEventArgs e)
         {
@@ -37,7 +37,7 @@ namespace GitFlowVS.Extension
             outWindow.CreatePane(ref customGuid, customTitle, 1, 1);            
             outWindow.GetPane(ref customGuid, out customPane);
 
-            var ui = new GitFlowSectionUI(this) { ActiveRepo = activeRepo, OutputWindow = customPane }; 
+            this.ui = new GitFlowSectionUI(this, activeRepo, customPane); 
             SectionContent = ui;
 
         }
@@ -45,11 +45,15 @@ namespace GitFlowVS.Extension
 
         private void GitServiceOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
         {
+            if (ui != null)
+            {
+                ui.UpdateModel();
+            }
         }
 
         public void CancelAction()
         {
-            var ui = new GitFlowSectionUI(this) { ActiveRepo = activeRepo, OutputWindow = customPane }; 
+            var ui = new GitFlowSectionUI(this, activeRepo, customPane); 
             SectionContent = ui;
         }
 
@@ -97,7 +101,7 @@ namespace GitFlowVS.Extension
 
         public void FinishAction()
         {
-            SectionContent = new GitFlowSectionUI(this) { ActiveRepo = activeRepo, OutputWindow = customPane }; 
+            SectionContent = new GitFlowSectionUI(this, activeRepo, customPane); 
         }
     }
 }

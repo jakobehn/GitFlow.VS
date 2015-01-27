@@ -39,6 +39,9 @@ namespace GitFlow.VS
         {
             get
             {
+                if (!IsInitialized)
+                    return false;
+
                 using (var repo = new Repository(repoDirectory))
                 {
                     var featurePrefix = repo.Config.Get<string>("gitflow.prefix.feature");
@@ -51,6 +54,9 @@ namespace GitFlow.VS
         {
             get
             {
+                if (!IsInitialized)
+                    return false;
+
                 using (var repo = new Repository(repoDirectory))
                 {
                     var hotfixPrefix = repo.Config.Get<string>("gitflow.prefix.hotfix");
@@ -63,6 +69,9 @@ namespace GitFlow.VS
         {
             get
             {
+                if (!IsInitialized)
+                    return false;
+
                 using (var repo = new Repository(repoDirectory))
                 {
                     var masterBranch = repo.Config.Get<string>("gitflow.branch.master");
@@ -104,6 +113,9 @@ namespace GitFlow.VS
         {
             get
             {
+                if (!IsInitialized)
+                    return false;
+
                 using (var repo = new Repository(repoDirectory))
                 {
                     var developBranch = repo.Config.Get<string>("gitflow.branch.develop");
@@ -116,6 +128,9 @@ namespace GitFlow.VS
         {
             get
             {
+                if (!IsInitialized)
+                    return false;
+
                 using (var repo = new Repository(repoDirectory))
                 {
                     var releasePrefix = repo.Config.Get<string>("gitflow.prefix.release");

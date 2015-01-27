@@ -23,65 +23,14 @@
     <SolidColorBrush x:Key="ItemHoverBorderBrushKey" Color="{Binding Source={x:Static mtcw:TeamFoundationColors.Instance},Path=ItemHoverBorderColor,Mode=OneWay}" />
     <SolidColorBrush x:Key="SubduedTextBrushKey" Color="{Binding Source={x:Static mtcw:TeamFoundationColors.Instance},Path=SubduedTextColor,Mode=OneWay}" />
 
-
-    <!-- ListViewItem Style -->
-    <Style TargetType="{x:Type ListViewItem}">
-        <Setter Property="Control.Background" Value="{StaticResource ItemBrushKey}" />
-        <Setter Property="Control.Foreground" Value="{StaticResource ItemTextBrushKey}" />
-        <Setter Property="Control.BorderBrush" Value="{StaticResource ItemBorderBrushKey}" />
-        <Setter Property="Control.BorderThickness" Value="1" />
-        <Setter Property="Control.HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
-        <Setter Property="Control.VerticalContentAlignment" Value="{Binding VerticalContentAlignment,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
-        <Setter Property="Control.Padding" Value="0" />
-        <Setter Property="FrameworkElement.Margin" Value="0" />
-        <Setter Property="Control.Template">
-            <Setter.Value>
-                <ControlTemplate ControlTemplate.TargetType="{x:Type ListViewItem}">
-                    <Border Border.Name="Bd" UIElement.SnapsToDevicePixels="True" Border.Background="{StaticResource ItemBrushKey}" TextElement.Foreground="{StaticResource ItemTextBrushKey}" Border.BorderBrush="{StaticResource ItemBorderBrushKey}" Border.BorderThickness="{TemplateBinding Control.BorderThickness}" Border.Padding="{TemplateBinding Control.Padding}" FrameworkElement.Margin="{TemplateBinding FrameworkElement.Margin}">
-                        <GridViewRowPresenter GridViewRowPresenter.Content="{TemplateBinding ContentControl.Content}" GridViewRowPresenterBase.Columns="{TemplateBinding GridView.ColumnCollection}" UIElement.SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Trigger.Property="ListBoxItem.IsSelected" Trigger.Value="True">
-                            <Setter TargetName="Bd" Value="{StaticResource ItemSelectedBrushKey}" Property="Border.Background" />
-                            <Setter TargetName="Bd" Value="{StaticResource ItemSelectedTextBrushKey}" Property="TextElement.Foreground" />
-                            <Setter TargetName="Bd" Value="{StaticResource ItemSelectedBorderBrushKey}" Property="Border.BorderBrush" />
-                            <Setter Value="{StaticResource ItemSelectedBrushKey}" Property="Control.Background" />
-                            <Setter Value="{StaticResource ItemSelectedTextBrushKey}" Property="Control.Foreground" />
-                            <Setter Value="{StaticResource ItemSelectedBorderBrushKey}" Property="Control.BorderBrush" />
-                        </Trigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Condition.Property="ListBoxItem.IsSelected" Condition.Value="False" />
-                                <Condition Condition.Property="UIElement.IsMouseOver" Condition.Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="Bd" Value="{StaticResource ItemHoverBrushKey}" Property="Border.Background" />
-                            <Setter TargetName="Bd" Value="{StaticResource ItemHoverTextBrushKey}" Property="TextElement.Foreground" />
-                            <Setter TargetName="Bd" Value="{StaticResource ItemHoverBorderBrushKey}" Property="Border.BorderBrush" />
-                            <Setter Value="{StaticResource ItemHoverBrushKey}" Property="Control.Background" />
-                            <Setter Value="{StaticResource ItemHoverTextBrushKey}" Property="Control.Foreground" />
-                            <Setter Value="{StaticResource ItemHoverBorderBrushKey}" Property="Control.BorderBrush" />
-                        </MultiTrigger>
-                        <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition Condition.Binding="{Binding RelativeSource={RelativeSource Self},Path=IsSelected}" Condition.Value="true" />
-                                <Condition Condition.Binding="{Binding RelativeSource={RelativeSource Self},Path=IsMouseOver}" Condition.Value="false" />
-                                <Condition Condition.Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ListBox}},Path=IsKeyboardFocusWithin}" Condition.Value="False" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter TargetName="Bd" Value="{StaticResource ItemSelectedNotFocusedBrushKey}" Property="Border.Background" />
-                            <Setter TargetName="Bd" Value="{StaticResource ItemSelectedTextNotFocusedBrushKey}" Property="TextElement.Foreground" />
-                            <Setter TargetName="Bd" Value="{StaticResource ItemSelectedBorderNotFocusedBrushKey}" Property="Border.BorderBrush" />
-                            <Setter Value="{StaticResource ItemSelectedNotFocusedBrushKey}" Property="Control.Background" />
-                            <Setter Value="{StaticResource ItemSelectedTextNotFocusedBrushKey}" Property="Control.Foreground" />
-                            <Setter Value="{StaticResource ItemSelectedBorderNotFocusedBrushKey}" Property="Control.BorderBrush" />
-                        </MultiDataTrigger>
-                        <Trigger Trigger.Property="UIElement.IsEnabled" Trigger.Value="False">
-                            <Setter TargetName="Bd" Value="{StaticResource SubduedTextBrushKey}" Property="TextElement.Foreground" />
-                            <Setter Value="{StaticResource SubduedTextBrushKey}" Property="Control.Foreground" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+    <Style TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{StaticResource SubduedTextBrushKey}" />
+        <Setter Property="Margin" Value="5,0,0,0" />
     </Style>
+    <Style TargetType="{x:Type TextBox}">
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="Width" Value="100" />
+    </Style>
+
 
 </ResourceDictionary>
