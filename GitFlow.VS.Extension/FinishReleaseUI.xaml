@@ -4,35 +4,35 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:wpf="clr-namespace:Microsoft.TeamFoundation.Controls.WPF;assembly=Microsoft.TeamFoundation.Controls"
-             mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="300">
-    <Grid>
+             mc:Ignorable="d">
+    <Grid Margin="5">
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <TextBlock Foreground="{Binding Source={x:Static wpf:TeamFoundationColors.Instance}, Path=SubduedTextColor, Mode=OneWay}">Release Name:</TextBlock>
+        <TextBlock>Release Name:</TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CurrentFeature}"></TextBlock>
         <Label Grid.Row="0" Grid.Column="1" ></Label>
-        <Label Grid.Row="1">Options</Label>
+        <TextBlock Grid.Row="1">Options</TextBlock>
         <CheckBox Grid.Row="2" IsChecked="True">Tag with this message:</CheckBox>
         <TextBox Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding TagMessage}" IsEnabled="{Binding TagMessageEnabled}"></TextBox>
-        <Label Grid.Row="4">After finishing:</Label>
+        <TextBlock Grid.Row="4">After finishing:</TextBlock>
         <CheckBox Grid.Row="5" IsChecked="{Binding DeleteBranch}">Delete branch</CheckBox>
         <CheckBox Grid.Row="5" Grid.Column="1" IsChecked="{Binding ForceDeletion}">Force deletion</CheckBox>
         <CheckBox Grid.Row="6" IsChecked="{Binding PushChanges}">Push changes to remote</CheckBox>
         <StackPanel Grid.Row="7" Grid.ColumnSpan="2" Orientation="Horizontal">
-            <Button Width="50" VerticalAlignment="Bottom" Click="FinishReleaseOK_Click">OK</Button>
-            <Button IsDefault="True" Width="50" Margin="20,0,0,0" VerticalAlignment="Bottom" Click="FinishFeatureCancel_Click">Cancel</Button>
+            <Button Width="50" Click="FinishReleaseOK_Click" Height="20">OK</Button>
+            <Button IsDefault="True" Width="50" Margin="10,0,0,0" Height="20" Click="FinishFeatureCancel_Click">Cancel</Button>
         </StackPanel>
     </Grid>
 </UserControl>

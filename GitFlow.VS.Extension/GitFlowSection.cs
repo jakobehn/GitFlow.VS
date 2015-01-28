@@ -17,10 +17,10 @@ namespace GitFlowVS.Extension
 
         private IGitExt gitService;
         private IGitRepositoryInfo activeRepo;
-        private GitFlowSectionUI ui;
+        private GitFlowSectionUI gitFlowUi;
 
         public override void Initialize(object sender, SectionInitializeEventArgs e)
-        {
+        {            
             base.Initialize(sender, e);
 
             this.Title = "GitFlow";
@@ -30,24 +30,21 @@ namespace GitFlowVS.Extension
             gitService.PropertyChanged += GitServiceOnPropertyChanged;
             activeRepo = gitService.ActiveRepositories.FirstOrDefault();
 
-            IVsOutputWindow outWindow = Package.GetGlobalService(typeof(SVsOutputWindow)) as IVsOutputWindow;
+            var outWindow = Package.GetGlobalService(typeof(SVsOutputWindow)) as IVsOutputWindow;
 
             Guid customGuid = new Guid("B85225F6-B15E-4A8A-AF6E-2BE96A4FE672");
-            string customTitle = "GitFlow.VS";
-            outWindow.CreatePane(ref customGuid, customTitle, 1, 1);            
+            outWindow.CreatePane(ref customGuid, "GitFlow.VS", 1, 1);            
             outWindow.GetPane(ref customGuid, out customPane);
 
-            this.ui = new GitFlowSectionUI(this, activeRepo, customPane); 
-            SectionContent = ui;
-
+            this.gitFlowUi = new GitFlowSectionUI(this, activeRepo, customPane); 
+            SectionContent = gitFlowUi;
         }
-        
 
         private void GitServiceOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
         {
-            if (ui != null)
+            if (gitFlowUi != null)
             {
-                ui.UpdateModel();
+                gitFlowUi.UpdateModel(true);
             }
         }
 
@@ -71,7 +68,7 @@ namespace GitFlowVS.Extension
 
         public void FinishFeature()
         {
-            var ui = new FinishFeatureUI(this) {ActiveRepo = activeRepo, OutputWindow = customPane};
+            var ui = new FinishFeatureUI(this,activeRepo,customPane);
             SectionContent = ui;
         }
 
@@ -83,7 +80,7 @@ namespace GitFlowVS.Extension
 
         public void FinishRelease()
         {
-            var ui = new FinishReleaseUI(this) {ActiveRepo = activeRepo, OutputWindow = customPane};
+            var ui = new FinishReleaseUI(this, activeRepo, customPane);
             SectionContent = ui;
         }
 
@@ -95,7 +92,7 @@ namespace GitFlowVS.Extension
 
         public void FinishHotfix()
         {
-            var ui = new FinishHotfixUI(this) {ActiveRepo = activeRepo, OutputWindow = customPane};
+            var ui = new FinishHotfixUI(this, activeRepo, customPane);
             SectionContent = ui;
         }
 

@@ -29,28 +29,45 @@ namespace GitFlowVS.Extension
             UpdateModel();
         }
 
-        public void UpdateModel()
+        public void UpdateModel(bool reset = false)
         {
             if (ActiveRepo != null)
             {
-                var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow);
+                var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow, parent);
                 model.InitVisible = gf.IsInitialized ? Visibility.Collapsed : Visibility.Visible;
-                model.StartFeatureVisible = gf.IsInitialized && (gf.IsOnDevelopBranch || gf.IsOnMasterBranch)
+                model.StartFeatureVisible = gf.IsInitialized && (model.ShowAll || gf.IsOnDevelopBranch || gf.IsOnMasterBranch)
                     ? Visibility.Visible
                     : Visibility.Collapsed;
-                model.FinishFeatureVisible = gf.IsInitialized && gf.IsOnFeatureBranch
+                model.FinishFeatureVisible = gf.IsInitialized && (model.ShowAll || gf.IsOnFeatureBranch)
                     ? Visibility.Visible
                     : Visibility.Collapsed;
-                model.StartReleaseVisible = gf.IsInitialized && (gf.IsOnDevelopBranch || gf.IsOnMasterBranch)
+                model.StartReleaseVisible = gf.IsInitialized && (model.ShowAll || gf.IsOnDevelopBranch || gf.IsOnMasterBranch)
                     ? Visibility.Visible
                     : Visibility.Collapsed;
-                model.FinishReleaseVisible = gf.IsInitialized && gf.IsOnReleaseBranch
+                model.FinishReleaseVisible = gf.IsInitialized && (model.ShowAll || gf.IsOnReleaseBranch)
                     ? Visibility.Visible
                     : Visibility.Collapsed;
-                model.StartHotfixVisible = gf.IsInitialized && (gf.IsOnDevelopBranch || gf.IsOnMasterBranch)
+                model.StartHotfixVisible = gf.IsInitialized && (model.ShowAll || gf.IsOnDevelopBranch || gf.IsOnMasterBranch)
                     ? Visibility.Visible
                     : Visibility.Collapsed;
-                model.FinishHotfixVisible = gf.IsInitialized && gf.IsOnHotfixBranch ? Visibility.Visible : Visibility.Collapsed;
+                model.FinishHotfixVisible = gf.IsInitialized && (model.ShowAll || gf.IsOnHotfixBranch) ? Visibility.Visible : Visibility.Collapsed;
+
+                model.CurrentStateVisible = gf.IsInitialized &&
+                                            (gf.IsOnFeatureBranch || gf.IsOnReleaseBranch || gf.IsOnHotfixBranch)
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
+
+                if (reset)
+                {
+                    model.ShowAll = false;
+                }
+                else
+                {
+                    if (!gf.IsInitialized)
+                    {
+                        model.ShowAll = false;
+                    }
+                }
             }
         }
 
@@ -60,7 +77,7 @@ namespace GitFlowVS.Extension
             {
                 if (ActiveRepo != null)
                 {
-                    var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow);
+                    var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow, parent);
                     return gf.CurrentStatus;
                 }
                 return "";
@@ -100,6 +117,12 @@ namespace GitFlowVS.Extension
         private void FinishHotfix_Click(object sender, RoutedEventArgs e)
         {
             parent.FinishHotfix();
+        }
+
+        private void ShowAll_Click(object sender, RoutedEventArgs e)
+        {
+            model.ShowAll = true;
+            UpdateModel();
         }
     }
 }

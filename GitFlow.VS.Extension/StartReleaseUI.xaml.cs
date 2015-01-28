@@ -39,7 +39,7 @@ namespace GitFlowVS.Extension
                     OutputWindow.Activate();
                     using (new WaitCursor())
                     {
-                        var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow);
+                        var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow, parent);
                         gf.StartRelease(model.ReleaseName);
                     }
                     parent.FinishAction();

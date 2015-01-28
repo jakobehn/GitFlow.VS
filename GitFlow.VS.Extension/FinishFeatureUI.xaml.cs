@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TeamFoundation.Git.Extensibility;
@@ -11,17 +12,35 @@ namespace GitFlowVS.Extension
     public partial class FinishFeatureUI : UserControl
     {
         private readonly FinishFeatureModel model;
-        private GitFlowSection parent;
-        public IGitRepositoryInfo ActiveRepo { get; set; }
-        public IVsOutputWindowPane OutputWindow { get; set; }
-        public FinishFeatureUI(GitFlowSection parent)
+        private readonly GitFlowSection parent;
+        private IGitRepositoryInfo ActiveRepo { get; set; }
+        private IVsOutputWindowPane OutputWindow { get; set; }
+        public FinishFeatureUI(GitFlowSection parent, IGitRepositoryInfo activeRepo, IVsOutputWindowPane outputWindow)
         {
             this.model = new FinishFeatureModel();
             this.parent = parent;
+            ActiveRepo = activeRepo;
+            OutputWindow = outputWindow;
             InitializeComponent();
 
-            this.DataContext = model;            
+            this.DataContext = model;
+
+            model.CurrentFeature = CurrentFeature;
         }
+
+        public string CurrentFeature
+        {
+            get
+            {
+                if (ActiveRepo != null)
+                {
+                    var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow, parent);
+                    return gf.CurrentBranchLeafName;
+                }
+                return "";
+            }
+        }
+
 
         private void FinishFeature_Cancel_Click(object sender, RoutedEventArgs e)
         {
@@ -35,7 +54,7 @@ namespace GitFlowVS.Extension
                 OutputWindow.Activate();
                 using (new WaitCursor())
                 {
-                    var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow);
+                    var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow, parent);
                     gf.FinishFeature(gf.CurrentBranchLeafName, model.RebaseOnDevelopment, model.DeleteBranch);
                 }
                 parent.FinishAction();

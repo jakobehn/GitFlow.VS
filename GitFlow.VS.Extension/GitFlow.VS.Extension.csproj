@@ -135,6 +135,7 @@
     <Compile Include="FinishFeatureUI.xaml.cs">
       <DependentUpon>FinishFeatureUI.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FinishHotfixModel.cs" />
     <Compile Include="FinishHotfixUI.xaml.cs">
       <DependentUpon>FinishHotfixUI.xaml</DependentUpon>
     </Compile>

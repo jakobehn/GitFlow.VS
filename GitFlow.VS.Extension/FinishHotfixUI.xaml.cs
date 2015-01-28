@@ -12,19 +12,36 @@ namespace GitFlowVS.Extension
     {
        private readonly GitFlowSection parent;
         private readonly FinishHotfixModel model;
-        public IGitRepositoryInfo ActiveRepo { get; set; }
-        public IVsOutputWindowPane OutputWindow { get; set; }
-        public FinishHotfixUI(GitFlowSection parent)
+        private IGitRepositoryInfo ActiveRepo { get; set; }
+        private IVsOutputWindowPane OutputWindow { get; set; }
+        public FinishHotfixUI(GitFlowSection parent, IGitRepositoryInfo activeRepo, IVsOutputWindowPane outputWindow)
         {
             this.model = new FinishHotfixModel();
             this.parent = parent;
+            ActiveRepo = activeRepo;
+            OutputWindow = outputWindow;
             InitializeComponent();
             this.DataContext = model;
+
+            model.CurrentFeature = CurrentFeature;
         }
 
         private void FinishHotfixCancel_Click(object sender, RoutedEventArgs e)
         {
             parent.CancelAction();
+        }
+
+        public string CurrentFeature
+        {
+            get
+            {
+                if (ActiveRepo != null)
+                {
+                    var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow, parent);
+                    return gf.CurrentBranchLeafName;
+                }
+                return "";
+            }
         }
 
         private void FinishHotfixOK_Click(object sender, RoutedEventArgs e)
@@ -34,8 +51,8 @@ namespace GitFlowVS.Extension
                 OutputWindow.Activate();
                 using (new WaitCursor())
                 {
-                    var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow);
-                    gf.FinishHotfix(gf.CurrentBranch, model.TagMessage, model.DeleteBranch, model.ForceDeletion, model.PushChanges);
+                    var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow, parent);
+                    gf.FinishHotfix(gf.CurrentBranchLeafName, model.TagMessage, model.DeleteBranch, model.ForceDeletion, model.PushChanges);
                 }
                 parent.FinishAction();
             }

@@ -10,17 +10,19 @@
     </UserControl.Resources>
 
     <StackPanel>
-        <TextBlock Foreground="{StaticResource SubduedTextBrushKey}">Current state: </TextBlock>
-        <TextBlock Foreground="{StaticResource SubduedTextBrushKey}" Text="{Binding CurrentState}"></TextBlock>
-        
-        <DockPanel VerticalAlignment="Stretch" Height="Auto" LastChildFill="False">
-            <Button DockPanel.Dock="Top" Content="Init" Margin="0,0,0,0" Click="Button_Click" Width="100px" Visibility="{Binding InitVisible}"/>
-            <Button DockPanel.Dock="Top" Content="Start Feature" Margin="0,5,0,0" Click="StartFeature_Click" Width="100px" Visibility="{Binding StartFeatureVisible}"/>
-            <Button DockPanel.Dock="Top" Content="Finish Feature" Margin="0,5,0,0" Click="FinishFeature_Click" Width="100px" Visibility="{Binding FinishFeatureVisible}"/>
-            <Button DockPanel.Dock="Top" Content="Start Release" Margin="0,5,0,0" Click="StartRelease_Click" Width="100px" Visibility="{Binding StartReleaseVisible}"/>
-            <Button DockPanel.Dock="Top" Content="Finish Release" Margin="0,5,0,0" Click="FinishRelease_Click" Width="100px" Visibility="{Binding FinishReleaseVisible}"/>
-            <Button DockPanel.Dock="Top" Content="Start Hotfix" Margin="0,5,0,0" Click="StartHotfix_Click" Width="100px" Visibility="{Binding StartHotfixVisible}"/>
-            <Button DockPanel.Dock="Top" Content="Finish Hotfix" Margin="0,5,0,0" Click="FinishHotfix_Click" Width="100px" Visibility="{Binding FinishHotfixVisible}"/>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Foreground="{StaticResource SubduedTextBrushKey}" Visibility="{Binding CurrentStateVisible}">Current state: </TextBlock>
+            <TextBlock Foreground="{StaticResource SubduedTextBrushKey}" Text="{Binding CurrentState}" Visibility="{Binding CurrentStateVisible}"></TextBlock>
+        </StackPanel>
+        <DockPanel VerticalAlignment="Stretch" HorizontalAlignment="Left" Height="Auto" LastChildFill="False" Margin="10,0,0,0">
+            <Button DockPanel.Dock="Top" Content="Init" Click="Button_Click" Style="{StaticResource GitFlowButton}" Visibility="{Binding InitVisible}" ToolTip="Your repo need to be initialized for GitFlow!"/>
+            <Button DockPanel.Dock="Top" Content="Start Feature" Click="StartFeature_Click" Style="{StaticResource GitFlowButton}"  Visibility="{Binding StartFeatureVisible}" ToolTip="Start working on a new feature"/>
+            <Button DockPanel.Dock="Top" Content="Finish Feature" Click="FinishFeature_Click" Style="{StaticResource GitFlowButton}"  Visibility="{Binding FinishFeatureVisible}" ToolTip="Finish the current feature"/>
+            <Button DockPanel.Dock="Top" Content="Start Release" Click="StartRelease_Click" Style="{StaticResource GitFlowButton}"  Visibility="{Binding StartReleaseVisible}" ToolTip="Start working on a new release"/>
+            <Button DockPanel.Dock="Top" Content="Finish Release" Click="FinishRelease_Click" Style="{StaticResource GitFlowButton}"  Visibility="{Binding FinishReleaseVisible}" ToolTip="Finish the current release"/>
+            <Button DockPanel.Dock="Top" Content="Start Hotfix" Click="StartHotfix_Click" Style="{StaticResource GitFlowButton}"  Visibility="{Binding StartHotfixVisible}" ToolTip="Start working on a new hotfix"/>
+            <Button DockPanel.Dock="Top" Content="Finish Hotfix" Click="FinishHotfix_Click" Style="{StaticResource GitFlowButton}"  Visibility="{Binding FinishHotfixVisible}" ToolTip="Finish the current hotfix"/>
+            <Button DockPanel.Dock="Top" Content="..." Click="ShowAll_Click" Style="{StaticResource GitFlowButton}"  Visibility="{Binding ShowAllVisible}"/>
         </DockPanel>
     </StackPanel>
 </UserControl>

@@ -3,13 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="300">
-    <Grid>
+             mc:Ignorable="d" >
+    <Grid Margin="5">
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -17,12 +16,12 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <TextBlock>Feature Name:</TextBlock>
-        <TextBlock Grid.Column="1" Name="CurrentFeature"></TextBlock>
-        <CheckBox Grid.Row="1" Name="RebaseOnDevelopment" IsChecked="False">Rebase on development branch</CheckBox>
-        <CheckBox Grid.Row="2" Name="DeleteBranch" IsChecked="True">Delete branch</CheckBox>
-        <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" >
+        <TextBlock Grid.Column="1" Text="{Binding CurrentFeature}"></TextBlock>
+        <CheckBox Grid.Row="1" Name="RebaseOnDevelopment" IsChecked="False" Margin="10,0,0,0">Rebase on development branch</CheckBox>
+        <CheckBox Grid.Row="2" Name="DeleteBranch" IsChecked="True" Margin="10,0,0,0">Delete branch</CheckBox>
+        <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" >
             <Button Name="FinishFeature_OK" Width="50" Click="FinishFeature_OK_Click">OK</Button>
-            <Button Name="FinishFeature_Cancel" IsDefault="True" Width="50" Margin="20,0,0,0" Height="25" VerticalAlignment="Bottom" Click="FinishFeature_Cancel_Click" >Cancel</Button>
+            <Button Name="FinishFeature_Cancel" IsDefault="True" Width="50" Margin="10,0,0,0" Height="25" Click="FinishFeature_Cancel_Click" >Cancel</Button>
         </StackPanel>
     </Grid>
 

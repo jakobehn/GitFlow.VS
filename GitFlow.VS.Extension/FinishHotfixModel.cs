@@ -1,20 +1,25 @@
-﻿using System.ComponentModel;
+using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using GitFlowVS.Extension.Annotations;
 
 namespace GitFlowVS.Extension
 {
-    public class FinishFeatureModel : INotifyPropertyChanged
+    public class FinishHotfixModel : INotifyPropertyChanged
     {
-        private bool rebaseOnDevelopment;
+        private string tagMessage;
         private bool deleteBranch;
+        private bool forceDeletion;
+        private bool pushChanges;
         private string currentFeature;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public FinishFeatureModel()
+        public FinishHotfixModel()
         {
-            RebaseOnDevelopment = false;
             DeleteBranch = true;
+            this.ForceDeletion = false;
+            this.PushChanges = false;
+
         }
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -34,13 +39,13 @@ namespace GitFlowVS.Extension
             }
         }
 
-        public bool RebaseOnDevelopment
+        public string TagMessage
         {
-            get { return rebaseOnDevelopment; }
+            get { return tagMessage; }
             set
             {
-                if (value.Equals(rebaseOnDevelopment)) return;
-                rebaseOnDevelopment = value;
+                if (value == tagMessage) return;
+                tagMessage = value;
                 OnPropertyChanged();
             }
         }
@@ -54,6 +59,33 @@ namespace GitFlowVS.Extension
                 deleteBranch = value;
                 OnPropertyChanged();
             }
+        }
+
+        public bool ForceDeletion
+        {
+            get { return forceDeletion; }
+            set
+            {
+                if (value.Equals(forceDeletion)) return;
+                forceDeletion = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool PushChanges
+        {
+            get { return pushChanges; }
+            set
+            {
+                if (value.Equals(pushChanges)) return;
+                pushChanges = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool TagMessageEnabled
+        {
+            get { return String.IsNullOrEmpty(TagMessage); }
         }
     }
 }

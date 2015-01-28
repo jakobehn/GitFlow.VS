@@ -15,8 +15,14 @@ namespace GitFlowVS.Extension
         private Visibility finishReleaseVisible;
         private Visibility startHotfixVisible;
         private Visibility finishHotfixVisible;
+        private Visibility currentStateVisible;
+        private bool showAll;
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public GitFlowViewModel()
+        {
+            ShowAll = false;
+        }
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -31,6 +37,22 @@ namespace GitFlowVS.Extension
             {
                 if (value == initVisible) return;
                 initVisible = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Visibility ShowAllVisible
+        {
+            get { return ShowAll || InitVisible == Visibility.Visible  ? Visibility.Collapsed : Visibility.Visible; }
+        }
+
+        public Visibility CurrentStateVisible
+        {
+            get { return currentStateVisible; }
+            set
+            {
+                if (value == currentStateVisible) return;
+                currentStateVisible = value;
                 OnPropertyChanged();
             }
         }
@@ -109,6 +131,18 @@ namespace GitFlowVS.Extension
                 if (value == currentState) return;
                 currentState = value;
                 OnPropertyChanged();
+            }
+        }
+
+        public bool ShowAll
+        {
+            get { return showAll; }
+            set
+            {
+                if (value.Equals(showAll)) return;
+                showAll = value;
+                OnPropertyChanged();
+                OnPropertyChanged("ShowAllVisible");
             }
         }
     }
