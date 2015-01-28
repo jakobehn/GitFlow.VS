@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
+using System.Windows.Threading;
 using GitFlow.VS;
 using Microsoft.TeamFoundation.Controls;
 using Microsoft.VisualStudio.Shell.Interop;
@@ -17,8 +19,13 @@ namespace GitFlowVS.Extension
             };
             CommandErrorDataReceived += (o, args) =>
             {
-                //section.ShowNotification(args.Output, NotificationType.Error);
-                outputWindow.OutputStringThreadSafe(args.Output);
+                if (!String.IsNullOrEmpty(args.Output) && args.Output != Environment.NewLine)
+                {
+                    System.Windows.Application.Current.Dispatcher.BeginInvoke(
+                        DispatcherPriority.Background,
+                        new Action(() => section.ShowNotification(args.Output.Trim(), NotificationType.Error)));
+                    outputWindow.OutputStringThreadSafe(args.Output.Trim());
+                }
             };
         }
     }
