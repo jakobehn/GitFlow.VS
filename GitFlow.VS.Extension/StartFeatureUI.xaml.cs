@@ -11,17 +11,19 @@ namespace GitFlowVS.Extension
     public partial class StartFeatureUI : UserControl
     {
         private readonly GitFlowSection parent;
-        private StartFeatureModel model;
-        public IGitRepositoryInfo ActiveRepo { get; set; }
-        public IVsOutputWindowPane OutputWindow { get; set; }
+        private readonly StartFeatureModel model;
+        private IGitRepositoryInfo ActiveRepo { get; set; }
+        private IVsOutputWindowPane OutputWindow { get; set; }
 
-        public StartFeatureUI(GitFlowSection parent)
+        public StartFeatureUI(GitFlowSection parent, IGitRepositoryInfo activeRepo, IVsOutputWindowPane outputWindow)
         {
-            this.model = new StartFeatureModel();
+            model = new StartFeatureModel();
+            ActiveRepo = activeRepo;
+            OutputWindow = outputWindow;
             this.parent = parent;
             InitializeComponent();
 
-            this.DataContext = model;
+            DataContext = model;
         }
 
         private void OnCancelFeature(object sender, RoutedEventArgs e)

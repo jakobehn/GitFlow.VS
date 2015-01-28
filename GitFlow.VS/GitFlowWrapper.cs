@@ -96,15 +96,15 @@ namespace GitFlow.VS
             get
             {
                 string status = "";
-                using (var repo = new Repository(repoDirectory))
-                {
-                    if (IsOnDevelopBranch)
-                        status = "Develop: " + CurrentBranchLeafName;
-                    else if (IsOnFeatureBranch)
-                        status = "Feature: " + CurrentBranchLeafName;
-                    else if (IsOnHotfixBranch)
-                        status = "Hotfix: " + CurrentBranchLeafName;
-                }
+                if (IsOnDevelopBranch)
+                    status = "Develop: " + CurrentBranchLeafName;
+                else if (IsOnFeatureBranch)
+                    status = "Feature: " + CurrentBranchLeafName;
+                else if (IsOnHotfixBranch)
+                    status = "Hotfix: " + CurrentBranchLeafName;
+                else if (IsOnReleaseBranch)
+                    status = "Release: " + CurrentBranchLeafName;
+
                 return status;
             }
         }

@@ -13,7 +13,7 @@ namespace TeamExplorer.Common
         /// </summary>
         public TeamExplorerBaseNavigationLink(IServiceProvider serviceProvider)
         {
-            this.ServiceProvider = serviceProvider;
+            ServiceProvider = serviceProvider;
         }
 
         #region ITeamExplorerNavigationLink

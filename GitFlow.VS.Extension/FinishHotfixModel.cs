@@ -17,8 +17,8 @@ namespace GitFlowVS.Extension
         public FinishHotfixModel()
         {
             DeleteBranch = true;
-            this.ForceDeletion = false;
-            this.PushChanges = false;
+            ForceDeletion = false;
+            PushChanges = false;
 
         }
         [NotifyPropertyChangedInvocator]

@@ -5,6 +5,7 @@ using GitFlow.VS;
 using Microsoft.TeamFoundation.Controls;
 using Microsoft.VisualStudio.Shell.Interop;
 using TeamExplorer.Common;
+using Application = System.Windows.Application;
 
 namespace GitFlowVS.Extension
 {
@@ -19,13 +20,14 @@ namespace GitFlowVS.Extension
             };
             CommandErrorDataReceived += (o, args) =>
             {
-                if (!String.IsNullOrEmpty(args.Output) && args.Output != Environment.NewLine)
-                {
-                    System.Windows.Application.Current.Dispatcher.BeginInvoke(
-                        DispatcherPriority.Background,
-                        new Action(() => section.ShowNotification(args.Output.Trim(), NotificationType.Error)));
-                    outputWindow.OutputStringThreadSafe(args.Output.Trim());
-                }
+                //if (!String.IsNullOrEmpty(args.Output) && args.Output != Environment.NewLine)
+                //{
+                //    Application.Current.Dispatcher.BeginInvoke(
+                //        DispatcherPriority.Background,
+                //        new Action(() => section.ShowNotification(args.Output.Trim(), NotificationType.Error)));
+                //    outputWindow.OutputStringThreadSafe(args.Output.Trim());
+                //}
+                outputWindow.OutputStringThreadSafe(args.Output.Trim());
             };
         }
     }

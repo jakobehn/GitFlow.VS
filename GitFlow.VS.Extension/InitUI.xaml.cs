@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using GitFlow.VS;
 using Microsoft.VisualStudio.Shell.Interop;
@@ -7,19 +6,21 @@ using Microsoft.VisualStudio.TeamFoundation.Git.Extensibility;
 
 namespace GitFlowVS.Extension
 {
-    public partial class InitUI : UserControl
+    public partial class InitUi : UserControl
     {
         private readonly GitFlowSection parent;
-        private InitModel model;
-        public IGitRepositoryInfo ActiveRepo { get; set; }
-        public IVsOutputWindowPane OutputWindow { get; set; }
+        private readonly InitModel model;
+        private IGitRepositoryInfo ActiveRepo { get; set; }
+        private IVsOutputWindowPane OutputWindow { get; set; }
 
-        public InitUI(GitFlowSection parent)
+        public InitUi(GitFlowSection parent, IGitRepositoryInfo activeRepo, IVsOutputWindowPane outputWindow)
         {
-            this.model = new InitModel();
+            model = new InitModel();
+            ActiveRepo = activeRepo;
+            OutputWindow = outputWindow;
             this.parent = parent;
             InitializeComponent();
-            this.DataContext = model;
+            DataContext = model;
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -34,9 +35,8 @@ namespace GitFlowVS.Extension
                 OutputWindow.Activate();
                 using (new WaitCursor())
                 {
-
                     var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow, parent);
-                    gf.Init(new GitFlowRepoSettings()
+                    gf.Init(new GitFlowRepoSettings
                     {
                         DevelopBranch = model.Develop,
                         MasterBranch = model.Master,

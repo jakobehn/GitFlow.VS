@@ -18,7 +18,7 @@ namespace TeamExplorer.Common
         /// </summary>
         public TeamExplorerBaseNavigationItem(IServiceProvider serviceProvider)
         {
-            this.ServiceProvider = serviceProvider;
+            ServiceProvider = serviceProvider;
         }
 
         #region ITeamExplorerNavigationItem
@@ -35,7 +35,7 @@ namespace TeamExplorer.Common
         /// <summary>
         /// Get/set the item image.
         /// </summary>
-        public System.Drawing.Image Image
+        public Image Image
         {
             get { return image; }
             set { image = value; RaisePropertyChanged("Image"); }

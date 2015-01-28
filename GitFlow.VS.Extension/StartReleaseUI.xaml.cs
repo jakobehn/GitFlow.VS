@@ -3,7 +3,6 @@ using System.Windows;
 using System.Windows.Controls;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TeamFoundation.Git.Extensibility;
-using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace GitFlowVS.Extension
 {
@@ -13,16 +12,18 @@ namespace GitFlowVS.Extension
     public partial class StartReleaseUI : UserControl
     {
         private readonly GitFlowSection parent;
-        private StartReleaseModel model;
-        public IGitRepositoryInfo ActiveRepo { get; set; }
-        public IVsOutputWindowPane OutputWindow { get; set; }
-        public StartReleaseUI(GitFlowSection parent)
+        private readonly StartReleaseModel model;
+        private IGitRepositoryInfo ActiveRepo { get; set; }
+        private IVsOutputWindowPane OutputWindow { get; set; }
+        public StartReleaseUI(GitFlowSection parent, IGitRepositoryInfo activeRepo, IVsOutputWindowPane outputWindow)
         {
-            this.model = new StartReleaseModel();
+            model = new StartReleaseModel();
             this.parent = parent;
+            ActiveRepo = activeRepo;
+            OutputWindow = outputWindow;
             InitializeComponent();
 
-            this.DataContext = model;
+            DataContext = model;
         }
 
         private void OnCancelRelease(object sender, RoutedEventArgs e)
@@ -32,22 +33,15 @@ namespace GitFlowVS.Extension
 
         private void OnCreateRelease(object sender, RoutedEventArgs e)
         {
-            try
+            if (ActiveRepo != null)
             {
-                if (ActiveRepo != null)
+                OutputWindow.Activate();
+                using (new WaitCursor())
                 {
-                    OutputWindow.Activate();
-                    using (new WaitCursor())
-                    {
-                        var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow, parent);
-                        gf.StartRelease(model.ReleaseName);
-                    }
-                    parent.FinishAction();
+                    var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow, parent);
+                    gf.StartRelease(model.ReleaseName);
                 }
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show(exception.ToString());
+                parent.FinishAction();
             }
         }
     }

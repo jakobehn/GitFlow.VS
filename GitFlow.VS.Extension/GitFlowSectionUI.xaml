@@ -11,8 +11,8 @@
 
     <StackPanel>
         <StackPanel Orientation="Horizontal">
-            <TextBlock Foreground="{StaticResource SubduedTextBrushKey}" Visibility="{Binding CurrentStateVisible}">Current state: </TextBlock>
-            <TextBlock Foreground="{StaticResource SubduedTextBrushKey}" Text="{Binding CurrentState}" Visibility="{Binding CurrentStateVisible}"></TextBlock>
+            <TextBlock Visibility="{Binding CurrentStateVisible}">Current state: </TextBlock>
+            <TextBlock Text="{Binding CurrentState}" Visibility="{Binding CurrentStateVisible}"></TextBlock>
         </StackPanel>
         <DockPanel VerticalAlignment="Stretch" HorizontalAlignment="Left" Height="Auto" LastChildFill="False" Margin="10,0,0,0">
             <Button DockPanel.Dock="Top" Content="Init" Click="Button_Click" Style="{StaticResource GitFlowButton}" Visibility="{Binding InitVisible}" ToolTip="Your repo need to be initialized for GitFlow!"/>

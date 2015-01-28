@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TeamFoundation.Git.Extensibility;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace GitFlowVS.Extension
 {
@@ -11,7 +12,7 @@ namespace GitFlowVS.Extension
     public partial class GitFlowSectionUI : UserControl
     {
         private readonly GitFlowSection parent;
-        private GitFlowViewModel model;
+        private readonly GitFlowViewModel model;
         public IGitRepositoryInfo ActiveRepo { get; set; }
         public IVsOutputWindowPane OutputWindow { get; set; }
 
@@ -22,7 +23,7 @@ namespace GitFlowVS.Extension
             OutputWindow = outputWindow;
             InitializeComponent();
 
-            this.model = new GitFlowViewModel();
+            model = new GitFlowViewModel();
             DataContext = model;
 
             model.CurrentState = CurrentState;

@@ -47,10 +47,10 @@ namespace TeamExplorer.Common
         /// </summary>
         public T GetService<T>()
         {
-            Debug.Assert(this.ServiceProvider != null, "GetService<T> called before service provider is set");
-            if (this.ServiceProvider != null)
+            Debug.Assert(ServiceProvider != null, "GetService<T> called before service provider is set");
+            if (ServiceProvider != null)
             {
-                return (T)this.ServiceProvider.GetService(typeof(T));
+                return (T)ServiceProvider.GetService(typeof(T));
             }
 
             return default(T);
@@ -86,7 +86,7 @@ namespace TeamExplorer.Common
 
         #region INotifyPropertyChanged
 
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// Raise the PropertyChanged event for the specified property.
@@ -94,9 +94,9 @@ namespace TeamExplorer.Common
         /// <param name="propertyName">Property name</param>
         protected void RaisePropertyChanged(string propertyName)
         {
-            if (this.PropertyChanged != null)
+            if (PropertyChanged != null)
             {
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
 
@@ -109,8 +109,8 @@ namespace TeamExplorer.Common
         /// </summary>
         protected void SubscribeContextChanges()
         {
-            Debug.Assert(this.ServiceProvider != null, "ServiceProvider must be set before subscribing to context changes");
-            if (this.ServiceProvider == null || m_contextSubscribed)
+            Debug.Assert(ServiceProvider != null, "ServiceProvider must be set before subscribing to context changes");
+            if (ServiceProvider == null || m_contextSubscribed)
             {
                 return;
             }
@@ -129,7 +129,7 @@ namespace TeamExplorer.Common
         /// </summary>
         protected void UnsubscribeContextChanges()
         {
-            if (this.ServiceProvider == null || !m_contextSubscribed)
+            if (ServiceProvider == null || !m_contextSubscribed)
             {
                 return;
             }

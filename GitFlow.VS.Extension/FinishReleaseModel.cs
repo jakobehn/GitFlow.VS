@@ -17,8 +17,8 @@ namespace GitFlowVS.Extension
         public FinishReleaseModel()
         {
             DeleteBranch = true;
-            this.ForceDeletion = false;
-            this.PushChanges = false;
+            ForceDeletion = false;
+            PushChanges = false;
         }
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

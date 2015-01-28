@@ -15,7 +15,7 @@ namespace TeamExplorer.Common
         /// </summary>
         public virtual void Initialize(object sender, SectionInitializeEventArgs e)
         {
-            this.ServiceProvider = e.ServiceProvider;
+            ServiceProvider = e.ServiceProvider;
         }
 
         /// <summary>

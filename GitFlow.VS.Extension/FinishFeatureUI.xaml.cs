@@ -17,13 +17,13 @@ namespace GitFlowVS.Extension
         private IVsOutputWindowPane OutputWindow { get; set; }
         public FinishFeatureUI(GitFlowSection parent, IGitRepositoryInfo activeRepo, IVsOutputWindowPane outputWindow)
         {
-            this.model = new FinishFeatureModel();
+            model = new FinishFeatureModel();
             this.parent = parent;
             ActiveRepo = activeRepo;
             OutputWindow = outputWindow;
             InitializeComponent();
 
-            this.DataContext = model;
+            DataContext = model;
 
             model.CurrentFeature = CurrentFeature;
         }

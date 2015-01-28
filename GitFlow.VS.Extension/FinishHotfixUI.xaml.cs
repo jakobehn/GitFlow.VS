@@ -16,12 +16,12 @@ namespace GitFlowVS.Extension
         private IVsOutputWindowPane OutputWindow { get; set; }
         public FinishHotfixUI(GitFlowSection parent, IGitRepositoryInfo activeRepo, IVsOutputWindowPane outputWindow)
         {
-            this.model = new FinishHotfixModel();
+            model = new FinishHotfixModel();
             this.parent = parent;
             ActiveRepo = activeRepo;
             OutputWindow = outputWindow;
             InitializeComponent();
-            this.DataContext = model;
+            DataContext = model;
 
             model.CurrentFeature = CurrentFeature;
         }

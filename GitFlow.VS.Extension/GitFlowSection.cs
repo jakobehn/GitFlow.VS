@@ -23,7 +23,7 @@ namespace GitFlowVS.Extension
         {            
             base.Initialize(sender, e);
 
-            this.Title = "GitFlow";
+            Title = "GitFlow";
 
             serviceProvider = e.ServiceProvider;
             gitService = (IGitExt)e.ServiceProvider.GetService(typeof(IGitExt));
@@ -32,11 +32,11 @@ namespace GitFlowVS.Extension
 
             var outWindow = Package.GetGlobalService(typeof(SVsOutputWindow)) as IVsOutputWindow;
 
-            Guid customGuid = new Guid("B85225F6-B15E-4A8A-AF6E-2BE96A4FE672");
+            var customGuid = new Guid("B85225F6-B15E-4A8A-AF6E-2BE96A4FE672");
             outWindow.CreatePane(ref customGuid, "GitFlow.VS", 1, 1);            
             outWindow.GetPane(ref customGuid, out customPane);
 
-            this.gitFlowUi = new GitFlowSectionUI(this, activeRepo, customPane); 
+            gitFlowUi = new GitFlowSectionUI(this, activeRepo, customPane); 
             SectionContent = gitFlowUi;
         }
 
@@ -56,13 +56,13 @@ namespace GitFlowVS.Extension
 
         public void Init()
         {
-            var ui = new InitUI(this) {ActiveRepo = activeRepo, OutputWindow = customPane};
+            var ui = new InitUi(this, activeRepo, customPane);
             SectionContent = ui;
         }
 
         public void StartFeature()
         {
-            var ui = new StartFeatureUI(this) {ActiveRepo = activeRepo, OutputWindow = customPane};
+            var ui = new StartFeatureUI(this, activeRepo, customPane);
             SectionContent = ui;
         }
 
@@ -74,7 +74,7 @@ namespace GitFlowVS.Extension
 
         public void StartRelease()
         {
-            var ui = new StartReleaseUI(this) {ActiveRepo = activeRepo, OutputWindow = customPane};
+            var ui = new StartReleaseUI(this, activeRepo, customPane);
             SectionContent = ui;
         }
 
@@ -86,7 +86,7 @@ namespace GitFlowVS.Extension
 
         public void StartHotfix()
         {
-            var ui = new StartHotfixUI(this) {ActiveRepo = activeRepo, OutputWindow = customPane};
+            var ui = new StartHotfixUI(this, activeRepo, customPane);
             SectionContent = ui;
         }
 
