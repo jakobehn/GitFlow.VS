@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Specialized;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Windows.Navigation;
+using GitFlowVS.Extension.UI;
 using Microsoft.TeamFoundation.Controls;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
@@ -36,8 +40,25 @@ namespace GitFlowVS.Extension
             outWindow.CreatePane(ref customGuid, "GitFlow.VS", 1, 1);            
             outWindow.GetPane(ref customGuid, out customPane);
 
-            gitFlowUi = new GitFlowSectionUI(this, activeRepo, customPane); 
-            SectionContent = gitFlowUi;
+            if (!GitFlowIsInstalled)
+            {
+                SectionContent = new InstallGitFlowUI(this);
+            }
+            else
+            {
+                gitFlowUi = new GitFlowSectionUI(this, activeRepo, customPane);
+                SectionContent = gitFlowUi;
+            }
+        }
+
+        public bool GitFlowIsInstalled
+        {
+            get
+            {
+                string gitFlowFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86),
+                    "Git\\bin\\git-flow");
+                return File.Exists(gitFlowFile);
+            }
         }
 
         private void GitServiceOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)

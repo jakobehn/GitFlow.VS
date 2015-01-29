@@ -133,6 +133,9 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UI\InstallGitFlowUI.xaml.cs">
+      <DependentUpon>InstallGitFlowUI.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\FinishFeatureModel.cs" />
     <Compile Include="UI\FinishFeatureUI.xaml.cs">
       <DependentUpon>FinishFeatureUI.xaml</DependentUpon>
@@ -243,6 +246,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\Dictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\InstallGitFlowUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
