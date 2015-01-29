@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using GitFlow.VS;
 using Microsoft.VisualStudio.Shell.Interop;
@@ -28,12 +29,16 @@ namespace GitFlowVS.Extension
             parent.CancelAction();
         }
 
-        private void OK_Click(object sender, RoutedEventArgs e)
+        private async void OK_Click(object sender, RoutedEventArgs e)
         {
             if (ActiveRepo != null)
             {
                 OutputWindow.Activate();
-                using (new WaitCursor())
+                loadingPanel.IsLoading = true;
+                loadingPanel.Message = "Initializing GitFlow";
+                //loadingPanel.Visibility = Visibility.Visible;
+                
+                await Task.Run(() =>
                 {
                     var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow, parent);
                     gf.Init(new GitFlowRepoSettings
@@ -45,7 +50,10 @@ namespace GitFlowVS.Extension
                         HotfixBranch = model.HotfixPrefix,
                         VersionTag = model.VersionTagPrefix
                     });
-                }
+                });
+
+                loadingPanel.IsLoading = false;
+
             }
             parent.FinishAction();
         }

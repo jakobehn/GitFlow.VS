@@ -96,5 +96,6 @@ namespace GitFlowVS.Extension
                 OnPropertyChanged();
             }
         }
+
     }
 }
