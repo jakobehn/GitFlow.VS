@@ -31,6 +31,7 @@ namespace GitFlow.VS.Tests
         }
 
         [TestMethod]
+        [Ignore]
         public void RunInstallScript()
         {
             string installationPath =

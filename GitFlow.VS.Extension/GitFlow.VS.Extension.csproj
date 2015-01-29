@@ -132,26 +132,26 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FinishFeatureModel.cs" />
-    <Compile Include="FinishFeatureUI.xaml.cs">
+    <Compile Include="ViewModels\FinishFeatureModel.cs" />
+    <Compile Include="UI\FinishFeatureUI.xaml.cs">
       <DependentUpon>FinishFeatureUI.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FinishHotfixModel.cs" />
-    <Compile Include="FinishHotfixUI.xaml.cs">
+    <Compile Include="ViewModels\FinishHotfixModel.cs" />
+    <Compile Include="UI\FinishHotfixUI.xaml.cs">
       <DependentUpon>FinishHotfixUI.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FinishReleaseModel.cs" />
-    <Compile Include="FinishReleaseUI.xaml.cs">
+    <Compile Include="ViewModels\FinishReleaseModel.cs" />
+    <Compile Include="UI\FinishReleaseUI.xaml.cs">
       <DependentUpon>FinishReleaseUI.xaml</DependentUpon>
     </Compile>
     <Compile Include="GitFlowSection.cs" />
-    <Compile Include="GitFlowSectionUI.xaml.cs">
+    <Compile Include="UI\GitFlowSectionUI.xaml.cs">
       <DependentUpon>GitFlowSectionUI.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GitFlowViewModel.cs" />
+    <Compile Include="ViewModels\GitFlowViewModel.cs" />
     <Compile Include="Guids.cs" />
-    <Compile Include="InitModel.cs" />
-    <Compile Include="InitUI.xaml.cs">
+    <Compile Include="ViewModels\InitModel.cs" />
+    <Compile Include="UI\InitUI.xaml.cs">
       <DependentUpon>InitUI.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\Annotations.cs" />
@@ -163,20 +163,20 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GitFlow.VS.ExtensionPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StartFeatureModel.cs" />
-    <Compile Include="StartFeatureUI.xaml.cs">
+    <Compile Include="ViewModels\StartFeatureModel.cs" />
+    <Compile Include="UI\StartFeatureUI.xaml.cs">
       <DependentUpon>StartFeatureUI.xaml</DependentUpon>
     </Compile>
-    <Compile Include="StartHotfixModel.cs" />
-    <Compile Include="StartHotfixUI.xaml.cs">
+    <Compile Include="ViewModels\StartHotfixModel.cs" />
+    <Compile Include="UI\StartHotfixUI.xaml.cs">
       <DependentUpon>StartHotfixUI.xaml</DependentUpon>
     </Compile>
-    <Compile Include="StartReleaseModel.cs" />
-    <Compile Include="StartReleaseUI.xaml.cs">
+    <Compile Include="ViewModels\StartReleaseModel.cs" />
+    <Compile Include="UI\StartReleaseUI.xaml.cs">
       <DependentUpon>StartReleaseUI.xaml</DependentUpon>
     </Compile>
     <Compile Include="VsGitFlowWrapper.cs" />
-    <Compile Include="WaitCursor.cs" />
+    <Compile Include="UI\WaitCursor.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">
@@ -222,23 +222,23 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="FinishFeatureUI.xaml">
+    <Page Include="UI\FinishFeatureUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FinishHotfixUI.xaml">
+    <Page Include="UI\FinishHotfixUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FinishReleaseUI.xaml">
+    <Page Include="UI\FinishReleaseUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GitFlowSectionUI.xaml">
+    <Page Include="UI\GitFlowSectionUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="InitUI.xaml">
+    <Page Include="UI\InitUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -246,15 +246,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="StartFeatureUI.xaml">
+    <Page Include="UI\StartFeatureUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="StartHotfixUI.xaml">
+    <Page Include="UI\StartHotfixUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="StartReleaseUI.xaml">
+    <Page Include="UI\StartReleaseUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
