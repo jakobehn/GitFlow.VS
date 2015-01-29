@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Windows.Navigation;
 using GitFlowVS.Extension.UI;
 using Microsoft.TeamFoundation.Controls;
 using Microsoft.VisualStudio.Shell;

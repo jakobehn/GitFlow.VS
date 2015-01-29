@@ -1,7 +1,5 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TeamFoundation.Git.Extensibility;
 
