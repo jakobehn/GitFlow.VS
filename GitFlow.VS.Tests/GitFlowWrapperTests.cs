@@ -31,6 +31,29 @@ namespace GitFlow.VS.Tests
         }
 
         [TestMethod]
+        public void RunInstallScript()
+        {
+            string installationPath =
+                @"C:\Users\jakobe\AppData\Local\Microsoft\VisualStudio\12.0Exp\Extensions\Jakob Ehn\GitFlow.VS\0.9";
+            string cmd = Path.Combine(installationPath, "Dependencies\\install.ps1");
+            var proc = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "powershell.exe",
+                    WorkingDirectory = Path.Combine(installationPath, "Dependencies"),
+                    UseShellExecute = true,
+                    Arguments = @"-File ""C:\Users\jakobe\Source\Repos\GitFlow.VS\GitFlow.VS.Extension\Dependencies\Install.ps1""",
+                    Verb = "runas",
+                    LoadUserProfile = false
+                }
+            };
+            proc.Start();
+            proc.WaitForExit();
+            var exit = proc.ExitCode;
+        }
+
+        [TestMethod]
         public void MakeSureTestRepoIsCopied()
         {
             Assert.IsTrue(File.Exists("TestData\\SampleGitRepo.zip"));

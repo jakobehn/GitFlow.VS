@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
+using System.IO.Compression;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.ComponentModel.Design;
 using System.Windows.Forms;
@@ -60,8 +63,35 @@ namespace GitFlowVS.Extension
             Debug.WriteLine (string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", ToString()));
             base.Initialize();
 
-
-
+            try
+            {
+                var installationPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                MessageBox.Show(installationPath);
+                if (!Directory.Exists(Path.Combine(installationPath, "gitflow")))
+                {
+                    MessageBox.Show("Installing gitflow");
+                    string cmd = Path.Combine(installationPath, "Dependencies\\install.ps1");
+                    var proc = new Process
+                    {
+                        StartInfo = new ProcessStartInfo
+                        {
+                            FileName = "powershell.exe",
+                            WorkingDirectory = Path.Combine(installationPath, "Dependencies"),
+                            UseShellExecute = true,
+                            Arguments = "-NoLogo -NoProfile -File \"" + cmd + "\"",
+                            Verb = "runas",
+                            LoadUserProfile = false
+                        }
+                    };
+                    proc.Start();
+                    proc.WaitForExit();
+                }
+ 
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
         }
         #endregion
 

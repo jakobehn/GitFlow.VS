@@ -1,9 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="19ffe08d-8c71-4125-a024-6296bd27fce8" Version="1.1" Language="en-US" Publisher="Jakob Ehn" />
-    <DisplayName>GitFlow.VS.Extension</DisplayName>
+    <Identity Id="19ffe08d-8c71-4125-a024-6296bd27fce8" Version="0.9" Language="en-US" Publisher="Jakob Ehn" />
+    <DisplayName>GitFlow.VS</DisplayName>
     <Description xml:space="preserve">Visual Studio extension that integrates GitFlow into Team Explorer</Description>
+    <Icon>icon.png</Icon>
+    <PreviewImage>icon.png</PreviewImage>
+    <Tags>git gitflow VisualStudio TeamExplorer</Tags>
   </Metadata>
   <Installation InstalledByMsi="false">
     <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[12.0]" />
