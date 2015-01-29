@@ -66,10 +66,8 @@ namespace GitFlowVS.Extension
             try
             {
                 var installationPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                MessageBox.Show(installationPath);
-                if (!Directory.Exists(Path.Combine(installationPath, "gitflow")))
+                if (!Directory.Exists(Path.Combine(installationPath, "Dependencies\\gitflow")))
                 {
-                    MessageBox.Show("Installing gitflow");
                     string cmd = Path.Combine(installationPath, "Dependencies\\install.ps1");
                     var proc = new Process
                     {
