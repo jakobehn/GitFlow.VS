@@ -10,19 +10,23 @@
             <RowDefinition Height="20"></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <TextBlock>Feature Name:</TextBlock>
-        <TextBlock Grid.Column="1" Text="{Binding CurrentFeature}"></TextBlock>
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
+            <TextBlock>Finish feature:</TextBlock>
+            <TextBlock Text="{Binding CurrentFeature}" Margin="10,0,0,0"></TextBlock>
+        </StackPanel>
         <CheckBox Grid.Row="1" Name="RebaseOnDevelopment" IsChecked="False" Margin="10,0,0,0">Rebase on development branch</CheckBox>
         <CheckBox Grid.Row="2" Name="DeleteBranch" IsChecked="True" Margin="10,0,0,0">Delete branch</CheckBox>
         <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" >
             <Button Name="FinishFeature_OK" Width="50" Click="FinishFeature_OK_Click">OK</Button>
             <Button Name="FinishFeature_Cancel" IsDefault="True" Width="50" Margin="10,0,0,0" Height="25" Click="FinishFeature_Cancel_Click" >Cancel</Button>
         </StackPanel>
+        <ProgressBar Grid.Row="4" Grid.ColumnSpan="2" Margin="10" Visibility="Hidden" Height="20" Minimum="0" Maximum="100" Name="progress" IsIndeterminate="True" />
     </Grid>
 
 </UserControl>

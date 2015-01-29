@@ -11,7 +11,7 @@ namespace GitFlowVS.Extension
         private bool deleteBranch;
         private bool forceDeletion;
         private bool pushChanges;
-        private string currentFeature;
+        private string currentRelease;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public FinishReleaseModel()
@@ -27,13 +27,13 @@ namespace GitFlowVS.Extension
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public string CurrentFeature
+        public string CurrentRelease
         {
-            get { return currentFeature; }
+            get { return currentRelease; }
             set
             {
-                if (value == currentFeature) return;
-                currentFeature = value;
+                if (value == currentRelease) return;
+                currentRelease = value;
                 OnPropertyChanged();
             }
         }

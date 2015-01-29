@@ -11,7 +11,7 @@ namespace GitFlowVS.Extension
         private bool deleteBranch;
         private bool forceDeletion;
         private bool pushChanges;
-        private string currentFeature;
+        private string currentHotfix;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public FinishHotfixModel()
@@ -28,13 +28,13 @@ namespace GitFlowVS.Extension
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public string CurrentFeature
+        public string CurrentHotfix
         {
-            get { return currentFeature; }
+            get { return currentHotfix; }
             set
             {
-                if (value == currentFeature) return;
-                currentFeature = value;
+                if (value == currentHotfix) return;
+                currentHotfix = value;
                 OnPropertyChanged();
             }
         }

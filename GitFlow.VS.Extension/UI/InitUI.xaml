@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:controls="clr-namespace:LoadingPanelSample.Controls"
              mc:Ignorable="d" >
 
     <UserControl.Resources>
@@ -45,11 +44,7 @@
             <Button Width="50" Click="OK_Click" Margin="0,0,0,0.2">OK</Button>
             <Button Width="50" Margin="20,0,0,0" Click="Cancel_Click">Cancel</Button>
         </StackPanel>
-        <controls:LoadingPanel Grid.ColumnSpan="2" Grid.Row="9" x:Name="loadingPanel"
-                  IsLoading="{Binding PanelLoading}"
-                  Message="{Binding PanelMainMessage}"
-                  SubMessage="{Binding PanelSubMessage}" 
-                  ClosePanelCommand="{Binding PanelCloseCommand}"  />
+        <ProgressBar Margin="10" Visibility="Hidden" Height="20" Grid.Row="9" Grid.ColumnSpan="2" Minimum="0" Maximum="100" Name="progress" IsIndeterminate="True" />
     </Grid>
     
 

@@ -5,9 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:wpf="clr-namespace:Microsoft.TeamFoundation.Controls.WPF;assembly=Microsoft.TeamFoundation.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="50" d:DesignWidth="300">
+             d:DesignHeight="80" d:DesignWidth="300">
     <Grid DockPanel.Dock="Top" Name="StartFeatureGrid">
         <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
@@ -18,8 +19,9 @@
         <Label>Feature Name:</Label>
         <TextBox Grid.Row="0" Grid.Column="1" Name="FeatureName" Text="{Binding FeatureName}"></TextBox>
         <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" Orientation="Horizontal" Margin="5,5,0,0"  >
-            <Button Name="FeatureOk" Width="50" Click="OnCreateFeature">OK</Button>
+            <Button Name="FeatureOk" Width="50" Click="OnCreateFeature" Height="22" VerticalAlignment="Top">OK</Button>
             <Button Name="FeatureCancel" IsDefault="True" Width="50" Margin="10,0,0,0" Click="OnCancelFeature">Cancel</Button>
         </StackPanel>
+        <ProgressBar Margin="10" Visibility="Hidden" Height="20" Grid.Row="2" Grid.ColumnSpan="2" Minimum="0" Maximum="100" Name="progress" IsIndeterminate="True" />
     </Grid>
 </UserControl>

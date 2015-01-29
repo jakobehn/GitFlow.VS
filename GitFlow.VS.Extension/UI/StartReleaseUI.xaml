@@ -10,6 +10,7 @@
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="90"></ColumnDefinition>
@@ -21,5 +22,6 @@
             <Button Name="ReleaseOk" Width="50" Click="OnCreateRelease">OK</Button>
             <Button Name="ReleaseCancel" IsDefault="True" Width="50" Margin="10,0,0,0" Click="OnCancelRelease">Cancel</Button>
         </StackPanel>
+        <ProgressBar  Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" Margin="10" Visibility="Hidden" Height="20" Minimum="0" Maximum="100" Name="progress" IsIndeterminate="True" />
     </Grid>
 </UserControl>

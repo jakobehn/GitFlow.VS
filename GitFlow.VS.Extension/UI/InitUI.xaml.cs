@@ -34,9 +34,7 @@ namespace GitFlowVS.Extension
             if (ActiveRepo != null)
             {
                 OutputWindow.Activate();
-                loadingPanel.IsLoading = true;
-                loadingPanel.Message = "Initializing GitFlow";
-                //loadingPanel.Visibility = Visibility.Visible;
+                progress.Visibility = Visibility.Visible;
                 
                 await Task.Run(() =>
                 {
@@ -52,7 +50,7 @@ namespace GitFlowVS.Extension
                     });
                 });
 
-                loadingPanel.IsLoading = false;
+                progress.Visibility = Visibility.Hidden;
 
             }
             parent.FinishAction();

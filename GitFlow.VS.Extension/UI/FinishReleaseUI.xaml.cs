@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.VisualStudio.Shell.Interop;
@@ -21,7 +22,7 @@ namespace GitFlowVS.Extension
             InitializeComponent();
 
             DataContext = model;
-            model.CurrentFeature = CurrentFeature;
+            model.CurrentRelease = CurrentFeature;
         }
 
         public string CurrentFeature
@@ -42,16 +43,20 @@ namespace GitFlowVS.Extension
             parent.CancelAction();
         }
 
-        private void FinishReleaseOK_Click(object sender, RoutedEventArgs e)
+        private async void FinishReleaseOK_Click(object sender, RoutedEventArgs e)
         {
             if (ActiveRepo != null)
             {
                 OutputWindow.Activate();
-                using (new WaitCursor())
+                progress.Visibility = Visibility.Visible;
+
+                await Task.Run(() =>
                 {
                     var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow, parent);
-                    gf.FinishRelease(gf.CurrentBranchLeafName, model.TagMessage, model.DeleteBranch, model.ForceDeletion, model.PushChanges);
-                }
+                    gf.FinishRelease(gf.CurrentBranchLeafName, model.TagMessage, model.DeleteBranch, model.ForceDeletion,
+                        model.PushChanges);
+                });
+                progress.Visibility = Visibility.Hidden;
                 parent.FinishAction();
             }
         }

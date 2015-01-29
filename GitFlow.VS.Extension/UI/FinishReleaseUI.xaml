@@ -15,13 +15,16 @@
             <RowDefinition Height="20"></RowDefinition>
             <RowDefinition Height="20"></RowDefinition>
             <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <TextBlock>Release Name:</TextBlock>
-        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CurrentFeature}"></TextBlock>
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
+            <TextBlock>Finish release:</TextBlock>
+            <TextBlock Text="{Binding CurrentRelease}" Margin="10,0,0,0"></TextBlock>
+        </StackPanel>
         <Label Grid.Row="0" Grid.Column="1" ></Label>
         <TextBlock Grid.Row="1">Options</TextBlock>
         <CheckBox Grid.Row="2" IsChecked="True">Tag with this message:</CheckBox>
@@ -34,5 +37,6 @@
             <Button Width="50" Click="FinishReleaseOK_Click" Height="20">OK</Button>
             <Button IsDefault="True" Width="50" Margin="10,0,0,0" Height="20" Click="FinishFeatureCancel_Click">Cancel</Button>
         </StackPanel>
+        <ProgressBar Grid.Row="8" Grid.ColumnSpan="2" Margin="10" Visibility="Hidden" Height="20" Minimum="0" Maximum="100" Name="progress" IsIndeterminate="True" />
     </Grid>
 </UserControl>

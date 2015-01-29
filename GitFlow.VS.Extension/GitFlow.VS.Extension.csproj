@@ -133,12 +133,6 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UI\CircularProgressBar.xaml.cs">
-      <DependentUpon>CircularProgressBar.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\LoadingPanel.xaml.cs">
-      <DependentUpon>LoadingPanel.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\FinishFeatureModel.cs" />
     <Compile Include="UI\FinishFeatureUI.xaml.cs">
       <DependentUpon>FinishFeatureUI.xaml</DependentUpon>
@@ -183,7 +177,6 @@
       <DependentUpon>StartReleaseUI.xaml</DependentUpon>
     </Compile>
     <Compile Include="VsGitFlowWrapper.cs" />
-    <Compile Include="UI\WaitCursor.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">
@@ -229,10 +222,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="UI\CircularProgressBar.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="UI\FinishFeatureUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -256,10 +245,6 @@
     <Page Include="Resources\Dictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\LoadingPanel.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="UI\StartFeatureUI.xaml">
       <SubType>Designer</SubType>

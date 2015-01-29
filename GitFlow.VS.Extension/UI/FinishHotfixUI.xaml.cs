@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TeamFoundation.Git.Extensibility;
@@ -23,7 +24,7 @@ namespace GitFlowVS.Extension
             InitializeComponent();
             DataContext = model;
 
-            model.CurrentFeature = CurrentFeature;
+            model.CurrentHotfix = CurrentFeature;
         }
 
         private void FinishHotfixCancel_Click(object sender, RoutedEventArgs e)
@@ -44,16 +45,20 @@ namespace GitFlowVS.Extension
             }
         }
 
-        private void FinishHotfixOK_Click(object sender, RoutedEventArgs e)
+        private async void FinishHotfixOK_Click(object sender, RoutedEventArgs e)
         {
             if (ActiveRepo != null)
             {
                 OutputWindow.Activate();
-                using (new WaitCursor())
+                progress.Visibility = Visibility.Visible;
+
+                await Task.Run(() =>
                 {
                     var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow, parent);
-                    gf.FinishHotfix(gf.CurrentBranchLeafName, model.TagMessage, model.DeleteBranch, model.ForceDeletion, model.PushChanges);
-                }
+                    gf.FinishHotfix(gf.CurrentBranchLeafName, model.TagMessage, model.DeleteBranch, model.ForceDeletion,
+                        model.PushChanges);
+                });
+                progress.Visibility = Visibility.Hidden;
                 parent.FinishAction();
             }
         }

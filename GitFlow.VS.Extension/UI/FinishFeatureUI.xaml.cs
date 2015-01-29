@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TeamFoundation.Git.Extensibility;
 
@@ -47,18 +48,22 @@ namespace GitFlowVS.Extension
             parent.CancelAction();
         }
 
-        private void FinishFeature_OK_Click(object sender, RoutedEventArgs e)
+        private async void FinishFeature_OK_Click(object sender, RoutedEventArgs e)
         {
             if (ActiveRepo != null)
             {
                 OutputWindow.Activate();
-                using (new WaitCursor())
+
+                progress.Visibility = Visibility.Visible;
+                
+                await System.Threading.Tasks.Task.Run(() =>
                 {
                     var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow, parent);
                     gf.FinishFeature(gf.CurrentBranchLeafName, model.RebaseOnDevelopment, model.DeleteBranch);
-                }
-                parent.FinishAction();
+                });
 
+                progress.Visibility = Visibility.Hidden;
+                parent.FinishAction();
             }
         }
     }
