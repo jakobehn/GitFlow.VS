@@ -1,11 +1,6 @@
-﻿using System;
-using System.Windows.Forms;
-using System.Windows.Threading;
-using GitFlow.VS;
-using Microsoft.TeamFoundation.Controls;
+﻿using GitFlow.VS;
 using Microsoft.VisualStudio.Shell.Interop;
 using TeamExplorer.Common;
-using Application = System.Windows.Application;
 
 namespace GitFlowVS.Extension
 {
@@ -27,7 +22,7 @@ namespace GitFlowVS.Extension
                 //        new Action(() => section.ShowNotification(args.Output.Trim(), NotificationType.Error)));
                 //    outputWindow.OutputStringThreadSafe(args.Output.Trim());
                 //}
-                outputWindow.OutputStringThreadSafe(args.Output.Trim());
+                outputWindow.OutputStringThreadSafe(args.Output);
             };
         }
     }

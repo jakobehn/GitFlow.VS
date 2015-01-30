@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using GitFlowVS.Extension.UI;
 using Microsoft.TeamFoundation.Controls;
 using Microsoft.VisualStudio.Shell;
@@ -55,8 +56,12 @@ namespace GitFlowVS.Extension
             {
                 string gitFlowFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86),
                     "Git\\bin\\git-flow");
-                return File.Exists(gitFlowFile);
-            }
+                if (!File.Exists(gitFlowFile))
+                    return false;
+                //Check if extension has been configured
+                string binariesPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Dependencies/binaries");
+                return Directory.Exists(binariesPath);
+;            }
         }
 
         private void GitServiceOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)

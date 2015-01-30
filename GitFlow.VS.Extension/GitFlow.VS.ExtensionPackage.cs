@@ -1,10 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
+﻿using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Shell;
 
@@ -16,15 +10,5 @@ namespace GitFlowVS.Extension
     [Guid(GuidList.guidGitFlow_VS_ExtensionPkgString)]
     public sealed class GitFlow_VS_ExtensionPackage : Package
     {
-        public GitFlow_VS_ExtensionPackage()
-        {
-        }
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-        }
-
     }
 }

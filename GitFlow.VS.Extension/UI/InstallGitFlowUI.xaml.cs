@@ -25,6 +25,7 @@ namespace GitFlowVS.Extension.UI
         {
             try
             {
+                Error.Visibility = Visibility.Hidden;
                 var installationPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 string cmd = Path.Combine(installationPath, "Dependencies\\install.ps1");
                 var proc = new Process
@@ -34,14 +35,23 @@ namespace GitFlowVS.Extension.UI
                         FileName = "powershell.exe",
                         WorkingDirectory = Path.Combine(installationPath, "Dependencies"),
                         UseShellExecute = true,
-                        Arguments = "-NoLogo -NoProfile -File \"" + cmd + "\"",
+                        Arguments = "-ExecutionPolicy ByPass -NoLogo -NoProfile -File \"" + cmd + "\"",
                         Verb = "runas",
                         LoadUserProfile = false
                     }
                 };
                 proc.Start();
                 proc.WaitForExit();
-                parent.FinishAction();
+
+                if (proc.ExitCode != 0)
+                {
+                    Error.Text = Error.Text.Replace("{0}", proc.ExitCode.ToString());
+                    Error.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    parent.FinishAction();
+                }
             }
             catch (Exception ex)
             {
