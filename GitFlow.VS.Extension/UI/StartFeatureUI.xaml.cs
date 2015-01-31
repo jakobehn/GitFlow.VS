@@ -16,6 +16,10 @@ namespace GitFlowVS.Extension
         private IGitRepositoryInfo ActiveRepo { get; set; }
         private IVsOutputWindowPane OutputWindow { get; set; }
 
+        public StartFeatureUI()
+        {
+            
+        }
         public StartFeatureUI(GitFlowSection parent, IGitRepositoryInfo activeRepo, IVsOutputWindowPane outputWindow)
         {
             model = new StartFeatureModel();

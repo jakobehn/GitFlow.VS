@@ -133,9 +133,16 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GitFlowActionSection.cs" />
+    <Compile Include="GitFlowLink.cs" />
+    <Compile Include="GitFlowPage.cs" />
+    <Compile Include="UI\GitFlowActionsUI.xaml.cs">
+      <DependentUpon>GitFlowActionsUI.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\InstallGitFlowUI.xaml.cs">
       <DependentUpon>InstallGitFlowUI.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\ActionViewModel.cs" />
     <Compile Include="ViewModels\FinishFeatureModel.cs" />
     <Compile Include="UI\FinishFeatureUI.xaml.cs">
       <DependentUpon>FinishFeatureUI.xaml</DependentUpon>
@@ -212,6 +219,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <None Include="Resources\LinkIcon.png" />
     <Content Include="Resources\Package.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -234,6 +242,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\FinishReleaseUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\GitFlowActionsUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
