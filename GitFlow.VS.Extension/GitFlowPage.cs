@@ -23,9 +23,14 @@ namespace GitFlowVS.Extension
             }
         }
 
-        public static IVsOutputWindowPane OutputWindowPane
+        public static IVsOutputWindowPane OutputWindow
         {
             get { return outputWindow; }
+        }
+
+        public static string ActiveRepoPath
+        {
+            get { return ActiveRepo.RepositoryPath; }
         }
 
         [ImportingConstructor]
@@ -41,6 +46,10 @@ namespace GitFlowVS.Extension
             outWindow.GetPane(ref customGuid, out outputWindow);
         }
 
+        public static void ActiveOutputWindow()
+        {
+            OutputWindow.Activate();
+        }
     }
 
 }

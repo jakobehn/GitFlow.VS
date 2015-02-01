@@ -143,6 +143,7 @@
       <DependentUpon>InstallGitFlowUI.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ActionViewModel.cs" />
+    <Compile Include="ViewModels\CommandHandler.cs" />
     <Compile Include="ViewModels\FinishFeatureModel.cs" />
     <Compile Include="UI\FinishFeatureUI.xaml.cs">
       <DependentUpon>FinishFeatureUI.xaml</DependentUpon>
@@ -174,18 +175,6 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GitFlow.VS.ExtensionPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\StartFeatureModel.cs" />
-    <Compile Include="UI\StartFeatureUI.xaml.cs">
-      <DependentUpon>StartFeatureUI.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ViewModels\StartHotfixModel.cs" />
-    <Compile Include="UI\StartHotfixUI.xaml.cs">
-      <DependentUpon>StartHotfixUI.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ViewModels\StartReleaseModel.cs" />
-    <Compile Include="UI\StartReleaseUI.xaml.cs">
-      <DependentUpon>StartReleaseUI.xaml</DependentUpon>
-    </Compile>
     <Compile Include="VsGitFlowWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -262,18 +251,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\InstallGitFlowUI.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\StartFeatureUI.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\StartHotfixUI.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\StartReleaseUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

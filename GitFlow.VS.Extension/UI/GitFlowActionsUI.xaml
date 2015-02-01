@@ -9,13 +9,28 @@
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <WrapPanel Grid.Row="0">
             <teamExplorer:DropDownLink Margin="3,6,3,0"  Text="Start Feature" DropDownMenuCommand="{Binding Path=StartFeatureDropDownCommand}" />
             <Separator Margin="3,6,3,0"/>
+            <teamExplorer:DropDownLink Margin="3,6,3,0"  Text="Start Release" DropDownMenuCommand="{Binding Path=StartReleaseDropDownCommand}" />
+            <Separator Margin="3,6,3,0"/>
+            <teamExplorer:DropDownLink Margin="3,6,3,0"  Text="Start Hotfix" DropDownMenuCommand="{Binding Path=StartHotfixDropDownCommand}" />
+            <Separator Margin="3,6,3,0"/>
+            <teamExplorer:DropDownLink Margin="3,6,3,0" Name="OtherActions" Text="Other Actions">
+                <teamExplorer:DropDownLink.DropDownMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Finish Feature" Command="{Binding Path=FinishFeatureDropDownCommand}"></MenuItem>
+                        <MenuItem Header="Finish Release" Command="{Binding Path=FinishReleaseDropDownCommand}"></MenuItem>
+                        <MenuItem Header="Finish Hotfix" Command="{Binding Path=FinishHotfixDropDownCommand}"></MenuItem>
+                    </ContextMenu>
+                </teamExplorer:DropDownLink.DropDownMenu>
+            </teamExplorer:DropDownLink>
         </WrapPanel>
-        <Grid Grid.Row="1" Margin="10" Name="StartFeatureGrid" Visibility="{Binding ShowStartFeature}">
+        <Grid Grid.Row="1" Margin="10" Visibility="{Binding ShowStartFeature}">
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
@@ -28,10 +43,45 @@
             <TextBlock>Feature Name:</TextBlock>
             <TextBox Grid.Row="0" Grid.Column="1" Name="FeatureName" Text="{Binding FeatureName}"></TextBox>
             <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" Orientation="Horizontal" Margin="5,5,0,0"  >
-                <Button Name="FeatureOk" Width="50"  Height="22" VerticalAlignment="Top">OK</Button>
-                <Button Name="FeatureCancel" IsDefault="True" Width="50" Margin="10,0,0,0" Command="{Binding CancelStartFeatureCommand}">Cancel</Button>
+                <Button IsDefault="True" Width="50" Height="20" Command="{Binding StartFeatureCommand}">OK</Button>
+                <Button Width="50" Margin="10,0,0,0" Command="{Binding CancelStartFeatureCommand}">Cancel</Button>
             </StackPanel>
-            <ProgressBar Margin="10" Visibility="Hidden" Height="20" Grid.Row="2" Grid.ColumnSpan="2" Minimum="0" Maximum="100" Name="progress" IsIndeterminate="True" />
         </Grid>
+        <Grid Grid.Row="2" Visibility="{Binding ShowStartRelease}">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="90"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label>Release Name:</Label>
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ReleaseName}" Margin="3" ></TextBox>
+            <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" Orientation="Horizontal" Margin="0,5,0,0"  >
+                <Button Width="50" IsDefault="True" Command="{Binding StartReleaseCommand}">OK</Button>
+                <Button Width="50" Margin="10,0,0,0" Command="{Binding CancelStartReleaseCommand}">Cancel</Button>
+            </StackPanel>
+        </Grid >
+        <Grid Grid.Row="3" Visibility="{Binding Path=ShowStartHotfix}">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="90"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Margin="5,0,0,0">Hotfix Name:</Label>
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding HotfixName}" Margin="3" ></TextBox>
+            <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" Orientation="Horizontal" Margin="9,5,0,0"  >
+                <Button Width="50" IsDefault="True" Command="{Binding StartHotfixCommand}">OK</Button>
+                <Button Width="50" Margin="10,0,0,0" Command="{Binding CancelStartHotfixCommand}">Cancel</Button>
+            </StackPanel>
+        </Grid>
+
+        <ProgressBar Grid.Row="4" Margin="10"  Visibility="{Binding Path=ProgressVisibility}" Height="20" Minimum="0" Maximum="100" IsIndeterminate="True" />
     </Grid>
 </UserControl>

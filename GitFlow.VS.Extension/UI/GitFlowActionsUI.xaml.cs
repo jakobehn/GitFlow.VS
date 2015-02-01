@@ -29,6 +29,7 @@ namespace GitFlowVS.Extension.UI
 
             this.model = new ActionViewModel();
             DataContext = model;
+
         }
     }
 }

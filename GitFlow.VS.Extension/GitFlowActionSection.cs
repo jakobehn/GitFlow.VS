@@ -23,7 +23,7 @@ namespace GitFlowVS.Extension
 
         private void UpdateVisibleState()
         {
-            var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepo.RepositoryPath, GitFlowPage.OutputWindowPane);
+            var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepo.RepositoryPath, GitFlowPage.OutputWindow);
             IsVisible = gf.IsInitialized;
         }
 
@@ -55,7 +55,7 @@ namespace GitFlowVS.Extension
 
         private void UpdateVisibleState()
         {
-            var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepo.RepositoryPath, GitFlowPage.OutputWindowPane);
+            var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepo.RepositoryPath, GitFlowPage.OutputWindow);
             IsVisible = !gf.IsInitialized;
         }
     }

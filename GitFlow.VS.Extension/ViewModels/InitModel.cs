@@ -4,7 +4,6 @@ using System.Windows;
 using System.Windows.Input;
 using GitFlow.VS;
 using GitFlowVS.Extension.Annotations;
-using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace GitFlowVS.Extension.ViewModels
 {
@@ -81,10 +80,10 @@ namespace GitFlowVS.Extension.ViewModels
         {
             if (GitFlowPage.ActiveRepo != null)
             {
-                GitFlowPage.OutputWindowPane.Activate();
+                GitFlowPage.OutputWindow.Activate();
                 ProgressVisibility = Visibility.Visible;
 
-                var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepo.RepositoryPath, GitFlowPage.OutputWindowPane);
+                var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepo.RepositoryPath, GitFlowPage.OutputWindow);
                 gf.Init(new GitFlowRepoSettings
                 {
                     DevelopBranch = Develop,

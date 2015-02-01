@@ -86,8 +86,8 @@ namespace GitFlowVS.Extension
 
         public void StartFeature()
         {
-            var ui = new StartFeatureUI(this, activeRepo, customPane);
-            SectionContent = ui;
+            //var ui = new StartFeatureUI(this, activeRepo, customPane);
+            //SectionContent = ui;
         }
 
         public void FinishFeature()
@@ -98,8 +98,8 @@ namespace GitFlowVS.Extension
 
         public void StartRelease()
         {
-            var ui = new StartReleaseUI(this, activeRepo, customPane);
-            SectionContent = ui;
+//            var ui = new StartReleaseUI(this, activeRepo, customPane);
+  //          SectionContent = ui;
         }
 
         public void FinishRelease()
@@ -110,8 +110,8 @@ namespace GitFlowVS.Extension
 
         public void StartHotfix()
         {
-            var ui = new StartHotfixUI(this, activeRepo, customPane);
-            SectionContent = ui;
+            //var ui = new StartHotfixUI(this, activeRepo, customPane);
+            //SectionContent = ui;
         }
 
         public void FinishHotfix()

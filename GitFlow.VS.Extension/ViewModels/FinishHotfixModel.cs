@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using GitFlowVS.Extension.Annotations;
 
-namespace GitFlowVS.Extension
+namespace GitFlowVS.Extension.ViewModels
 {
     public class FinishHotfixModel : INotifyPropertyChanged
     {
