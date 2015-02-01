@@ -1,8 +1,12 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
+using System.Windows.Input;
+using GitFlow.VS;
 using GitFlowVS.Extension.Annotations;
+using MessageBox = System.Windows.Forms.MessageBox;
 
-namespace GitFlowVS.Extension
+namespace GitFlowVS.Extension.ViewModels
 {
     public class InitModel : INotifyPropertyChanged
     {
@@ -12,8 +16,23 @@ namespace GitFlowVS.Extension
         private string releasePrefix;
         private string hotfixPrefix;
         private string versionTagPrefix;
+        private Visibility progressVisibility;
+        private Visibility initGridVisibility;
+
+        public ICommand OnShowInitCommand { get; private set; }
+        public ICommand OkCommand { get; private set; }
+        public ICommand CancelCommand { get; private set; }
 
         public InitModel()
+        {
+            InitializeModel();
+
+            OkCommand = new CommandHandler(OnInitialize, true);
+            CancelCommand = new CommandHandler(OnCancel, true);
+            OnShowInitCommand = new CommandHandler(OnShowInit, true);
+        }
+
+        private void InitializeModel()
         {
             Master = "master";
             Develop = "develop";
@@ -21,7 +40,66 @@ namespace GitFlowVS.Extension
             ReleasePrefix = "release/";
             HotfixPrefix = "hotfix/";
             VersionTagPrefix = "";
+
+            InitGridVisibility = Visibility.Hidden;
+            ProgressVisibility = Visibility.Hidden; 
         }
+
+        private void OnCancel()
+        {
+            InitializeModel();
+        }
+
+        public Visibility InitGridVisibility
+        {
+            get { return initGridVisibility; }
+            set
+            {
+                if (value == initGridVisibility) return;
+                initGridVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Visibility ProgressVisibility
+        {
+            get { return progressVisibility; }
+            set
+            {
+                if (value == progressVisibility) return;
+                progressVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private void OnShowInit()
+        {
+            InitGridVisibility = Visibility.Visible;
+        }
+
+        private void OnInitialize()
+        {
+            if (GitFlowPage.ActiveRepo != null)
+            {
+                GitFlowPage.OutputWindowPane.Activate();
+                ProgressVisibility = Visibility.Visible;
+
+                var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepo.RepositoryPath, GitFlowPage.OutputWindowPane);
+                gf.Init(new GitFlowRepoSettings
+                {
+                    DevelopBranch = Develop,
+                    MasterBranch = Master,
+                    FeatureBranch = FeaturePrefix,
+                    ReleaseBranch = ReleasePrefix,
+                    HotfixBranch = HotfixPrefix,
+                    VersionTag = VersionTagPrefix
+                });
+
+                ProgressVisibility = Visibility.Hidden;
+                InitGridVisibility = Visibility.Hidden;
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]

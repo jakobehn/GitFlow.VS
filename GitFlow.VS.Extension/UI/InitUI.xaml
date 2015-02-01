@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:teamExplorer="clr-namespace:Microsoft.TeamFoundation.Controls.WPF.TeamExplorer;assembly=Microsoft.TeamFoundation.Controls"
              mc:Ignorable="d" >
 
     <UserControl.Resources>
@@ -13,39 +14,46 @@
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition MinWidth="120"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <TextBlock Grid.ColumnSpan="2" FontWeight="Bold" >Create / use the following branches:</TextBlock>
-        <TextBlock Grid.Row="1" Grid.Column="0">Production branch:</TextBlock>
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Master}" ></TextBox>
-        <TextBlock Grid.Row="2">Develop branch:</TextBlock>
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Develop}" ></TextBox>
-        <TextBlock Grid.ColumnSpan="2" Grid.Row="3" FontWeight="Bold" Margin="0,5,0,0">Use the following prefixes in future:</TextBlock>
-        <TextBlock Grid.Row="4" >Feature branch prefix:</TextBlock>
-        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding FeaturePrefix}"></TextBox>
-        <TextBlock Grid.Row="5" >Release branch prefix:</TextBlock>
-        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding ReleasePrefix}"></TextBox>
-        <TextBlock Grid.Row="6" >Hotfix branch prefix:</TextBlock>
-        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding HotfixPrefix}"></TextBox>
-        <TextBlock Grid.Row="7" >Version branch prefix:</TextBlock>
-        <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding VersionTagPrefix}"></TextBox>
-        <StackPanel Grid.Row="8" Grid.ColumnSpan="2" Grid.Column="0" Orientation="Horizontal" Margin="0,10,0,0">
-            <Button Width="50" Click="OK_Click" Margin="0,0,0,0.2">OK</Button>
-            <Button Width="50" Margin="20,0,0,0" Click="Cancel_Click">Cancel</Button>
-        </StackPanel>
-        <ProgressBar Margin="10" Visibility="Hidden" Height="20" Grid.Row="9" Grid.ColumnSpan="2" Minimum="0" Maximum="100" Name="progress" IsIndeterminate="True" />
+
+        <teamExplorer:DropDownLink Margin="3,6,3,0"  Text="Initialize" DropDownMenuCommand="{Binding Path=OnShowInitCommand}" />
+        <Grid Grid.Row="1" Visibility="{Binding Path=InitGridVisibility}">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MinWidth="120"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.ColumnSpan="2" FontWeight="Bold" >Create / use the following branches:</TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="0">Production branch:</TextBlock>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Master}" ></TextBox>
+            <TextBlock Grid.Row="2">Develop branch:</TextBlock>
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Develop}" ></TextBox>
+            <TextBlock Grid.ColumnSpan="2" Grid.Row="3" FontWeight="Bold" Margin="0,5,0,0">Use the following prefixes in future:</TextBlock>
+            <TextBlock Grid.Row="4" >Feature branch prefix:</TextBlock>
+            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding FeaturePrefix}"></TextBox>
+            <TextBlock Grid.Row="5" >Release branch prefix:</TextBlock>
+            <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding ReleasePrefix}"></TextBox>
+            <TextBlock Grid.Row="6" >Hotfix branch prefix:</TextBlock>
+            <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding HotfixPrefix}"></TextBox>
+            <TextBlock Grid.Row="7" >Version branch prefix:</TextBlock>
+            <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding VersionTagPrefix}"></TextBox>
+            <StackPanel Grid.Row="8" Grid.ColumnSpan="2" Grid.Column="0" Orientation="Horizontal" Margin="0,10,0,0">
+                <Button Width="50" Margin="0,0,0,0.2" Command="{Binding Path=OkCommand}">OK</Button>
+                <Button Width="50" Margin="20,0,0,0" Command="{Binding Path=CancelCommand}">Cancel</Button>
+            </StackPanel>
+            <ProgressBar Margin="10" Visibility="{Binding Path=ProgressVisibility}" Height="20" Grid.Row="9" Grid.ColumnSpan="2" Minimum="0" Maximum="100" Name="progress" IsIndeterminate="True" />
+        </Grid>
     </Grid>
-    
 
 </UserControl>

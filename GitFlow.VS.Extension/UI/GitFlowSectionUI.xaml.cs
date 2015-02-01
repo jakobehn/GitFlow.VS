@@ -34,7 +34,7 @@ namespace GitFlowVS.Extension
         {
             if (ActiveRepo != null)
             {
-                var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow, parent);
+                var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow);
                 model.InitVisible = gf.IsInitialized ? Visibility.Collapsed : Visibility.Visible;
                 model.StartFeatureVisible = gf.IsInitialized && (model.ShowAll || gf.IsOnDevelopBranch || gf.IsOnMasterBranch)
                     ? Visibility.Visible
@@ -78,7 +78,7 @@ namespace GitFlowVS.Extension
             {
                 if (ActiveRepo != null)
                 {
-                    var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow, parent);
+                    var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow);
                     return gf.CurrentStatus;
                 }
                 return "";

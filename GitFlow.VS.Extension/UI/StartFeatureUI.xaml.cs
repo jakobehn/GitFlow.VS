@@ -44,7 +44,7 @@ namespace GitFlowVS.Extension
                 progress.Visibility = Visibility.Visible;
                 await Task.Run(() =>
                 {
-                    var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow, parent);
+                    var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow);
                     gf.StartFeature(model.FeatureName);
                 });
                 progress.Visibility = Visibility.Hidden;

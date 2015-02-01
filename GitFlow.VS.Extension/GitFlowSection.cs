@@ -12,7 +12,7 @@ using TeamExplorer.Common;
 
 namespace GitFlowVS.Extension
 {
-    [TeamExplorerSection(GuidList.sampleTeamExplorerSection, TeamExplorerPageIds.Home, 100)]
+    //[TeamExplorerSection(GuidList.sampleTeamExplorerSection, TeamExplorerPageIds.Home, 100)]
     public class GitFlowSection : TeamExplorerBaseSection
     {
         private IServiceProvider serviceProvider;
@@ -80,7 +80,7 @@ namespace GitFlowVS.Extension
 
         public void Init()
         {
-            var ui = new InitUi(this, activeRepo, customPane);
+            var ui = new InitUi();
             SectionContent = ui;
         }
 

@@ -31,7 +31,7 @@ namespace GitFlowVS.Extension
             {
                 if (ActiveRepo != null)
                 {
-                    var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow, parent);
+                    var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow);
                     return gf.CurrentBranchLeafName;
                 }
                 return "";
@@ -52,7 +52,7 @@ namespace GitFlowVS.Extension
 
                 await Task.Run(() =>
                 {
-                    var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow, parent);
+                    var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow);
                     gf.FinishRelease(gf.CurrentBranchLeafName, model.TagMessage, model.DeleteBranch, model.ForceDeletion,
                         model.PushChanges);
                 });

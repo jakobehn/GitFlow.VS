@@ -16,5 +16,6 @@ namespace GitFlowVS.Extension
         public const string gitFlowPage = "1F9974CD-16C3-4AEF-AED2-0CE37988E2F1";
         public const string startFeatureLink = "355625AA-BD86-4633-B718-8E75E7C39523";
         public const string topSection = "F63C9A55-E0A2-4E7C-A78B-C37512EAEE5D";
+        public const string initSection = "12760882-D1DE-46FF-8965-045017C7472D";
     };
 }

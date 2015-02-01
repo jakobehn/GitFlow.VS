@@ -41,7 +41,7 @@ namespace GitFlowVS.Extension
 
                 await Task.Run(() =>
                 {
-                    var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow, parent);
+                    var gf = new VsGitFlowWrapper(ActiveRepo.RepositoryPath, OutputWindow);
                     gf.StartRelease(model.ReleaseName);
                 });
 
