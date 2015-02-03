@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -22,6 +23,16 @@ namespace GitFlowVS.Extension.ViewModels
         private string hotfixName;
 
         private Visibility progressVisibility;
+        private bool featureRebaseOnDevelopmentBranch;
+        private bool featureDeleteBranch;
+        private bool releaseDeleteBranch;
+        private string releaseTagMessage;
+        private bool releaseForceDeletion;
+        private bool releasePushChanges;
+        private bool hotfixDeleteBranch;
+        private bool hotfixPushChanges;
+        private bool hotfixForceDeletion;
+        private string hotfixTagMessage;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -188,6 +199,21 @@ namespace GitFlowVS.Extension.ViewModels
             ShowFinishRelease = Visibility.Visible;
         }
 
+        public bool CanCreateFeature
+        {
+            get { return !String.IsNullOrEmpty(FeatureName); }
+        }
+
+        public bool CanCreateRelease
+        {
+            get { return !String.IsNullOrEmpty(ReleaseName); }
+        }
+
+        public bool CanCreateHotfix
+        {
+            get { return !String.IsNullOrEmpty(HotfixName); }
+        }
+
         private void StartFeature()
         {
             if (GitFlowPage.ActiveRepo != null)
@@ -197,7 +223,7 @@ namespace GitFlowVS.Extension.ViewModels
                 var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
                 gf.StartFeature(FeatureName);
                 ProgressVisibility = Visibility.Hidden;
-                ShowStartFeature =Visibility.Hidden;
+                ShowStartFeature =Visibility.Collapsed;
             }
         }
 
@@ -210,7 +236,7 @@ namespace GitFlowVS.Extension.ViewModels
                 var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
                 gf.StartRelease(ReleaseName);
                 ProgressVisibility = Visibility.Hidden;
-                ShowStartRelease = Visibility.Hidden;
+                ShowStartRelease = Visibility.Collapsed;
             }
         }
 
@@ -223,21 +249,53 @@ namespace GitFlowVS.Extension.ViewModels
                 var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
                 gf.StartHotfix(HotfixName);
                 ProgressVisibility = Visibility.Hidden;
-                ShowStartHotfix = Visibility.Hidden;
+                ShowStartHotfix = Visibility.Collapsed;
             }
         }
 
         private void FinishFeature()
         {
+            if (GitFlowPage.ActiveRepo != null)
+            {
+                GitFlowPage.ActiveOutputWindow();
+
+                ProgressVisibility = Visibility.Visible;
+
+                var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
+                gf.FinishFeature(gf.CurrentBranchLeafName, FeatureRebaseOnDevelopmentBranch, FeatureDeleteBranch);
+
+                ProgressVisibility = Visibility.Hidden;
+                ShowFinishFeature = Visibility.Collapsed;
+            }
         }
 
         private void FinishRelease()
         {
+            if (GitFlowPage.ActiveRepo != null)
+            {
+                GitFlowPage.ActiveOutputWindow();
+                ProgressVisibility = Visibility.Visible;
+
+                var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
+                gf.FinishRelease(gf.CurrentBranchLeafName, ReleaseTagMessage, ReleaseDeleteBranch, ReleaseForceDeletion, ReleasePushChanges);
+                ProgressVisibility = Visibility.Hidden;
+                ShowFinishRelease = Visibility.Collapsed;
+            }
             
         }
 
         private void FinishHotfix()
         {
+            if (GitFlowPage.ActiveRepo != null)
+            {
+                GitFlowPage.ActiveOutputWindow();
+                ProgressVisibility = Visibility.Visible;
+
+                var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
+                gf.FinishHotfix(gf.CurrentBranchLeafName, HotfixTagMessage, HotfixDeleteBranch, HotfixForceDeletion, HotfixPushChanges);
+                ProgressVisibility = Visibility.Hidden;
+                ShowFinishHotfix = Visibility.Collapsed;
+            }
             
         }
 
@@ -271,6 +329,7 @@ namespace GitFlowVS.Extension.ViewModels
                 if (value == featureName) return;
                 featureName = value;
                 OnPropertyChanged();
+                OnPropertyChanged("CanCreateFeature");
             }
         }
 
@@ -351,5 +410,132 @@ namespace GitFlowVS.Extension.ViewModels
             }
         }
 
+        #region Feature
+
+        public bool FeatureRebaseOnDevelopmentBranch
+        {
+            get { return featureRebaseOnDevelopmentBranch; }
+            set
+            {
+                if (value.Equals(featureRebaseOnDevelopmentBranch)) return;
+                featureRebaseOnDevelopmentBranch = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool FeatureDeleteBranch
+        {
+            get { return featureDeleteBranch; }
+            set
+            {
+                if (value.Equals(featureDeleteBranch)) return;
+                featureDeleteBranch = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion
+
+        #region Release
+
+
+        public string ReleaseTagMessage
+        {
+            get { return releaseTagMessage; }
+            set
+            {
+                if (value == releaseTagMessage) return;
+                releaseTagMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool ReleaseDeleteBranch
+        {
+            get { return releaseDeleteBranch; }
+            set
+            {
+                if (value.Equals(releaseDeleteBranch)) return;
+                releaseDeleteBranch = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool ReleaseTagMessageEnabled
+        {
+            get { return String.IsNullOrEmpty(ReleaseTagMessage); }
+        }
+
+        public bool ReleasePushChanges
+        {
+            get { return releasePushChanges; }
+            set
+            {
+                if (value.Equals(releasePushChanges)) return;
+                releasePushChanges = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool ReleaseForceDeletion
+        {
+            get { return releaseForceDeletion; }
+            set
+            {
+                if (value.Equals(releaseForceDeletion)) return;
+                releaseForceDeletion = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion
+
+        #region Hotfix
+
+        public string HotfixTagMessage
+        {
+            get { return hotfixTagMessage; }
+            set
+            {
+                if (value == hotfixTagMessage) return;
+                hotfixTagMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool HotfixForceDeletion
+        {
+            get { return hotfixForceDeletion; }
+            set
+            {
+                if (value.Equals(hotfixForceDeletion)) return;
+                hotfixForceDeletion = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool HotfixPushChanges
+        {
+            get { return hotfixPushChanges; }
+            set
+            {
+                if (value.Equals(hotfixPushChanges)) return;
+                hotfixPushChanges = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool HotfixDeleteBranch
+        {
+            get { return hotfixDeleteBranch; }
+            set
+            {
+                if (value.Equals(hotfixDeleteBranch)) return;
+                hotfixDeleteBranch = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion
     }
 }
