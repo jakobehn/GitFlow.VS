@@ -675,19 +675,112 @@ namespace GitFlowVS.Extension.ViewModels
         }
 
         #endregion
-    }
 
-    public class ListItem
-    {
-        public string Name { get; set; }
+        #region Visibility
 
-        public override bool Equals(object obj)
+        public Visibility StartFeatureVisible
         {
-            if (obj is ListItem)
-            {
-                return String.Equals(Name, ((ListItem) obj).Name);
-            }
-            return base.Equals(obj);
+            get { return OnMainBranch(); }
         }
+
+        public Visibility OtherStartFeatureVisible
+        {
+            get
+            {
+                var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
+                return gf.IsOnDevelopBranch || gf.IsOnMasterBranch ? Visibility.Collapsed : Visibility.Visible;
+            }
+        }
+
+        public Visibility OtherStartReleaseVisible
+        {
+            get
+            {
+                var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
+                return gf.IsOnDevelopBranch || gf.IsOnMasterBranch ? Visibility.Collapsed : Visibility.Visible;
+            }
+        }
+
+        public Visibility OtherStartHotfixVisible
+        {
+            get
+            {
+                var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
+                return gf.IsOnDevelopBranch || gf.IsOnMasterBranch ? Visibility.Collapsed : Visibility.Visible;
+            }
+        }
+
+        private static Visibility OnMainBranch()
+        {
+            var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
+            return gf.IsOnDevelopBranch || gf.IsOnMasterBranch ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        public Visibility StartReleaseVisible
+        {
+            get { return OnMainBranch(); }
+        }
+
+        public Visibility StartHotfixVisible
+        {
+            get { return OnMainBranch(); }
+        }
+
+        public Visibility FinishHotfixVisible
+        {
+            get
+            {
+                var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
+                return gf.IsOnHotfixBranch ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
+        public Visibility FinishFeatureVisible
+        {
+            get
+            {
+                var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
+                return gf.IsOnFeatureBranch ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
+        public Visibility FinishReleaseVisible
+        {
+            get
+            {
+                var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
+                return gf.IsOnReleaseBranch ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
+
+        public Visibility OtherFinishHotfixVisible
+        {
+            get
+            {
+                var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
+                return gf.IsOnHotfixBranch ? Visibility.Collapsed : Visibility.Visible;
+            }
+        }
+
+        public Visibility OtherFinishFeatureVisible
+        {
+            get
+            {
+                var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
+                return gf.IsOnFeatureBranch ? Visibility.Collapsed : Visibility.Visible;
+            }
+        }
+
+        public Visibility OtherFinishReleaseVisible
+        {
+            get
+            {
+                var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
+                return gf.IsOnReleaseBranch ? Visibility.Collapsed : Visibility.Visible;
+            }
+        }
+
+        #endregion
     }
 }

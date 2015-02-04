@@ -23,18 +23,29 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <WrapPanel Grid.Row="0">
-            <teamExplorer:DropDownLink Margin="3,6,3,0"  Text="Start Feature" DropDownMenuCommand="{Binding Path=StartFeatureDropDownCommand}" />
-            <Separator Margin="0,6,0,0"/>
-            <teamExplorer:DropDownLink Margin="3,6,3,0"  Text="Start Release" DropDownMenuCommand="{Binding Path=StartReleaseDropDownCommand}" />
-            <Separator Margin="0,6,0,0"/>
-            <teamExplorer:DropDownLink Margin="3,6,3,0"  Text="Start Hotfix" DropDownMenuCommand="{Binding Path=StartHotfixDropDownCommand}" />
-            <Separator Margin="0,6,0,0"/>
-            <teamExplorer:DropDownLink Margin="3,6,3,0" Name="OtherActions" Text="Other Actions">
+            <teamExplorer:DropDownLink Margin="3,6,3,0"  Text="Start Feature" DropDownMenuCommand="{Binding Path=StartFeatureDropDownCommand}" Visibility="{Binding Path=StartFeatureVisible}" />
+<!--            <Separator Margin="0,6,0,0"/>-->
+            <teamExplorer:DropDownLink Margin="3,6,3,0"  Text="Start Release" DropDownMenuCommand="{Binding Path=StartReleaseDropDownCommand}"  Visibility="{Binding Path=StartReleaseVisible}"/>
+            <!--            <Separator Margin="0,6,0,0"/>-->
+            <teamExplorer:DropDownLink Margin="3,6,3,0"  Text="Start Hotfix" DropDownMenuCommand="{Binding Path=StartHotfixDropDownCommand}"  Visibility="{Binding Path=StartHotfixVisible}"/>
+            <!--            <Separator Margin="0,6,0,0"/>-->
+            <teamExplorer:DropDownLink Margin="3,6,3,0"  Text="Finish Feature" DropDownMenuCommand="{Binding Path=FinishFeatureDropDownCommand}"  Visibility="{Binding Path=FinishFeatureVisible}"/>
+            <teamExplorer:DropDownLink Margin="3,6,3,0"  Text="Finish Release" DropDownMenuCommand="{Binding Path=FinishReleaseDropDownCommand}"  Visibility="{Binding Path=FinishReleaseVisible}"/>
+            <teamExplorer:DropDownLink Margin="3,6,3,0"  Text="Finish Hotfix" DropDownMenuCommand="{Binding Path=FinishHotfixDropDownCommand}"  Visibility="{Binding Path=FinishHotfixVisible}"/>
+            <teamExplorer:DropDownLink Margin="3,6,3,0" Name="OtherActions" Text="Other">
+                <!--            <Separator Margin="0,6,0,0"/>-->
+                <!--            <Separator Margin="0,6,0,0"/>-->
+                <!--            <Separator Margin="0,6,0,0"/>-->
                 <teamExplorer:DropDownLink.DropDownMenu>
                     <ContextMenu>
-                        <MenuItem Header="Finish Feature" Command="{Binding Path=FinishFeatureDropDownCommand}"></MenuItem>
-                        <MenuItem Header="Finish Release" Command="{Binding Path=FinishReleaseDropDownCommand}"></MenuItem>
-                        <MenuItem Header="Finish Hotfix" Command="{Binding Path=FinishHotfixDropDownCommand}"></MenuItem>
+                        <MenuItem Header="Start Feature" Command="{Binding Path=StartFeatureDropDownCommand}" Visibility="{Binding Path=OtherStartFeatureVisible}"></MenuItem>
+                        <MenuItem Header="Finish Feature" Command="{Binding Path=FinishFeatureDropDownCommand}" Visibility="{Binding Path=OtherFinishFeatureVisible}"></MenuItem>
+                        <Separator/>
+                        <MenuItem Header="Start Release" Command="{Binding Path=StartReleaseDropDownCommand}" Visibility="{Binding Path=OtherStartReleaseVisible}"></MenuItem>
+                        <MenuItem Header="Finish Release" Command="{Binding Path=FinishReleaseDropDownCommand}" Visibility="{Binding Path=OtherFinishReleaseVisible}"></MenuItem>
+                        <Separator/>
+                        <MenuItem Header="Start Hotfix" Command="{Binding Path=StartHotfixDropDownCommand}" Visibility="{Binding Path=OtherStartHotfixVisible}"></MenuItem>
+                        <MenuItem Header="Finish Hotfix" Command="{Binding Path=FinishHotfixDropDownCommand}" Visibility="{Binding Path=OtherFinishHotfixVisible}"></MenuItem>
                     </ContextMenu>
                 </teamExplorer:DropDownLink.DropDownMenu>
             </teamExplorer:DropDownLink>
