@@ -124,6 +124,54 @@ namespace GitFlow.VS.Tests
         }
 
         [TestMethod]
+        public void FinishFeatureShouldRemoveIt()
+        {
+            var gf = new GitFlowWrapper(sampleRepoPath);
+            gf.Init(new GitFlowRepoSettings());
+            gf.StartFeature("X");
+            gf.StartFeature("Y");
+
+            Assert.AreEqual(2, gf.AllFeatures.Count());
+
+            gf.FinishFeature("X");
+
+            Assert.AreEqual(1, gf.AllFeatures.Count());
+        }
+
+        [TestMethod]
+        public void GetAllFeatures()
+        {
+            var gf = new GitFlowWrapper(sampleRepoPath);
+            gf.Init(new GitFlowRepoSettings());
+            gf.StartFeature("X");
+            gf.StartFeature("Y");
+
+            Assert.AreEqual(2, gf.AllFeatures.Count());
+        }
+
+        [TestMethod]
+        public void GetAllReleases()
+        {
+            var gf = new GitFlowWrapper(sampleRepoPath);
+            gf.Init(new GitFlowRepoSettings());
+            gf.StartRelease("1.0");
+            gf.StartRelease("2.0");
+
+            Assert.AreEqual(2, gf.AllReleases.Count());
+        }
+
+        [TestMethod]
+        public void GetAllHotfixes()
+        {
+            var gf = new GitFlowWrapper(sampleRepoPath);
+            gf.Init(new GitFlowRepoSettings());
+            gf.StartHotfix("hf1");
+            gf.StartHotfix("hf2");
+
+            Assert.AreEqual(2, gf.AllHotfixes.Count());
+        }
+
+        [TestMethod]
         public void StartFeature()
         {
             var gf = new GitFlowWrapper(sampleRepoPath);

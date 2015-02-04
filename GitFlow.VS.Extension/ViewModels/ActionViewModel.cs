@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
+using GitFlow.VS;
 using GitFlowVS.Extension.Annotations;
 using Microsoft.TeamFoundation.Controls.WPF.TeamExplorer;
 
@@ -33,6 +36,9 @@ namespace GitFlowVS.Extension.ViewModels
         private bool hotfixPushChanges;
         private bool hotfixForceDeletion;
         private string hotfixTagMessage;
+        private ListItem selectedFeature;
+        private bool hotfixTagMessageSelected;
+        private bool releaseTagMessageSelected;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -75,6 +81,12 @@ namespace GitFlowVS.Extension.ViewModels
 
         public ActionViewModel()
         {
+            FeatureDeleteBranch = true;
+            ReleaseDeleteBranch = true;
+            ReleaseTagMessageSelected = true;
+            HotfixDeleteBranch = true;
+            HotfixTagMessageSelected = true;
+
             ShowStartFeature = Visibility.Collapsed;
             ShowStartRelease = Visibility.Collapsed;
             ShowStartHotfix = Visibility.Collapsed;
@@ -82,7 +94,6 @@ namespace GitFlowVS.Extension.ViewModels
             ShowFinishFeature = Visibility.Collapsed;
             ShowFinishRelease = Visibility.Collapsed;
             ShowFinishHotfix = Visibility.Collapsed;
-
 
             ProgressVisibility = Visibility.Hidden;
 
@@ -98,9 +109,8 @@ namespace GitFlowVS.Extension.ViewModels
             StartHotfixCommand = new CommandHandler(StartHotfix, true);
             CancelStartHotfixCommand = new CommandHandler(CancelStartHotfix, true);
 
-
             FinishFeatureDropDownCommand = new DropDownLinkCommand(p => FinishFeatureDropDown(), p => CanShowFinishFeatureDropDown());
-            FinishFeatureCommand = new CommandHandler(FinishFeature, true);
+            FinishFeatureCommand = new CommandHandler(FinishFeature, CanFinishFeature);
             CancelFinishFeatureCommand = new CommandHandler(CancelFinishFeature, true);
 
             FinishReleaseDropDownCommand = new DropDownLinkCommand(p => FinishReleaseDropDown(), p => CanShowFinishReleaseDropDown());
@@ -110,6 +120,11 @@ namespace GitFlowVS.Extension.ViewModels
             FinishHotfixDropDownCommand = new DropDownLinkCommand(p => FinishHotfixDropDown(), p => CanShowFinishHotfixDropDown());
             FinishHotfixCommand = new CommandHandler(FinishHotfix, true);
             CancelFinishHotfixCommand = new CommandHandler(CancelFinishHotfix, true);
+        }
+
+        public bool CanFinishFeature
+        {
+            get { return SelectedFeature != null; }
         }
 
         private void CancelStartFeature()
@@ -214,6 +229,38 @@ namespace GitFlowVS.Extension.ViewModels
             get { return !String.IsNullOrEmpty(HotfixName); }
         }
 
+        public List<ListItem> AllFeatures
+        {
+            get
+            {
+                var gf = new GitFlowWrapper(GitFlowPage.ActiveRepoPath);
+                return gf.AllFeatures.Select(x => new ListItem {Name = x}).ToList();
+            }
+        }
+
+        public string CurrentFeature
+        {
+            get
+            {
+                var gf = new GitFlowWrapper(GitFlowPage.ActiveRepoPath);
+                if (gf.IsOnFeatureBranch)
+                    return gf.CurrentBranchLeafName;
+                return null;
+            }
+        }
+
+        public ListItem SelectedFeature
+        {
+            get { return selectedFeature; }
+            set
+            {
+                if (Equals(value, selectedFeature)) return;
+                selectedFeature = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         private void StartFeature()
         {
             if (GitFlowPage.ActiveRepo != null)
@@ -262,10 +309,12 @@ namespace GitFlowVS.Extension.ViewModels
                 ProgressVisibility = Visibility.Visible;
 
                 var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
-                gf.FinishFeature(gf.CurrentBranchLeafName, FeatureRebaseOnDevelopmentBranch, FeatureDeleteBranch);
+                gf.FinishFeature(SelectedFeature.Name, FeatureRebaseOnDevelopmentBranch, FeatureDeleteBranch);
 
                 ProgressVisibility = Visibility.Hidden;
                 ShowFinishFeature = Visibility.Collapsed;
+                OnPropertyChanged("AllFeatures");
+                OnPropertyChanged("SelectedFeature");
             }
         }
 
@@ -384,6 +433,12 @@ namespace GitFlowVS.Extension.ViewModels
             {
                 if (value == showFinishFeature) return;
                 showFinishFeature = value;
+                var gf = new GitFlowWrapper(GitFlowPage.ActiveRepoPath);
+                if (gf.IsOnFeatureBranch)
+                {
+                    SelectedFeature = AllFeatures.First(f => f.Name == gf.CurrentBranchLeafName);
+                }
+
                 OnPropertyChanged();
             }
         }
@@ -438,6 +493,27 @@ namespace GitFlowVS.Extension.ViewModels
 
         #region Release
 
+        public bool HotfixTagMessageSelected
+        {
+            get { return hotfixTagMessageSelected; }
+            set
+            {
+                if (value.Equals(hotfixTagMessageSelected)) return;
+                hotfixTagMessageSelected = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool ReleaseTagMessageSelected
+        {
+            get { return releaseTagMessageSelected; }
+            set
+            {
+                if (value.Equals(releaseTagMessageSelected)) return;
+                releaseTagMessageSelected = value;
+                OnPropertyChanged();
+            }
+        }
 
         public string ReleaseTagMessage
         {
@@ -459,11 +535,6 @@ namespace GitFlowVS.Extension.ViewModels
                 releaseDeleteBranch = value;
                 OnPropertyChanged();
             }
-        }
-
-        public bool ReleaseTagMessageEnabled
-        {
-            get { return String.IsNullOrEmpty(ReleaseTagMessage); }
         }
 
         public bool ReleasePushChanges
@@ -537,5 +608,19 @@ namespace GitFlowVS.Extension.ViewModels
         }
 
         #endregion
+    }
+
+    public class ListItem
+    {
+        public string Name { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is ListItem)
+            {
+                return String.Equals(this.Name, ((ListItem) obj).Name);
+            }
+            return base.Equals(obj);
+        }
     }
 }

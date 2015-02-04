@@ -99,30 +99,27 @@
                 </WrapPanel>
             </Grid >
         </Border>
-        <Grid Grid.Row="4" Visibility="{Binding ShowFinishFeature}">
+        <Border Grid.Row="4" Visibility="{Binding ShowFinishFeature}" Style="{StaticResource EmbeddedDialog}">
+        <Grid >
             <Grid.RowDefinitions>
-                <RowDefinition Height="20"></RowDefinition>
-                <RowDefinition Height="20"></RowDefinition>
-                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
-                <TextBlock>Finish feature:</TextBlock>
-                <TextBlock Text="{Binding CurrentFeature}" Margin="10,0,0,0"></TextBlock>
-            </StackPanel>
-            <CheckBox Grid.Row="1" IsChecked="{Binding FeatureRebaseOnDevelopment}" Margin="10,0,0,0">Rebase on development branch</CheckBox>
-            <CheckBox Grid.Row="2"  IsChecked="{Binding FeatureDeleteBranch}" Margin="10,0,0,0">Delete branch</CheckBox>
+                <ComboBox Grid.Row="0" Margin="-2,0,0,6" VerticalAlignment="Center"
+                    IsEditable="false" IsReadOnly="true" DisplayMemberPath="Name"
+                    ItemsSource="{Binding Path=AllFeatures}"
+                    SelectedItem="{Binding Path=SelectedFeature, Mode=TwoWay}"/>
+                <CheckBox Grid.Row="1" IsChecked="{Binding FeatureRebaseOnDevelopment}">Rebase on development branch</CheckBox>
+            <CheckBox Grid.Row="2"  IsChecked="{Binding FeatureDeleteBranch}">Delete branch</CheckBox>
             <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" >
                 <Button Command="{Binding FinishFeatureCommand}">OK</Button>
                 <Button IsDefault="True" Margin="10,0,0,0" Command="{Binding CancelFinishFeatureCommand}">Cancel</Button>
             </StackPanel>
         </Grid>
-
+</Border>
         <Grid Grid.Row="5" Visibility="{Binding ShowFinishRelease}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"></RowDefinition>
@@ -144,7 +141,7 @@
             </StackPanel>
             <Label Grid.Row="0" Grid.Column="1" ></Label>
             <TextBlock Grid.Row="1">Options</TextBlock>
-            <CheckBox Grid.Row="2" IsChecked="True">Tag with this message:</CheckBox>
+            <CheckBox Grid.Row="2" IsChecked="{Binding ReleaseTagMessageSelected}">Tag with this message:</CheckBox>
             <TextBox Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding ReleaseTagMessage}" IsEnabled="{Binding ReleaseTagMessageEnabled}"></TextBox>
             <TextBlock Grid.Row="4">After finishing:</TextBlock>
             <CheckBox Grid.Row="5" IsChecked="{Binding ReleaseDeleteBranch}">Delete branch</CheckBox>
@@ -177,7 +174,7 @@
             </StackPanel>
 
             <TextBlock Grid.Row="1">Options</TextBlock>
-            <CheckBox Grid.Row="2" IsChecked="True" Margin="10,0,0,0">Tag with this message:</CheckBox>
+            <CheckBox Grid.Row="2" IsChecked="{Binding HotfixTagMessageSelected}" Margin="10,0,0,0">Tag with this message:</CheckBox>
             <TextBox Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding HotfixTagMessage}" IsEnabled="{Binding HotfixTagMessageEnabled}" Margin="10,0,0,0"></TextBox>
             <TextBlock Grid.Row="4" VerticalAlignment="Center" >After finishing:</TextBlock>
             <CheckBox Grid.Row="5" IsChecked="{Binding HotfixDeleteBranch}" Margin="10,0,0,0">Delete branch</CheckBox>

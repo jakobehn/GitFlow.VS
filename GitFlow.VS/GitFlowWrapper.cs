@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -108,6 +110,46 @@ namespace GitFlow.VS
                 return status;
             }
         }
+
+        public IEnumerable<string> AllFeatures
+        {
+            get
+            {
+                return GetAllBranchesThatStartsWithConfigPrefix("gitflow.prefix.feature");
+            }
+        }
+
+        public IEnumerable<string> AllReleases
+        {
+            get
+            {
+                return GetAllBranchesThatStartsWithConfigPrefix("gitflow.prefix.release");
+            }
+        }
+
+        public IEnumerable<string> AllHotfixes
+        {
+            get
+            {
+                return GetAllBranchesThatStartsWithConfigPrefix("gitflow.prefix.hotfix");
+            }
+        }
+
+        private IEnumerable<string> GetAllBranchesThatStartsWithConfigPrefix(string config)
+        {
+            if (!IsInitialized)
+                return new List<string>();
+
+            using (var repo = new Repository(repoDirectory))
+            {
+                var prefix = repo.Config.Get<string>(config).Value;
+                return
+                    repo.Branches.Where(b => b.Name.StartsWith(prefix)).Select(c => c.Name.Split('/').Last()).ToList();
+            }   
+        }
+
+
+
 
         public bool IsOnDevelopBranch
         {
