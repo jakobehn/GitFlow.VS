@@ -27,7 +27,7 @@ namespace GitFlowVS.Extension.UI
         {
             InitializeComponent();
 
-            this.model = new ActionViewModel();
+            model = new ActionViewModel();
             DataContext = model;
 
         }

@@ -143,7 +143,7 @@
       <DependentUpon>InstallGitFlowUI.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ActionViewModel.cs" />
-    <Compile Include="ViewModels\CommandHandler.cs" />
+    <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="ViewModels\FinishFeatureModel.cs" />
     <Compile Include="ViewModels\FinishHotfixModel.cs" />
     <Compile Include="ViewModels\FinishReleaseModel.cs" />

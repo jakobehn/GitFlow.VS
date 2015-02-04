@@ -13,14 +13,14 @@ namespace GitFlowVS.Extension
         public GitFlowNavigationItem([Import(typeof(SVsServiceProvider))] IServiceProvider serviceProvider)
             : base(serviceProvider)
         {
-            this.IsVisible = true;
-            this.Text = "GitFlow";
-            this.Image = Resources.LinkIcon;
+            IsVisible = true;
+            Text = "GitFlow";
+            Image = Resources.LinkIcon;
         }
 
         public override void Execute()
         {
-            var service = this.GetService<ITeamExplorer>();
+            var service = GetService<ITeamExplorer>();
             if (service == null)
             {
                 return;

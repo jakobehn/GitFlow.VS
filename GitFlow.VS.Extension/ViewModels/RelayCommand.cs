@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace GitFlowVS.Extension.ViewModels
@@ -37,40 +38,39 @@ namespace GitFlowVS.Extension.ViewModels
             add
             {
                 CommandManager.RequerySuggested += value;
-                this.CanExecuteChangedInternal += value;
+                CanExecuteChangedInternal += value;
             }
 
             remove
             {
                 CommandManager.RequerySuggested -= value;
-                this.CanExecuteChangedInternal -= value;
+                CanExecuteChangedInternal -= value;
             }
         }
 
         public bool CanExecute(object parameter)
         {
-            return this.canExecute != null && this.canExecute(parameter);
+            return canExecute != null && canExecute(parameter);
         }
 
-        public void Execute(object parameter)
+        public async void Execute(object parameter)
         {
-            this.execute(parameter);
+            await Task.Run(() => execute(parameter));
         }
 
         public void OnCanExecuteChanged()
         {
-            EventHandler handler = this.CanExecuteChangedInternal;
+            EventHandler handler = CanExecuteChangedInternal;
             if (handler != null)
             {
-                //DispatcherHelper.BeginInvokeOnUIThread(() => handler.Invoke(this, EventArgs.Empty));
                 handler.Invoke(this, EventArgs.Empty);
             }
         }
 
         public void Destroy()
         {
-            this.canExecute = _ => false;
-            this.execute = _ => { return; };
+            canExecute = _ => false;
+            execute = _ => { };
         }
 
         private static bool DefaultCanExecute(object parameter)

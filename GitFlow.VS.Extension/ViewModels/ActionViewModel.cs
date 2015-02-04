@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using GitFlow.VS;
@@ -347,14 +348,16 @@ namespace GitFlowVS.Extension.ViewModels
             }
         }
 
-        private void StartHotfix()
+        private async void StartHotfix()
         {
             if (GitFlowPage.ActiveRepo != null)
             {
                 GitFlowPage.ActiveOutputWindow();
                 ProgressVisibility = Visibility.Visible;
+
                 var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
                 gf.StartHotfix(HotfixName);
+
                 ProgressVisibility = Visibility.Hidden;
                 ShowStartHotfix = Visibility.Collapsed;
                 HotfixName = String.Empty;
@@ -682,7 +685,7 @@ namespace GitFlowVS.Extension.ViewModels
         {
             if (obj is ListItem)
             {
-                return String.Equals(this.Name, ((ListItem) obj).Name);
+                return String.Equals(Name, ((ListItem) obj).Name);
             }
             return base.Equals(obj);
         }
