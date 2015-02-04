@@ -50,7 +50,7 @@ namespace GitFlowVS.Extension.UI
                 }
                 else
                 {
-                    parent.FinishAction();
+                    //parent.FinishAction();
                 }
             }
             catch (Exception ex)

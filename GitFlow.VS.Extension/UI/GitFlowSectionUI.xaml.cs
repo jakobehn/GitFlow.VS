@@ -85,45 +85,6 @@ namespace GitFlowVS.Extension
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            parent.Init();
-        }
 
-        private void StartFeature_Click(object sender, RoutedEventArgs e)
-        {
-            parent.StartFeature();
-        }
-
-        private void FinishFeature_Click(object sender, RoutedEventArgs e)
-        {
-            parent.FinishFeature();
-        }
-
-        private void StartRelease_Click(object sender, RoutedEventArgs e)
-        {
-            parent.StartRelease();
-        }
-
-        private void FinishRelease_Click(object sender, RoutedEventArgs e)
-        {
-            parent.FinishRelease();
-        }
-
-        private void StartHotfix_Click(object sender, RoutedEventArgs e)
-        {
-            parent.StartHotfix();
-        }
-
-        private void FinishHotfix_Click(object sender, RoutedEventArgs e)
-        {
-            parent.FinishHotfix();
-        }
-
-        private void ShowAll_Click(object sender, RoutedEventArgs e)
-        {
-            model.ShowAll = true;
-            UpdateModel();
-        }
     }
 }

@@ -8,6 +8,7 @@ using System.Windows.Input;
 using GitFlow.VS;
 using GitFlowVS.Extension.Annotations;
 using Microsoft.TeamFoundation.Controls.WPF.TeamExplorer;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace GitFlowVS.Extension.ViewModels
 {
@@ -40,6 +41,8 @@ namespace GitFlowVS.Extension.ViewModels
         private ListItem selectedFeature;
         private bool hotfixTagMessageSelected;
         private bool releaseTagMessageSelected;
+        private ListItem selectedHotfix;
+        private ListItem selectedRelease;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -62,9 +65,6 @@ namespace GitFlowVS.Extension.ViewModels
         public ICommand StartHotfixDropDownCommand { get; private set; }
         public ICommand StartHotfixCommand { get; private set; }
         public ICommand CancelStartHotfixCommand { get; private set; }
-
-
-
 
         public ICommand FinishFeatureDropDownCommand { get; private set; }
         public ICommand FinishFeatureCommand { get; private set; }
@@ -99,28 +99,38 @@ namespace GitFlowVS.Extension.ViewModels
             ProgressVisibility = Visibility.Hidden;
 
             StartFeatureDropDownCommand = new DropDownLinkCommand(p => StartFeatureDropDown(), p => CanShowStartFeatureDropDown());
-            StartFeatureCommand = new CommandHandler(StartFeature, true);
-            CancelStartFeatureCommand = new CommandHandler(CancelStartFeature, true);
+            StartFeatureCommand = new RelayCommand(p => StartFeature(), p => CanCreateFeature);
+            CancelStartFeatureCommand = new RelayCommand(p => CancelStartFeature(), p => true);
 
             StartReleaseDropDownCommand = new DropDownLinkCommand(p => StartReleaseDropDown(), p => CanShowStartReleaseDropDown());
-            StartReleaseCommand = new CommandHandler(StartRelease, true);
-            CancelStartReleaseCommand = new CommandHandler(CancelStartRelease, true);
+            StartReleaseCommand = new RelayCommand(p => StartRelease(), p => CanCreateRelease);
+            CancelStartReleaseCommand = new RelayCommand(p => CancelStartRelease(), p => true);
 
             StartHotfixDropDownCommand = new DropDownLinkCommand(p => StartHotfixDropDown(), p => CanShowStartHotfixDropDown());
-            StartHotfixCommand = new CommandHandler(StartHotfix, true);
-            CancelStartHotfixCommand = new CommandHandler(CancelStartHotfix, true);
+            StartHotfixCommand = new RelayCommand(p => StartHotfix(), p => CanCreateHotfix);
+            CancelStartHotfixCommand = new RelayCommand(p => CancelStartHotfix(), p => true);
 
             FinishFeatureDropDownCommand = new DropDownLinkCommand(p => FinishFeatureDropDown(), p => CanShowFinishFeatureDropDown());
-            FinishFeatureCommand = new CommandHandler(FinishFeature, CanFinishFeature);
-            CancelFinishFeatureCommand = new CommandHandler(CancelFinishFeature, true);
+            FinishFeatureCommand = new RelayCommand(p => FinishFeature(), p => CanFinishFeature);
+            CancelFinishFeatureCommand = new RelayCommand(p => CancelFinishFeature(), p => true);
 
             FinishReleaseDropDownCommand = new DropDownLinkCommand(p => FinishReleaseDropDown(), p => CanShowFinishReleaseDropDown());
-            FinishReleaseCommand = new CommandHandler(FinishRelease, true);
-            CancelFinishReleaseCommand = new CommandHandler(CancelFinishRelease, true);
+            FinishReleaseCommand = new RelayCommand(p => FinishRelease(), p => CanFinishRelease);
+            CancelFinishReleaseCommand = new RelayCommand(p => CancelFinishRelease(), p => true);
 
             FinishHotfixDropDownCommand = new DropDownLinkCommand(p => FinishHotfixDropDown(), p => CanShowFinishHotfixDropDown());
-            FinishHotfixCommand = new CommandHandler(FinishHotfix, true);
-            CancelFinishHotfixCommand = new CommandHandler(CancelFinishHotfix, true);
+            FinishHotfixCommand = new RelayCommand(p => FinishHotfix(), p => CanFinishHotfix);
+            CancelFinishHotfixCommand = new RelayCommand(p => CancelFinishHotfix(), p => true);
+        }
+
+        public bool CanFinishRelease
+        {
+            get { return SelectedRelease != null; }
+        }
+
+        public bool CanFinishHotfix
+        {
+            get { return SelectedHotfix != null; }
         }
 
         public bool CanFinishFeature
@@ -184,34 +194,46 @@ namespace GitFlowVS.Extension.ViewModels
 
         private void StartFeatureDropDown()
         {
+            HideAll();
             ShowStartFeature = Visibility.Visible;
+        }
+
+        private void HideAll()
+        {
+            ShowStartFeature = Visibility.Collapsed;
             ShowStartRelease = Visibility.Collapsed;
             ShowStartHotfix = Visibility.Collapsed;
+            ShowFinishFeature = Visibility.Collapsed;
+            ShowFinishRelease = Visibility.Collapsed;
+            ShowFinishHotfix = Visibility.Collapsed;
         }
+
         private void StartHotfixDropDown()
         {
+            HideAll();
             ShowStartHotfix = Visibility.Visible;
-            ShowStartRelease = Visibility.Collapsed;
-            ShowStartFeature = Visibility.Collapsed;
 
         }
         private void StartReleaseDropDown()
         {
+            HideAll();
             ShowStartRelease = Visibility.Visible;
-            ShowStartFeature = Visibility.Collapsed;
-            ShowStartHotfix = Visibility.Collapsed;
         }
 
         private void FinishFeatureDropDown()
         {
+            HideAll();
             ShowFinishFeature = Visibility.Visible;
         }
+
         private void FinishHotfixDropDown()
         {
+            HideAll();
             ShowFinishHotfix = Visibility.Visible;
         }
         private void FinishReleaseDropDown()
         {
+            HideAll();
             ShowFinishRelease = Visibility.Visible;
         }
 
@@ -222,7 +244,10 @@ namespace GitFlowVS.Extension.ViewModels
 
         public bool CanCreateRelease
         {
-            get { return !String.IsNullOrEmpty(ReleaseName); }
+            get
+            {
+                return !String.IsNullOrEmpty(ReleaseName);
+            }
         }
 
         public bool CanCreateHotfix
@@ -239,17 +264,6 @@ namespace GitFlowVS.Extension.ViewModels
             }
         }
 
-        public string CurrentFeature
-        {
-            get
-            {
-                var gf = new GitFlowWrapper(GitFlowPage.ActiveRepoPath);
-                if (gf.IsOnFeatureBranch)
-                    return gf.CurrentBranchLeafName;
-                return null;
-            }
-        }
-
         public ListItem SelectedFeature
         {
             get { return selectedFeature; }
@@ -257,6 +271,47 @@ namespace GitFlowVS.Extension.ViewModels
             {
                 if (Equals(value, selectedFeature)) return;
                 selectedFeature = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public List<ListItem> AllReleases
+        {
+            get
+            {
+                var gf = new GitFlowWrapper(GitFlowPage.ActiveRepoPath);
+                return gf.AllReleases.Select(x => new ListItem { Name = x }).ToList();
+            }
+        }
+
+        public ListItem SelectedRelease
+        {
+            get { return selectedRelease; }
+            set
+            {
+                if (Equals(value, selectedRelease)) return;
+                selectedRelease = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public List<ListItem> AllHotfixes
+        {
+            get
+            {
+                var gf = new GitFlowWrapper(GitFlowPage.ActiveRepoPath);
+                return gf.AllHotfixes.Select(x => new ListItem { Name = x }).ToList();
+            }
+        }
+
+
+        public ListItem SelectedHotfix
+        {
+            get { return selectedHotfix; }
+            set
+            {
+                if (Equals(value, selectedHotfix)) return;
+                selectedHotfix = value;
                 OnPropertyChanged();
             }
         }
@@ -272,6 +327,8 @@ namespace GitFlowVS.Extension.ViewModels
                 gf.StartFeature(FeatureName);
                 ProgressVisibility = Visibility.Hidden;
                 ShowStartFeature =Visibility.Collapsed;
+                SelectedFeature = null;
+                FeatureName = String.Empty;
             }
         }
 
@@ -285,6 +342,8 @@ namespace GitFlowVS.Extension.ViewModels
                 gf.StartRelease(ReleaseName);
                 ProgressVisibility = Visibility.Hidden;
                 ShowStartRelease = Visibility.Collapsed;
+                SelectedRelease = null;
+                ReleaseName = String.Empty;
             }
         }
 
@@ -298,6 +357,8 @@ namespace GitFlowVS.Extension.ViewModels
                 gf.StartHotfix(HotfixName);
                 ProgressVisibility = Visibility.Hidden;
                 ShowStartHotfix = Visibility.Collapsed;
+                HotfixName = String.Empty;
+                SelectedHotfix = null;
             }
         }
 
@@ -327,7 +388,7 @@ namespace GitFlowVS.Extension.ViewModels
                 ProgressVisibility = Visibility.Visible;
 
                 var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
-                gf.FinishRelease(gf.CurrentBranchLeafName, ReleaseTagMessage, ReleaseDeleteBranch, ReleaseForceDeletion, ReleasePushChanges);
+                gf.FinishRelease(SelectedRelease.Name, ReleaseTagMessage, ReleaseDeleteBranch, ReleaseForceDeletion, ReleasePushChanges);
                 ProgressVisibility = Visibility.Hidden;
                 ShowFinishRelease = Visibility.Collapsed;
             }
@@ -342,7 +403,7 @@ namespace GitFlowVS.Extension.ViewModels
                 ProgressVisibility = Visibility.Visible;
 
                 var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
-                gf.FinishHotfix(gf.CurrentBranchLeafName, HotfixTagMessage, HotfixDeleteBranch, HotfixForceDeletion, HotfixPushChanges);
+                gf.FinishHotfix(SelectedHotfix.Name, HotfixTagMessage, HotfixDeleteBranch, HotfixForceDeletion, HotfixPushChanges);
                 ProgressVisibility = Visibility.Hidden;
                 ShowFinishHotfix = Visibility.Collapsed;
             }
@@ -357,6 +418,7 @@ namespace GitFlowVS.Extension.ViewModels
                 if (value == releaseName) return;
                 releaseName = value;
                 OnPropertyChanged();
+                OnPropertyChanged("CanCreateRelease");
             }
         }
 
@@ -368,6 +430,7 @@ namespace GitFlowVS.Extension.ViewModels
                 if (value == hotfixName) return;
                 hotfixName = value;
                 OnPropertyChanged();
+                OnPropertyChanged("CanCreateHotfix");
             }
         }
 

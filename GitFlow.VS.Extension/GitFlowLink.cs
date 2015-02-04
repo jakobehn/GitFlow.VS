@@ -14,9 +14,8 @@ namespace GitFlowVS.Extension
             : base(serviceProvider)
         {
             this.IsVisible = true;
-
             this.Text = "GitFlow";
-            this.Image = Resources.icon;
+            this.Image = Resources.LinkIcon;
         }
 
         public override void Execute()

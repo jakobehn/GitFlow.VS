@@ -145,17 +145,8 @@
     <Compile Include="ViewModels\ActionViewModel.cs" />
     <Compile Include="ViewModels\CommandHandler.cs" />
     <Compile Include="ViewModels\FinishFeatureModel.cs" />
-    <Compile Include="UI\FinishFeatureUI.xaml.cs">
-      <DependentUpon>FinishFeatureUI.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\FinishHotfixModel.cs" />
-    <Compile Include="UI\FinishHotfixUI.xaml.cs">
-      <DependentUpon>FinishHotfixUI.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\FinishReleaseModel.cs" />
-    <Compile Include="UI\FinishReleaseUI.xaml.cs">
-      <DependentUpon>FinishReleaseUI.xaml</DependentUpon>
-    </Compile>
     <Compile Include="GitFlowSection.cs" />
     <Compile Include="UI\GitFlowSectionUI.xaml.cs">
       <DependentUpon>GitFlowSectionUI.xaml</DependentUpon>
@@ -222,18 +213,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="UI\FinishFeatureUI.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\FinishHotfixUI.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\FinishReleaseUI.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="UI\GitFlowActionsUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

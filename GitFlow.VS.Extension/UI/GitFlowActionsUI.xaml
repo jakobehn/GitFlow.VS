@@ -51,7 +51,7 @@
                                IsRequired="true" AcceptsReturn="false" Text="{Binding Path=FeatureName, Mode=TwoWay}"/>
                 <WrapPanel x:Uid="featureActionsPanel" Grid.Row="1" Margin="0,0,0,0">
                     <Button x:Uid="createReleaseButton" VerticalAlignment="Center" Margin="0" Padding="6,2,6,2" MinWidth="75"
-                  MinHeight="23" Command="{Binding Path=StartFeatureCommand}" IsEnabled="{Binding CanCreateFeature}">Create _Feature</Button>
+                  MinHeight="23" Command="{Binding Path=StartFeatureCommand}">Create _Feature</Button>
                     
                     <teamExplorer:TextLink x:Uid="cancelCreateFeatureLink" VerticalAlignment="Center" Margin="6,0,0,0" Text="Cancel"
                           Localization.Attributes="Text (Modifiable Readable Text)"
@@ -70,8 +70,8 @@
                                Localization.Attributes="HintText (Modifiable Readable Text) NameAndAutomationId (Modifiable Readable Text)"
                                IsRequired="true" AcceptsReturn="false" Text="{Binding Path=ReleaseName, Mode=TwoWay}"/>
                 <WrapPanel x:Uid="releaseActionsPanel" Grid.Row="1" Margin="0,0,0,0">
-                    <Button x:Uid="createReleaseButton" VerticalAlignment="Center" Margin="0" Padding="6,2,6,2" MinWidth="75"
-                  MinHeight="23" Command="{Binding Path=StartReleaseCommand}" IsEnabled="{Binding CanCreateRelease}">Create _Release</Button>
+                    <Button x:Uid="createReleaseButton" VerticalAlignment="Center" Margin="0" Padding="6,2,6,2" MinWidth="75" MinHeight="23" 
+                            Command="{Binding Path=StartReleaseCommand}">Create _Release</Button>
 
                     <teamExplorer:TextLink x:Uid="cancelCreateReleaseLink" VerticalAlignment="Center" Margin="6,0,0,0" Text="Cancel"
                           Localization.Attributes="Text (Modifiable Readable Text)"
@@ -91,7 +91,7 @@
                                IsRequired="true" AcceptsReturn="false" Text="{Binding Path=HotfixName, Mode=TwoWay}"/>
                 <WrapPanel x:Uid="hotfixActionsPanel" Grid.Row="1" Margin="0,0,0,0">
                     <Button x:Uid="createHotfixButton" VerticalAlignment="Center" Margin="0" Padding="6,2,6,2" MinWidth="75"
-                  MinHeight="23" Command="{Binding Path=StartHotfixCommand}" IsEnabled="{Binding CanCreateHotfix}">Create _Hotfix</Button>
+                  MinHeight="23" Command="{Binding Path=StartHotfixCommand}">Create _Hotfix</Button>
 
                     <teamExplorer:TextLink x:Uid="cancelCreateHotfixLink" VerticalAlignment="Center" Margin="6,0,0,0" Text="Cancel"
                           Localization.Attributes="Text (Modifiable Readable Text)"
@@ -114,77 +114,70 @@
                     SelectedItem="{Binding Path=SelectedFeature, Mode=TwoWay}"/>
                 <CheckBox Grid.Row="1" IsChecked="{Binding FeatureRebaseOnDevelopment}">Rebase on development branch</CheckBox>
             <CheckBox Grid.Row="2"  IsChecked="{Binding FeatureDeleteBranch}">Delete branch</CheckBox>
-            <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" >
+            <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,10,0,0" >
                 <Button Command="{Binding FinishFeatureCommand}">OK</Button>
                 <Button IsDefault="True" Margin="10,0,0,0" Command="{Binding CancelFinishFeatureCommand}">Cancel</Button>
             </StackPanel>
         </Grid>
 </Border>
-        <Grid Grid.Row="5" Visibility="{Binding ShowFinishRelease}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="30"></RowDefinition>
-                <RowDefinition Height="20"></RowDefinition>
-                <RowDefinition Height="20"></RowDefinition>
-                <RowDefinition Height="20"></RowDefinition>
-                <RowDefinition Height="30"></RowDefinition>
-                <RowDefinition Height="20"></RowDefinition>
-                <RowDefinition Height="20"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
-                <TextBlock>Finish release:</TextBlock>
-                <TextBlock Text="{Binding CurrentRelease}" Margin="10,0,0,0"></TextBlock>
-            </StackPanel>
-            <Label Grid.Row="0" Grid.Column="1" ></Label>
-            <TextBlock Grid.Row="1">Options</TextBlock>
-            <CheckBox Grid.Row="2" IsChecked="{Binding ReleaseTagMessageSelected}">Tag with this message:</CheckBox>
-            <TextBox Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding ReleaseTagMessage}" IsEnabled="{Binding ReleaseTagMessageEnabled}"></TextBox>
-            <TextBlock Grid.Row="4">After finishing:</TextBlock>
-            <CheckBox Grid.Row="5" IsChecked="{Binding ReleaseDeleteBranch}">Delete branch</CheckBox>
-            <CheckBox Grid.Row="5" Grid.Column="1" IsChecked="{Binding ReleaseForceDeletion}">Force deletion</CheckBox>
-            <CheckBox Grid.Row="6" IsChecked="{Binding ReleasePushChanges}">Push changes to remote</CheckBox>
-            <StackPanel Grid.Row="7" Grid.ColumnSpan="2" Orientation="Horizontal">
-                <Button IsDefault="True" Command="{Binding FinishReleaseCommand}">OK</Button>
-                <Button Margin="10,0,0,0" Command="{Binding CancelFinishReleaseCommand}">Cancel</Button>
-            </StackPanel>
-        </Grid>
-
-        <Grid Grid.Row="6" Visibility="{Binding ShowFinishHotfix}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="30"></RowDefinition>
-                <RowDefinition Height="20"></RowDefinition>
-                <RowDefinition Height="20"></RowDefinition>
-                <RowDefinition Height="20"></RowDefinition>
-                <RowDefinition Height="30"></RowDefinition>
-                <RowDefinition Height="20"></RowDefinition>
-                <RowDefinition Height="20"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
-                <TextBlock>Finish hotfix:</TextBlock>
-                <TextBlock Text="{Binding CurrentHotfix}" Margin="10,0,0,0"></TextBlock>
-            </StackPanel>
-
-            <TextBlock Grid.Row="1">Options</TextBlock>
-            <CheckBox Grid.Row="2" IsChecked="{Binding HotfixTagMessageSelected}" Margin="10,0,0,0">Tag with this message:</CheckBox>
-            <TextBox Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding HotfixTagMessage}" IsEnabled="{Binding HotfixTagMessageEnabled}" Margin="10,0,0,0"></TextBox>
-            <TextBlock Grid.Row="4" VerticalAlignment="Center" >After finishing:</TextBlock>
-            <CheckBox Grid.Row="5" IsChecked="{Binding HotfixDeleteBranch}" Margin="10,0,0,0">Delete branch</CheckBox>
-            <CheckBox Grid.Row="5" Grid.Column="1" IsChecked="{Binding HotfixForceDeletion}" Margin="10,0,0,0">Force deletion</CheckBox>
-            <CheckBox Grid.Row="6" IsChecked="{Binding HotfixPushChanges}" Margin="10,0,0,0">Push changes to remote</CheckBox>
-            <StackPanel Grid.Row="7" Grid.ColumnSpan="2" Orientation="Horizontal">
-                <Button IsDefault="True" Command="{Binding FinishHotfixCommand}">OK</Button>
-                <Button Margin="10,0,0,0" Command="{Binding CancelFinishHotfixCommand}">Cancel</Button>
-            </StackPanel>
-        </Grid>
+        <Border Grid.Row="5" Visibility="{Binding ShowFinishRelease}" Style="{StaticResource EmbeddedDialog}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <ComboBox Grid.Row="0" Margin="-2,0,0,6" VerticalAlignment="Center"
+                    IsEditable="false" IsReadOnly="true" DisplayMemberPath="Name"
+                    ItemsSource="{Binding Path=AllReleases, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding Path=SelectedRelease, Mode=TwoWay}"/>
+                <wpf:LabeledTextBox Grid.Row="1" Margin="-2,0,0,6"
+                               HintText="Tag with message &lt;Optional&gt;" NameAndAutomationId="Release Tag Message"
+                               Localization.Attributes="HintText (Modifiable Readable Text) NameAndAutomationId (Modifiable Readable Text)"
+                               IsRequired="true" AcceptsReturn="false" Text="{Binding Path=ReleaseTagMessage, Mode=TwoWay}"/>
+                <TextBlock Grid.Row="2">After finishing:</TextBlock>
+                <CheckBox Grid.Row="3" IsChecked="{Binding ReleaseDeleteBranch}">Delete branch</CheckBox>
+                <CheckBox Grid.Row="4" IsChecked="{Binding ReleaseForceDeletion}">Force deletion</CheckBox>
+                <CheckBox Grid.Row="5" IsChecked="{Binding ReleasePushChanges}">Push changes to remote</CheckBox>
+                <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,10,0,0" >
+                    <Button Command="{Binding FinishReleaseCommand}">OK</Button>
+                    <Button IsDefault="True" Margin="10,0,0,0" Command="{Binding CancelFinishReleaseCommand}">Cancel</Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Border Grid.Row="6" Visibility="{Binding ShowFinishHotfix}" Style="{StaticResource EmbeddedDialog}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <ComboBox Grid.Row="0" Margin="-2,0,0,6" VerticalAlignment="Center"
+                    IsEditable="false" IsReadOnly="true" DisplayMemberPath="Name"
+                    ItemsSource="{Binding Path=AllHotfixes, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding Path=SelectedHotfix, Mode=TwoWay}"/>
+                <wpf:LabeledTextBox Grid.Row="1" Margin="-2,0,0,6"
+                               HintText="Tag with message &lt;Optional&gt;" NameAndAutomationId="Hotfix Tag Message"
+                               Localization.Attributes="HintText (Modifiable Readable Text) NameAndAutomationId (Modifiable Readable Text)"
+                               IsRequired="true" AcceptsReturn="false" Text="{Binding Path=HotfixTagMessage, Mode=TwoWay}"/>
+                <TextBlock Grid.Row="2">After finishing:</TextBlock>
+                <CheckBox Grid.Row="3" IsChecked="{Binding HotfixDeleteBranch}">Delete branch</CheckBox>
+                <CheckBox Grid.Row="4" IsChecked="{Binding HotfixForceDeletion}">Force deletion</CheckBox>
+                <CheckBox Grid.Row="5" IsChecked="{Binding HotfixPushChanges}">Push changes to remote</CheckBox>
+                <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,10,0,0" >
+                    <Button Command="{Binding FinishHotfixCommand}">OK</Button>
+                    <Button IsDefault="True" Margin="10,0,0,0" Command="{Binding CancelFinishHotfixCommand}">Cancel</Button>
+                </StackPanel>
+            </Grid>
+        </Border>
         <ProgressBar Grid.Row="7" Margin="10"  Visibility="{Binding Path=ProgressVisibility}" Height="20" Minimum="0" Maximum="100" IsIndeterminate="True" />
     </Grid>
 </UserControl>

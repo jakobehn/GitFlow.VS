@@ -26,9 +26,9 @@ namespace GitFlowVS.Extension.ViewModels
         {
             InitializeModel();
 
-            OkCommand = new CommandHandler(OnInitialize, true);
-            CancelCommand = new CommandHandler(OnCancel, true);
-            OnShowInitCommand = new CommandHandler(OnShowInit, true);
+            OkCommand = new RelayCommand(p => OnInitialize(), p => true);
+            CancelCommand = new RelayCommand(p=> OnCancel(), p => true);
+            OnShowInitCommand = new RelayCommand(p => OnShowInit(), p => true);
         }
 
         private void InitializeModel()
