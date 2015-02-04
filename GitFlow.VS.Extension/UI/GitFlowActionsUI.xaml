@@ -110,7 +110,7 @@
             </Grid.RowDefinitions>
                 <ComboBox Grid.Row="0" Margin="-2,0,0,6" VerticalAlignment="Center"
                     IsEditable="false" IsReadOnly="true" DisplayMemberPath="Name"
-                    ItemsSource="{Binding Path=AllFeatures}"
+                    ItemsSource="{Binding Path=AllFeatures, UpdateSourceTrigger=PropertyChanged}"
                     SelectedItem="{Binding Path=SelectedFeature, Mode=TwoWay}"/>
                 <CheckBox Grid.Row="1" IsChecked="{Binding FeatureRebaseOnDevelopment}">Rebase on development branch</CheckBox>
             <CheckBox Grid.Row="2"  IsChecked="{Binding FeatureDeleteBranch}">Delete branch</CheckBox>

@@ -11,6 +11,7 @@ using Microsoft.TeamFoundation.Controls.WPF.TeamExplorer;
 
 namespace GitFlowVS.Extension.ViewModels
 {
+
     public class ActionViewModel : INotifyPropertyChanged
     {
         private Visibility showStartFeature;
