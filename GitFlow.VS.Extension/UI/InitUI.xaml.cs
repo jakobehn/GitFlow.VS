@@ -13,10 +13,10 @@ namespace GitFlowVS.Extension
     {
         private readonly InitModel model;
 
-        public InitUi(TeamExplorerBaseSection parent)
+        public InitUi(InitModel model)
         {
+            this.model = model;
             InitializeComponent();
-            model = new InitModel(parent);
             DataContext = model;
         }
 

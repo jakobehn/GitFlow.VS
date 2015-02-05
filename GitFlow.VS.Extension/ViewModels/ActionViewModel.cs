@@ -351,6 +351,7 @@ namespace GitFlowVS.Extension.ViewModels
                 ProgressVisibility = Visibility.Hidden;
                 FeatureName = String.Empty;
                 UpdateMenus();
+                HideAll();
                 OnPropertyChanged("AllFeatures");
             }
         }
@@ -371,6 +372,7 @@ namespace GitFlowVS.Extension.ViewModels
                 ShowStartRelease = Visibility.Collapsed;
                 ReleaseName = String.Empty;
                 UpdateMenus();
+                HideAll();
                 OnPropertyChanged("AllReleases");
             }
         }
@@ -398,6 +400,7 @@ namespace GitFlowVS.Extension.ViewModels
                 ShowStartHotfix = Visibility.Collapsed;
                 HotfixName = String.Empty;
                 UpdateMenus();
+                HideAll();
                 OnPropertyChanged("AllHotfixes");
             }
         }
@@ -417,6 +420,7 @@ namespace GitFlowVS.Extension.ViewModels
                     ShowErrorMessage(result);
                 }
 
+                HideAll();
                 ProgressVisibility = Visibility.Hidden;
                 ShowFinishFeature = Visibility.Collapsed;
                 OnPropertyChanged("AllFeatures");
@@ -438,6 +442,7 @@ namespace GitFlowVS.Extension.ViewModels
                     ShowErrorMessage(result);
                 }
 
+                HideAll();
                 ProgressVisibility = Visibility.Hidden;
                 ShowFinishRelease = Visibility.Collapsed;
                 OnPropertyChanged("AllReleases");
@@ -460,6 +465,7 @@ namespace GitFlowVS.Extension.ViewModels
                     ShowErrorMessage(result);
                 }
 
+                HideAll();
                 ProgressVisibility = Visibility.Hidden;
                 ShowFinishHotfix = Visibility.Collapsed;
                 OnPropertyChanged("AllHotfixes");
@@ -855,7 +861,7 @@ namespace GitFlowVS.Extension.ViewModels
 
         public void Update()
         {
-            OnPropertyChanged();
+            UpdateMenus();
         }
     }
 }

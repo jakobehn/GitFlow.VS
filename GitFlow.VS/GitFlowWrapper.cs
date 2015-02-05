@@ -292,7 +292,7 @@ namespace GitFlow.VS
 
             using (var p = CreateGitFlowProcess("init -f", repoDirectory))
             {
-                OnCommandOutputDataReceived(new CommandOutputEventArgs("Running git " + p.StartInfo.Arguments));
+                OnCommandOutputDataReceived(new CommandOutputEventArgs("Running git " + p.StartInfo.Arguments + Environment.NewLine));
                 p.Start();
                 p.ErrorDataReceived += OnErrorReceived;
                 p.BeginErrorReadLine();

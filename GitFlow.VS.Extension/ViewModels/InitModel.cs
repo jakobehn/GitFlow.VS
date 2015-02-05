@@ -178,5 +178,10 @@ namespace GitFlowVS.Extension.ViewModels
             }
         }
 
+        public void Update()
+        {
+            OnPropertyChanged("InitGridVisibility");
+            OnPropertyChanged("OnShowInitCommand");
+        }
     }
 }

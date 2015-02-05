@@ -48,6 +48,12 @@ namespace GitFlowVS.Extension
                         new Action(() =>
                             ((GitFlowActionSection) section).UpdateVisibleState()));
                 }
+                else if (section is GitFlowInitSection)
+                {
+                    System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+                        new Action(() =>
+                            ((GitFlowInitSection)section).UpdateVisibleState()));
+                }
             }
         }
 

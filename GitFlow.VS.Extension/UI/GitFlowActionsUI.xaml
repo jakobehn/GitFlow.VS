@@ -127,7 +127,9 @@
             <CheckBox Grid.Row="2"  IsChecked="{Binding FeatureDeleteBranch}">Delete branch</CheckBox>
             <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,10,0,0" >
                 <Button Command="{Binding FinishFeatureCommand}">OK</Button>
-                <Button IsDefault="True" Margin="10,0,0,0" Command="{Binding CancelFinishFeatureCommand}">Cancel</Button>
+                    <teamExplorer:TextLink x:Uid="cancelFinishFeature" VerticalAlignment="Center" Margin="6,0,0,0" Text="Cancel"
+                          Localization.Attributes="Text (Modifiable Readable Text)"
+                          Command="{Binding Path=CancelFinishFeatureCommand}"/>
             </StackPanel>
         </Grid>
 </Border>
@@ -156,7 +158,9 @@
                 <CheckBox Grid.Row="5" IsChecked="{Binding ReleasePushChanges}">Push changes to remote</CheckBox>
                 <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,10,0,0" >
                     <Button Command="{Binding FinishReleaseCommand}">OK</Button>
-                    <Button IsDefault="True" Margin="10,0,0,0" Command="{Binding CancelFinishReleaseCommand}">Cancel</Button>
+                    <teamExplorer:TextLink x:Uid="cancelFinishFeature" VerticalAlignment="Center" Margin="6,0,0,0" Text="Cancel"
+                          Localization.Attributes="Text (Modifiable Readable Text)"
+                          Command="{Binding Path=CancelFinishReleaseCommand}"/>
                 </StackPanel>
             </Grid>
         </Border>
@@ -185,7 +189,9 @@
                 <CheckBox Grid.Row="5" IsChecked="{Binding HotfixPushChanges}">Push changes to remote</CheckBox>
                 <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,10,0,0" >
                     <Button Command="{Binding FinishHotfixCommand}">OK</Button>
-                    <Button IsDefault="True" Margin="10,0,0,0" Command="{Binding CancelFinishHotfixCommand}">Cancel</Button>
+                    <teamExplorer:TextLink x:Uid="cancelFinishFeature" VerticalAlignment="Center" Margin="6,0,0,0" Text="Cancel"
+                          Localization.Attributes="Text (Modifiable Readable Text)"
+                          Command="{Binding Path=CancelFinishHotfixCommand}"/>
                 </StackPanel>
             </Grid>
         </Border>

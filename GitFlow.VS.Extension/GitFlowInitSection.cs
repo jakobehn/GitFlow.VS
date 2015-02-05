@@ -1,5 +1,6 @@
 using System;
 using System.Windows.Forms;
+using GitFlowVS.Extension.ViewModels;
 using Microsoft.TeamFoundation.Controls;
 using TeamExplorer.Common;
 
@@ -8,12 +9,15 @@ namespace GitFlowVS.Extension
     [TeamExplorerSection(GuidList.GitFlowInitSection, GuidList.GitFlowPage, 100)]
     public class GitFlowInitSection : TeamExplorerBaseSection
     {
+        private InitModel model;
+
         public GitFlowInitSection()
         {
             try
             {
+                this.model = new InitModel(this);
                 Title = "Recommended actions";
-                SectionContent = new InitUi(this);
+                SectionContent = new InitUi(model);
 
                 UpdateVisibleState();
 
@@ -40,6 +44,10 @@ namespace GitFlowVS.Extension
             }
             var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepo.RepositoryPath, GitFlowPage.OutputWindow);
             IsVisible = !gf.IsInitialized;
+            if (IsVisible)
+            {
+                model.Update();
+            }
         }
     }
 }
