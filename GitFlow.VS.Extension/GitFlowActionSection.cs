@@ -1,6 +1,6 @@
-using System;
-using System.Windows.Forms;
+using System.Runtime.InteropServices;
 using GitFlowVS.Extension.UI;
+using GitFlowVS.Extension.ViewModels;
 using Microsoft.TeamFoundation.Controls;
 using TeamExplorer.Common;
 
@@ -9,10 +9,13 @@ namespace GitFlowVS.Extension
     [TeamExplorerSection(GuidList.topSection, GuidList.gitFlowPage, 110)]
     public class GitFlowActionSection : TeamExplorerBaseSection
     {
+        private ActionViewModel model;
+
         public GitFlowActionSection()
         {
             Title = "Recommended actions";
-            SectionContent = new GitFlowActionsUI();
+            IsVisible = false;
+            model = new ActionViewModel(this);
             UpdateVisibleState();
         }
 
@@ -21,42 +24,28 @@ namespace GitFlowVS.Extension
             UpdateVisibleState();
         }
 
-        private void UpdateVisibleState()
+        public void UpdateVisibleState()
         {
             var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepo.RepositoryPath, GitFlowPage.OutputWindow);
-            IsVisible = gf.IsInitialized;
-        }
-
-    }
-
-    [TeamExplorerSection(GuidList.initSection, GuidList.gitFlowPage, 100)]
-    public class GitFlowInitSection : TeamExplorerBaseSection
-    {
-        public GitFlowInitSection()
-        {
-            try
+            if (gf.IsInitialized)
             {
-                Title = "Recommended actions";
-                SectionContent = new InitUi();
-
-                UpdateVisibleState();
-
+                if (!IsVisible)
+                {
+                    SectionContent = new GitFlowActionsUI(model);
+                    IsVisible = true;
+                }
+                model.Update();
             }
-            catch (Exception e)
+            else
             {
-                MessageBox.Show(e.ToString());
+                IsVisible = false;
             }
         }
 
-        public override void Refresh()
+        public void ShowErrorNotification(string message)
         {
-            UpdateVisibleState();
+            this.ShowNotification(message, NotificationType.Error);
         }
 
-        private void UpdateVisibleState()
-        {
-            var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepo.RepositoryPath, GitFlowPage.OutputWindow);
-            IsVisible = !gf.IsInitialized;
-        }
     }
 }

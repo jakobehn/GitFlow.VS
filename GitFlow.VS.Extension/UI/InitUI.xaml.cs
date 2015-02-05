@@ -5,6 +5,7 @@ using GitFlow.VS;
 using GitFlowVS.Extension.ViewModels;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TeamFoundation.Git.Extensibility;
+using TeamExplorer.Common;
 
 namespace GitFlowVS.Extension
 {
@@ -12,10 +13,10 @@ namespace GitFlowVS.Extension
     {
         private readonly InitModel model;
 
-        public InitUi()
+        public InitUi(TeamExplorerBaseSection parent)
         {
             InitializeComponent();
-            model = new InitModel();
+            model = new InitModel(parent);
             DataContext = model;
         }
 

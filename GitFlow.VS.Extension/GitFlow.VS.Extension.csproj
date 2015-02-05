@@ -134,6 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GitFlowActionSection.cs" />
+    <Compile Include="GitFlowInitSection.cs" />
     <Compile Include="GitFlowLink.cs" />
     <Compile Include="GitFlowPage.cs" />
     <Compile Include="UI\GitFlowActionsUI.xaml.cs">
@@ -149,9 +150,6 @@
     <Compile Include="ViewModels\FinishHotfixModel.cs" />
     <Compile Include="ViewModels\FinishReleaseModel.cs" />
     <Compile Include="GitFlowSection.cs" />
-    <Compile Include="UI\GitFlowSectionUI.xaml.cs">
-      <DependentUpon>GitFlowSectionUI.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\GitFlowViewModel.cs" />
     <Compile Include="Guids.cs" />
     <Compile Include="ViewModels\InitModel.cs" />
@@ -215,10 +213,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="UI\GitFlowActionsUI.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\GitFlowSectionUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

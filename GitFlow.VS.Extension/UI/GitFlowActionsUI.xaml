@@ -123,7 +123,7 @@
                     IsEditable="false" IsReadOnly="true" DisplayMemberPath="Name"
                     ItemsSource="{Binding Path=AllFeatures, UpdateSourceTrigger=PropertyChanged}"
                     SelectedItem="{Binding Path=SelectedFeature, Mode=TwoWay}"/>
-                <CheckBox Grid.Row="1" IsChecked="{Binding FeatureRebaseOnDevelopment}">Rebase on development branch</CheckBox>
+                <CheckBox Grid.Row="1" IsChecked="{Binding FeatureRebaseOnDevelopmentBranch}">Rebase on development branch</CheckBox>
             <CheckBox Grid.Row="2"  IsChecked="{Binding FeatureDeleteBranch}">Delete branch</CheckBox>
             <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,10,0,0" >
                 <Button Command="{Binding FinishFeatureCommand}">OK</Button>

@@ -10,20 +10,6 @@ using LibGit2Sharp;
 
 namespace GitFlow.VS
 {
-    public class CommandOutputEventArgs : EventArgs
-    {
-        public CommandOutputEventArgs()
-        {
-            
-        }
-
-        public CommandOutputEventArgs(string output)
-        {
-            Output = output;
-        }
-        public string Output { get; set; }
-    }
-
     public class GitFlowWrapper
     {
         public delegate void CommandOutputReceivedEventHandler(object sender, CommandOutputEventArgs args);
@@ -306,6 +292,7 @@ namespace GitFlow.VS
 
             using (var p = CreateGitFlowProcess("init -f", repoDirectory))
             {
+                OnCommandOutputDataReceived(new CommandOutputEventArgs("Running git " + p.StartInfo.Arguments));
                 p.Start();
                 p.ErrorDataReceived += OnErrorReceived;
                 p.BeginErrorReadLine();
@@ -418,10 +405,13 @@ namespace GitFlow.VS
         }
         private void OnErrorReceived(object sender, DataReceivedEventArgs dataReceivedEventArgs)
         {
-            Error = new StringBuilder();
-            Error.Append(dataReceivedEventArgs.Data);
-            Debug.WriteLine(dataReceivedEventArgs.Data);
-            OnCommandErrorDataReceived(new CommandOutputEventArgs(dataReceivedEventArgs.Data + Environment.NewLine));
+            if (dataReceivedEventArgs.Data != null && dataReceivedEventArgs.Data.StartsWith("Fatal:"))
+            {
+                Error = new StringBuilder();
+                Error.Append(dataReceivedEventArgs.Data);
+                Debug.WriteLine(dataReceivedEventArgs.Data);
+                OnCommandErrorDataReceived(new CommandOutputEventArgs(dataReceivedEventArgs.Data + Environment.NewLine));
+            }
         }
 
         public bool IsMasterBranchQuery(string input)
@@ -505,13 +495,13 @@ namespace GitFlow.VS
 
             using (var p = CreateGitFlowProcess(gitArguments, repoDirectory))
             {
+                OnCommandOutputDataReceived(new CommandOutputEventArgs("Running git " + p.StartInfo.Arguments));
                 p.Start();
                 p.ErrorDataReceived += OnErrorReceived;
                 p.OutputDataReceived += OnOutputDataReceived;
                 p.BeginErrorReadLine();
                 p.BeginOutputReadLine();
                 p.WaitForExit();
-
                 if (Error != null && Error.Length > 0)
                 {
                     return new GitFlowCommandResult(false, Error.ToString());

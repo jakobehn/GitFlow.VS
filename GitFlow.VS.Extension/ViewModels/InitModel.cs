@@ -4,11 +4,13 @@ using System.Windows;
 using System.Windows.Input;
 using GitFlow.VS;
 using GitFlowVS.Extension.Annotations;
+using TeamExplorer.Common;
 
 namespace GitFlowVS.Extension.ViewModels
 {
     public class InitModel : INotifyPropertyChanged
     {
+        private readonly TeamExplorerBaseSection parent;
         private string master;
         private string develop;
         private string featurePrefix;
@@ -22,8 +24,9 @@ namespace GitFlowVS.Extension.ViewModels
         public ICommand OkCommand { get; private set; }
         public ICommand CancelCommand { get; private set; }
 
-        public InitModel()
+        public InitModel(TeamExplorerBaseSection parent)
         {
+            this.parent = parent;
             InitializeModel();
 
             OkCommand = new RelayCommand(p => OnInitialize(), p => true);
@@ -96,6 +99,7 @@ namespace GitFlowVS.Extension.ViewModels
 
                 ProgressVisibility = Visibility.Hidden;
                 InitGridVisibility = Visibility.Hidden;
+                parent.Refresh();
             }
         }
 
