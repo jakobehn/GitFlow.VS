@@ -176,11 +176,184 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Dependencies\Dependencies.zip">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="Dependencies\binaries\getopt.exe">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\binaries\libiconv2.dll">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\binaries\libintl3.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="Dependencies\Install.ps1">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\.mailmap">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\AUTHORS">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\Changes.mdown">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\contrib\gitflow-installer.sh">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\contrib\msysgit-install.cmd">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\git-flow">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\git-flow-config">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\git-flow-feature">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\git-flow-hotfix">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\git-flow-init">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\git-flow-log">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\git-flow-release">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\git-flow-support">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\git-flow-version">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\gitflow-common">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\gitflow-shFlags">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\filter-flow-hotfix-finish-tag-message">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\filter-flow-hotfix-start-version">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\filter-flow-release-branch-tag-message">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\filter-flow-release-finish-tag-message">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\filter-flow-release-start-version">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\post-flow-feature-delete">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\post-flow-feature-finish">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\post-flow-feature-publish">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\post-flow-feature-pull">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\post-flow-feature-start">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\post-flow-feature-track">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\post-flow-hotfix-delete">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\post-flow-hotfix-finish">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\post-flow-hotfix-publish">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\post-flow-hotfix-start">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\post-flow-release-branch">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\post-flow-release-delete">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\post-flow-release-finish">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\post-flow-release-publish">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\post-flow-release-start">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\post-flow-release-track">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\pre-flow-feature-delete">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\pre-flow-feature-finish">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\pre-flow-feature-publish">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\pre-flow-feature-pull">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\pre-flow-feature-start">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\pre-flow-feature-track">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\pre-flow-hotfix-delete">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\pre-flow-hotfix-finish">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\pre-flow-hotfix-publish">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\pre-flow-hotfix-start">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\pre-flow-release-branch">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\pre-flow-release-delete">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\pre-flow-release-finish">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\pre-flow-release-publish">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\pre-flow-release-start">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\hooks\pre-flow-release-track">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\LICENSE">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\Makefile">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Dependencies\gitflow\README.mdown">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <None Include="source.extension.vsixmanifest">

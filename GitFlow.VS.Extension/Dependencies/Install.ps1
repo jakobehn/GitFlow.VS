@@ -1,30 +1,13 @@
 ﻿#Copy necessary files from the util-linux package into %programfiles(x86)%\Git\bin
-#Extracts GitFlow repo beneath extension
 #Runs gitflow\contrib\msysgit-install.cmd
 #
 # NOTE:This script must be executed with elevated priviledges
 #
 
 $installationPath = Split-Path $MyInvocation.MyCommand.Path
-$sourceFile = Join-Path  $installationPath "Dependencies.zip"
 $targetFolder = $installationPath
 $binaries = Join-Path $installationPath "binaries"
 $gitFlowFolder = Join-Path $installationPath "gitflow"
-
-#Remove old directories
-if (Test-Path $binaries){
-    Write-Host "Removing binaries directory"
-	Remove-Item $binaries -Recurse
-}
-
-if (Test-Path $gitFlowFolder){
-    Write-Host "Removing GitFlow directory"
-	Remove-Item $gitFlowFolder -Recurse
-}
-
-#Extract dependencies.zip
-[System.Reflection.Assembly]::LoadWithPartialName('System.IO.Compression.FileSystem')
-[System.IO.Compression.ZipFile]::ExtractToDirectory($sourceFile, $targetFolder)
 $gitLocation = Join-Path ${Env:ProgramFiles(x86)} "Git\bin"
 
 Write-Host "Copy binaries to Git installation directory"

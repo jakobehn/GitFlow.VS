@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,6 +21,13 @@ namespace GitFlowVS.Extension.UI
         {
             this.parent = parent;
             InitializeComponent();
+
+            if (!Directory.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86),"git")))
+            {
+                GitInstallation.Visibility = Visibility.Visible;
+                GitFlowInstallation.Visibility = Visibility.Collapsed;
+                GitFlowInstallationButton.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
