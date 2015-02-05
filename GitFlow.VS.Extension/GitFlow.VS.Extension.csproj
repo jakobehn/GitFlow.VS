@@ -136,7 +136,7 @@
     <Compile Include="GitFlowActionSection.cs" />
     <Compile Include="GitFlowInitSection.cs" />
     <Compile Include="GitFlowInstallSection.cs" />
-    <Compile Include="GitFlowLink.cs" />
+    <Compile Include="GitFlowNavigationItem.cs" />
     <Compile Include="GitFlowPage.cs" />
     <Compile Include="UI\GitFlowActionsUI.xaml.cs">
       <DependentUpon>GitFlowActionsUI.xaml</DependentUpon>
@@ -147,10 +147,6 @@
     <Compile Include="ViewModels\ActionViewModel.cs" />
     <Compile Include="ViewModels\ListItem.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
-    <Compile Include="ViewModels\FinishFeatureModel.cs" />
-    <Compile Include="ViewModels\FinishHotfixModel.cs" />
-    <Compile Include="ViewModels\FinishReleaseModel.cs" />
-    <Compile Include="GitFlowSection.cs" />
     <Compile Include="ViewModels\GitFlowViewModel.cs" />
     <Compile Include="Guids.cs" />
     <Compile Include="ViewModels\InitModel.cs" />
