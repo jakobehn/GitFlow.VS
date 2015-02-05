@@ -135,6 +135,7 @@
   <ItemGroup>
     <Compile Include="GitFlowActionSection.cs" />
     <Compile Include="GitFlowInitSection.cs" />
+    <Compile Include="GitFlowInstallSection.cs" />
     <Compile Include="GitFlowLink.cs" />
     <Compile Include="GitFlowPage.cs" />
     <Compile Include="UI\GitFlowActionsUI.xaml.cs">

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using System.Windows.Threading;
 using Microsoft.TeamFoundation.Controls;
@@ -12,7 +14,7 @@ using TeamExplorer.Common;
 
 namespace GitFlowVS.Extension
 {
-    [TeamExplorerPage(GuidList.gitFlowPage, Undockable = true)]
+    [TeamExplorerPage(GuidList.GitFlowPage, Undockable = true)]
     public class GitFlowPage : TeamExplorerBasePage
     {
         private static IGitExt gitService;
@@ -70,6 +72,23 @@ namespace GitFlowVS.Extension
         public static void ActiveOutputWindow()
         {
             OutputWindow.Activate();
+        }
+
+        public static bool GitFlowIsInstalled
+        {
+            get
+            {
+                //Check if extension has been configured
+                string binariesPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Dependencies/binaries");
+                if (!Directory.Exists(binariesPath))
+                    return false;
+
+                string gitFlowFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86),
+                    "Git\\bin\\git-flow");
+                if (!File.Exists(gitFlowFile))
+                    return false;
+                return true;
+            }
         }
     }
 

@@ -6,10 +6,10 @@ using TeamExplorer.Common;
 
 namespace GitFlowVS.Extension
 {
-    [TeamExplorerSection(GuidList.topSection, GuidList.gitFlowPage, 110)]
+    [TeamExplorerSection(GuidList.GitFlowActionSection, GuidList.GitFlowPage, 110)]
     public class GitFlowActionSection : TeamExplorerBaseSection
     {
-        private ActionViewModel model;
+        private readonly ActionViewModel model;
 
         public GitFlowActionSection()
         {
@@ -26,6 +26,12 @@ namespace GitFlowVS.Extension
 
         public void UpdateVisibleState()
         {
+            if (!GitFlowPage.GitFlowIsInstalled)
+            {
+                IsVisible = false;
+                return;
+            }
+
             var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepo.RepositoryPath, GitFlowPage.OutputWindow);
             if (gf.IsInitialized)
             {

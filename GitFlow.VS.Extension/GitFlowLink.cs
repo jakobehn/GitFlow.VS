@@ -25,7 +25,7 @@ namespace GitFlowVS.Extension
             {
                 return;
             }
-            service.NavigateToPage(new Guid(GuidList.gitFlowPage), null);
+            service.NavigateToPage(new Guid(GuidList.GitFlowPage), null);
         }
     }
 }

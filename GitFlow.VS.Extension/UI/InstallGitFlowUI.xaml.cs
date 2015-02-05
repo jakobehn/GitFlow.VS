@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using Microsoft.TeamFoundation.Controls;
 using MessageBox = System.Windows.Forms.MessageBox;
 using Path = System.IO.Path;
 
@@ -13,9 +14,9 @@ namespace GitFlowVS.Extension.UI
     /// </summary>
     public partial class InstallGitFlowUI : UserControl
     {
-        private readonly GitFlowSection parent;
+        private readonly GitFlowInstallSection parent;
 
-        public InstallGitFlowUI(GitFlowSection parent)
+        public InstallGitFlowUI(GitFlowInstallSection parent)
         {
             this.parent = parent;
             InitializeComponent();
@@ -50,12 +51,12 @@ namespace GitFlowVS.Extension.UI
                 }
                 else
                 {
-                    //parent.FinishAction();
+                    parent.Refresh();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                parent.ShowNotification(ex.ToString(), NotificationType.Error);
             }
         }
     }

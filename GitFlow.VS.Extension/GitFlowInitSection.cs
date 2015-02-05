@@ -5,7 +5,7 @@ using TeamExplorer.Common;
 
 namespace GitFlowVS.Extension
 {
-    [TeamExplorerSection(GuidList.initSection, GuidList.gitFlowPage, 100)]
+    [TeamExplorerSection(GuidList.GitFlowInitSection, GuidList.GitFlowPage, 100)]
     public class GitFlowInitSection : TeamExplorerBaseSection
     {
         public GitFlowInitSection()
@@ -33,6 +33,11 @@ namespace GitFlowVS.Extension
 
         public void UpdateVisibleState()
         {
+            if (!GitFlowPage.GitFlowIsInstalled)
+            {
+                IsVisible = false;
+                return;
+            }
             var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepo.RepositoryPath, GitFlowPage.OutputWindow);
             IsVisible = !gf.IsInitialized;
         }
