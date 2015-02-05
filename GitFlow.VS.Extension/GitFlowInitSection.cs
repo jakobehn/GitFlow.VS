@@ -7,9 +7,9 @@ using TeamExplorer.Common;
 namespace GitFlowVS.Extension
 {
     [TeamExplorerSection(GuidList.GitFlowInitSection, GuidList.GitFlowPage, 100)]
-    public class GitFlowInitSection : TeamExplorerBaseSection
+    public class GitFlowInitSection : TeamExplorerBaseSection, IGitFlowSection
     {
-        private InitModel model;
+        private readonly InitModel model;
 
         public GitFlowInitSection()
         {
@@ -30,7 +30,6 @@ namespace GitFlowVS.Extension
 
         public override void Refresh()
         {
-            UpdateVisibleState();
             var service = GetService<ITeamExplorerPage>();
             service.Refresh();
         }

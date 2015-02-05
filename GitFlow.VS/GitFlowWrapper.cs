@@ -105,6 +105,29 @@ namespace GitFlow.VS
             }
         }
 
+        public IEnumerable<BranchItem> AllFeatureBranches
+        {
+            get
+            {
+                if (!IsInitialized)
+                    return new List<BranchItem>();
+
+                using (var repo = new Repository(repoDirectory))
+                {
+                    var prefix = repo.Config.Get<string>("gitflow.prefix.feature").Value;
+                    return
+                        repo.Branches.Where(b => !b.IsRemote && !b.IsRemote && b.Name.StartsWith(prefix))
+                            .Select(c => new BranchItem()
+                            {
+                                Author = c.Tip.Author.Name,
+                                Name = c.Name.Split('/').Last(),
+                                LastCommit = c.Tip.Author.When
+                            }).ToList();
+                }   
+
+            }
+        }
+
         public IEnumerable<string> AllReleases
         {
             get
@@ -130,7 +153,7 @@ namespace GitFlow.VS
             {
                 var prefix = repo.Config.Get<string>(config).Value;
                 return
-                    repo.Branches.Where(b => b.Name.StartsWith(prefix)).Select(c => c.Name.Split('/').Last()).ToList();
+                    repo.Branches.Where(b => !b.IsRemote && b.Name.StartsWith(prefix)).Select(c => c.Name.Split('/').Last()).ToList();
             }   
         }
 
@@ -510,5 +533,27 @@ namespace GitFlow.VS
             }
         }
     }
+
+    public class BranchItem
+    {
+        public string Name { get; set; }
+        public string Author { get; set; }
+        public DateTimeOffset LastCommit { get; set; }
+
+        public string LastCommitAsString
+        {
+            get
+            {
+                TimeSpan timeSpan = DateTime.Now - LastCommit;
+                var daysSince = timeSpan.Days;
+                if (daysSince == 0)
+                {
+                    return timeSpan.Hours + " hours ago";
+                }
+                return daysSince + " days ago";
+            }
+        }
+    }
+
 
 }

@@ -134,10 +134,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GitFlowActionSection.cs" />
+    <Compile Include="GitFlowFeaturesSection.cs" />
     <Compile Include="GitFlowInitSection.cs" />
     <Compile Include="GitFlowInstallSection.cs" />
     <Compile Include="GitFlowNavigationItem.cs" />
     <Compile Include="GitFlowPage.cs" />
+    <Compile Include="IGitFlowSection.cs" />
+    <Compile Include="UI\FeaturesUI.xaml.cs">
+      <DependentUpon>FeaturesUI.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\GitFlowActionsUI.xaml.cs">
       <DependentUpon>GitFlowActionsUI.xaml</DependentUpon>
     </Compile>
@@ -145,6 +150,7 @@
       <DependentUpon>InstallGitFlowUI.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ActionViewModel.cs" />
+    <Compile Include="ViewModels\FeaturesViewModel.cs" />
     <Compile Include="ViewModels\ListItem.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="ViewModels\GitFlowViewModel.cs" />
@@ -382,6 +388,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="UI\FeaturesUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\GitFlowActionsUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

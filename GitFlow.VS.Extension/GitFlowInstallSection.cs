@@ -6,7 +6,7 @@ using TeamExplorer.Common;
 namespace GitFlowVS.Extension
 {
     [TeamExplorerSection(GuidList.GitFlowInstallSection, GuidList.GitFlowPage, 100)]
-    public class GitFlowInstallSection : TeamExplorerBaseSection
+    public class GitFlowInstallSection : TeamExplorerBaseSection, IGitFlowSection
     {
         public GitFlowInstallSection()
         {
@@ -26,7 +26,6 @@ namespace GitFlowVS.Extension
 
         public override void Refresh()
         {
-            UpdateVisibleState();
             var service = GetService<ITeamExplorerPage>();
             service.Refresh();
         }

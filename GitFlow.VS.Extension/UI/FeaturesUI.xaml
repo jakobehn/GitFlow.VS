@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="GitFlowVS.Extension.UI.FeaturesUI"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+
+    <UserControl.Resources>
+        <ResourceDictionary Source="/GitFlowVS.Extension;component/Resources/Dictionary.xaml" />
+    </UserControl.Resources>
+
+    <DataGrid Name="FeaturesGrid" Margin="6,6,6,6" ItemsSource="{Binding AllFeatures}" AutoGenerateColumns="False" GridLinesVisibility="None" HeadersVisibility="None" BorderThickness="0">
+        <DataGrid.Columns>
+            <DataGridTemplateColumn Header="Name" Width="SizeToCells"  IsReadOnly="True">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" />
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+
+            <DataGridTemplateColumn Header="Changed" Width="SizeToCells" IsReadOnly="True">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding LastCommitAsString}" HorizontalAlignment="Right" />
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+        </DataGrid.Columns>
+
+    </DataGrid>
+</UserControl>

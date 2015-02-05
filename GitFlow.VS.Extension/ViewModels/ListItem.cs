@@ -2,6 +2,7 @@ using System;
 
 namespace GitFlowVS.Extension.ViewModels
 {
+
     public class ListItem
     {
         public string Name { get; set; }

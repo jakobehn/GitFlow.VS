@@ -40,20 +40,13 @@ namespace GitFlowVS.Extension
 
         public override void Refresh()
         {
-            foreach (var section in this.GetSections())
+            ITeamExplorerSection[] teamExplorerSections = this.GetSections();
+            foreach (var section in teamExplorerSections.Where(s => s is IGitFlowSection))
             {
-                if (section is GitFlowActionSection)
-                {
-                    System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background,
-                        new Action(() =>
-                            ((GitFlowActionSection) section).UpdateVisibleState()));
-                }
-                else if (section is GitFlowInitSection)
-                {
-                    System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background,
-                        new Action(() =>
-                            ((GitFlowInitSection)section).UpdateVisibleState()));
-                }
+                ITeamExplorerSection section1 = section;
+                System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+                    new Action(() =>
+                        ((IGitFlowSection)section1).UpdateVisibleState()));
             }
         }
 

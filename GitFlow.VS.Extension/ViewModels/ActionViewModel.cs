@@ -11,7 +11,6 @@ using Microsoft.TeamFoundation.Controls.WPF.TeamExplorer;
 
 namespace GitFlowVS.Extension.ViewModels
 {
-
     public class ActionViewModel : INotifyPropertyChanged
     {
         private readonly GitFlowActionSection te;
@@ -420,11 +419,12 @@ namespace GitFlowVS.Extension.ViewModels
                     ShowErrorMessage(result);
                 }
 
-                HideAll();
                 ProgressVisibility = Visibility.Hidden;
                 ShowFinishFeature = Visibility.Collapsed;
-                OnPropertyChanged("AllFeatures");
                 UpdateMenus();
+                HideAll();
+                OnPropertyChanged("AllFeatures");
+                te.Refresh();
             }
         }
 

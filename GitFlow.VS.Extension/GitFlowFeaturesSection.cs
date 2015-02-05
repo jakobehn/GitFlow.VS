@@ -5,16 +5,16 @@ using TeamExplorer.Common;
 
 namespace GitFlowVS.Extension
 {
-    [TeamExplorerSection(GuidList.GitFlowActionSection, GuidList.GitFlowPage, 110)]
-    public class GitFlowActionSection : TeamExplorerBaseSection, IGitFlowSection
+    [TeamExplorerSection(GuidList.GitFlowFeaturesSection, GuidList.GitFlowPage, 120)]
+    public class GitFlowFeaturesSection : TeamExplorerBaseSection, IGitFlowSection
     {
-        private readonly ActionViewModel model;
+        private readonly FeaturesViewModel model;
 
-        public GitFlowActionSection()
+        public GitFlowFeaturesSection()
         {
-            Title = "Recommended actions";
+            Title = "Current Features";
             IsVisible = false;
-            model = new ActionViewModel(this);
+            model = new FeaturesViewModel();
             UpdateVisibleState();
         }
 
@@ -37,7 +37,7 @@ namespace GitFlowVS.Extension
             {
                 if (!IsVisible)
                 {
-                    SectionContent = new GitFlowActionsUI(model);
+                    SectionContent = new FeaturesUI(model);
                     IsVisible = true;
                 }
                 model.Update();
