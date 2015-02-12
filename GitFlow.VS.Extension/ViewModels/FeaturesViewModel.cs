@@ -8,6 +8,7 @@ namespace GitFlowVS.Extension.ViewModels
 {
     public class FeaturesViewModel : ViewModelBase
     {
+        private Visibility noItemsMessageVisibility;
         public ICommand PublishFeatureBranchCommand { get; private set; }
         public ICommand TrackFeatureBranchCommand { get; private set; }
         public ICommand CheckoutFeatureBranchCommand { get; private set; }
@@ -107,7 +108,13 @@ namespace GitFlowVS.Extension.ViewModels
         public void Update()
         {
             OnPropertyChanged("AllFeatures");
+            OnPropertyChanged("NoItemsMessageVisibility");
         }
 
+        public Visibility NoItemsMessageVisibility
+        {
+            get { return AllFeatures.Any() ? Visibility.Collapsed : Visibility.Visible; }
+
+        }
     }
 }

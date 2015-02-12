@@ -14,9 +14,11 @@
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
-        <DataGrid Name="FeaturesGrid" Margin="6,6,6,6" Padding="0,5,0,0" ItemsSource="{Binding AllFeatures}" AutoGenerateColumns="False" GridLinesVisibility="None" HeadersVisibility="None" BorderThickness="0" SelectedItem="{Binding SelectedFeature}" CanUserAddRows="False" Background="{StaticResource ItemBrushKey}">
+        <TextBlock FontStyle="Italic" Visibility="{Binding NoItemsMessageVisibility}">No features available</TextBlock>
+        <DataGrid Grid.Row="1" Name="FeaturesGrid" Margin="6,6,6,6" Padding="0,5,0,0" ItemsSource="{Binding AllFeatures}" AutoGenerateColumns="False" GridLinesVisibility="None" HeadersVisibility="None" BorderThickness="0" SelectedItem="{Binding SelectedFeature}" CanUserAddRows="False" Background="{StaticResource ItemBrushKey}">
                 <DataGrid.RowStyle>
                     <Style TargetType="{x:Type DataGridRow}">
                         <Style.Triggers>
@@ -66,6 +68,6 @@
                     </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
-        <ProgressBar Grid.Row="1" Margin="0,10,0,0"  Visibility="{Binding Path=ProgressVisibility}" Height="15" Minimum="0" Maximum="100" IsIndeterminate="True" />
+        <ProgressBar Grid.Row="2" Margin="0,10,0,0"  Visibility="{Binding Path=ProgressVisibility}" Height="15" Minimum="0" Maximum="100" IsIndeterminate="True" />
     </Grid>
 </UserControl>

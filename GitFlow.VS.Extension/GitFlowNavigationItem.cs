@@ -13,6 +13,7 @@ namespace GitFlowVS.Extension
         public GitFlowNavigationItem([Import(typeof(SVsServiceProvider))] IServiceProvider serviceProvider)
             : base(serviceProvider)
         {
+
             IsVisible = true;
             Text = "GitFlow";
             Image = Resources.LinkIcon;
