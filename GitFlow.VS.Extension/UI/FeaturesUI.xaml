@@ -2,7 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 
@@ -10,24 +10,62 @@
         <ResourceDictionary Source="/GitFlowVS.Extension;component/Resources/Dictionary.xaml" />
     </UserControl.Resources>
 
-    <DataGrid Name="FeaturesGrid" Margin="6,6,6,6" ItemsSource="{Binding AllFeatures}" AutoGenerateColumns="False" GridLinesVisibility="None" HeadersVisibility="None" BorderThickness="0">
-        <DataGrid.Columns>
-            <DataGridTemplateColumn Header="Name" Width="SizeToCells"  IsReadOnly="True">
-                <DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Name}" />
-                    </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
+    <Grid Background="{StaticResource ItemBrushKey}">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
 
-            <DataGridTemplateColumn Header="Changed" Width="SizeToCells" IsReadOnly="True">
-                <DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding LastCommitAsString}" HorizontalAlignment="Right" />
-                    </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
-        </DataGrid.Columns>
-
-    </DataGrid>
+        <DataGrid Name="FeaturesGrid" Margin="6,6,6,6" Padding="0,5,0,0" ItemsSource="{Binding AllFeatures}" AutoGenerateColumns="False" GridLinesVisibility="None" HeadersVisibility="None" BorderThickness="0" SelectedItem="{Binding SelectedFeature}" CanUserAddRows="False" Background="{StaticResource ItemBrushKey}">
+                <DataGrid.RowStyle>
+                    <Style TargetType="{x:Type DataGridRow}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=IsRemote}" Value="True">
+                                <Setter Property="FontStyle" Value="Italic"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=IsCurrentBranch}" Value="True">
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                        <Setter Property="ToolTip">
+                            <Setter.Value>
+                                <TextBlock Text="{Binding ToolTip}" />
+                            </Setter.Value>
+                        </Setter>
+                    <Setter Property="Background" Value="{StaticResource ItemBrushKey}"></Setter>
+                    <Setter Property="Foreground" Value="{StaticResource ItemTextBrushKey}"></Setter>
+                        <Setter Property="Margin" Value="0,0,0,5"></Setter>
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Name" Width="SizeToCells"  IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                                <StackPanel Orientation="Horizontal" >
+                                    <TextBlock Text="{Binding Name}" />
+                                    <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="10,0,10,0" />
+                                    <TextBlock Text="{Binding Author}"></TextBlock>
+                                </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                    
+                <DataGridTemplateColumn Header="Changed" Width="SizeToCells" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding LastCommitAsString}" HorizontalAlignment="Right" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                        <MenuItem Command="{Binding Path=PublishFeatureBranchCommand}" Header="Publish" ></MenuItem>
+                        <MenuItem Command="{Binding Path=TrackFeatureBranchCommand}" Header="Track" ></MenuItem>
+                        <MenuItem Command="{Binding Path=CheckoutFeatureBranchCommand}" Header="Checkout" ></MenuItem>
+                    </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+        <ProgressBar Grid.Row="1" Margin="0,10,0,0"  Visibility="{Binding Path=ProgressVisibility}" Height="15" Minimum="0" Maximum="100" IsIndeterminate="True" />
+    </Grid>
 </UserControl>

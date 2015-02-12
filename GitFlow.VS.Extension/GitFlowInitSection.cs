@@ -34,6 +34,11 @@ namespace GitFlowVS.Extension
             service.Refresh();
         }
 
+        public void ShowErrorNotification(string message)
+        {
+            ShowNotification(message, NotificationType.Error);
+        }
+
         public void UpdateVisibleState()
         {
             if (!GitFlowPage.GitFlowIsInstalled)

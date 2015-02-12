@@ -116,16 +116,39 @@ namespace GitFlow.VS
                 {
                     var prefix = repo.Config.Get<string>("gitflow.prefix.feature").Value;
                     return
-                        repo.Branches.Where(b => !b.IsRemote && !b.IsRemote && b.Name.StartsWith(prefix))
+                        repo.Branches.Where(b => (!b.IsRemote && b.Name.StartsWith(prefix)) /*|| (b.IsRemote && b.Name.Contains(prefix))*/)
                             .Select(c => new BranchItem()
                             {
                                 Author = c.Tip.Author.Name,
-                                Name = c.Name.Split('/').Last(),
-                                LastCommit = c.Tip.Author.When
+                                Name = c.IsRemote ? c.Name :  c.Name.Split('/').Last(),
+                                LastCommit = c.Tip.Author.When,
+                                IsTracking = c.IsTracking,
+                                IsCurrentBranch = c.IsCurrentRepositoryHead,
+                                IsRemote = c.IsRemote,
+                                CommitId = c.Tip.Id.ToString(),
+                                Message = c.Tip.MessageShort
                             }).ToList();
                 }   
 
             }
+        }
+
+        public GitFlowCommandResult PublishFeature(string featureName)
+        {
+            string gitArguments = "feature publish \"" + featureName + "\"";
+            return RunGitFlow(gitArguments);
+        }
+
+        public GitFlowCommandResult TrackFeature(ICloneable featureName)
+        {
+            string gitArguments = "feature track \"" + featureName + "\"";
+            return RunGitFlow(gitArguments);
+        }
+
+        public GitFlowCommandResult CheckoutFeature(ICloneable featureName)
+        {
+            string gitArguments = "feature checkout \"" + featureName + "\"";
+            return RunGitFlow(gitArguments);
         }
 
         public IEnumerable<string> AllReleases
@@ -156,9 +179,6 @@ namespace GitFlow.VS
                     repo.Branches.Where(b => !b.IsRemote && b.Name.StartsWith(prefix)).Select(c => c.Name.Split('/').Last()).ToList();
             }   
         }
-
-
-
 
         public bool IsOnDevelopBranch
         {
@@ -533,27 +553,4 @@ namespace GitFlow.VS
             }
         }
     }
-
-    public class BranchItem
-    {
-        public string Name { get; set; }
-        public string Author { get; set; }
-        public DateTimeOffset LastCommit { get; set; }
-
-        public string LastCommitAsString
-        {
-            get
-            {
-                TimeSpan timeSpan = DateTime.Now - LastCommit;
-                var daysSince = timeSpan.Days;
-                if (daysSince == 0)
-                {
-                    return timeSpan.Hours + " hours ago";
-                }
-                return daysSince + " days ago";
-            }
-        }
-    }
-
-
 }

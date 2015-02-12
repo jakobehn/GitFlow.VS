@@ -3,7 +3,8 @@
                     xmlns:mtcw="clr-namespace:Microsoft.TeamFoundation.Controls.WPF;assembly=Microsoft.TeamFoundation.Controls"
                     xmlns:mvvm="clr-namespace:Microsoft.TeamFoundation.MVVM;assembly=Microsoft.TeamFoundation.Controls"
                     xmlns:converters="clr-namespace:Microsoft.TeamFoundation.Controls.WPF.Converters;assembly=Microsoft.TeamFoundation.Controls"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+                    xmlns:system="clr-namespace:System;assembly=mscorlib"
+                    xmlns:viewModels="clr-namespace:GitFlowVS.Extension.ViewModels">
     <converters:IsNullConverter x:Key="IsNullConverter"/>
     <converters:IsParentConverter x:Key="isListBoxItemConverter" TypeOfParent="{x:Type ListBoxItem}"/>
     <converters:IsParentConverter x:Key="isTreeViewItemConverter" TypeOfParent="{x:Type TreeViewItem}"/>
@@ -2921,9 +2922,5 @@
     <Style TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="LemonChiffon"></Setter>
     </Style>
-    
-    <!--<Style TargetType="{x:Type Button}">
-        <Setter Property="Width" Value="50"></Setter>
-    </Style>-->
 
 </ResourceDictionary>

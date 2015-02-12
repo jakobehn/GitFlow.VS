@@ -14,7 +14,7 @@ namespace GitFlowVS.Extension
         {
             Title = "Current Features";
             IsVisible = false;
-            model = new FeaturesViewModel();
+            model = new FeaturesViewModel(this);
             UpdateVisibleState();
         }
 

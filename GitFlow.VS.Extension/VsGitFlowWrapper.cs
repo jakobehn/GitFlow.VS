@@ -1,4 +1,5 @@
-﻿using GitFlow.VS;
+﻿using System;
+using GitFlow.VS;
 using Microsoft.VisualStudio.Shell.Interop;
 
 namespace GitFlowVS.Extension
@@ -11,5 +12,6 @@ namespace GitFlowVS.Extension
             CommandOutputDataReceived += (o, args) => outputWindow.OutputStringThreadSafe(args.Output);
             CommandErrorDataReceived += (o, args) => outputWindow.OutputStringThreadSafe(args.Output);
         }
+
     }
 }

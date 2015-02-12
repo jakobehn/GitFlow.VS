@@ -6,7 +6,7 @@ using TeamExplorer.Common;
 
 namespace GitFlowVS.Extension
 {
-    [TeamExplorerNavigationItem("59168500-14BC-4EE9-BB1F-7B2B970A4AF6",900)]
+    [TeamExplorerNavigationItem("59168500-14BC-4EE9-BB1F-7B2B970A4AF6",1500)]
     public class GitFlowNavigationItem : TeamExplorerBaseNavigationItem
     {
         [ImportingConstructor]

@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BranchItem.cs" />
     <Compile Include="CommandOutputEventArgs.cs" />
     <Compile Include="GitFlowCommandResult.cs" />
     <Compile Include="GitFlowRepoSettings.cs" />

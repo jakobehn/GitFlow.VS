@@ -168,6 +168,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GitFlow.VS.ExtensionPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="VsGitFlowWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
