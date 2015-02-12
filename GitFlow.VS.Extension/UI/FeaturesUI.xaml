@@ -28,7 +28,11 @@
                             <DataTrigger Binding="{Binding Path=IsCurrentBranch}" Value="True">
                                 <Setter Property="FontWeight" Value="Bold"/>
                             </DataTrigger>
-                        </Style.Triggers>
+                        <Trigger Property="UIElement.IsMouseOver" Value="true">
+                            <Setter Property="Control.Foreground" Value="{StaticResource ItemHoverTextBrushKey}"/>
+                            <Setter Property="Control.Background" Value="{StaticResource ItemHoverBrushKey}"/>
+                        </Trigger>
+                    </Style.Triggers>
                         <Setter Property="ToolTip">
                             <Setter.Value>
                                 <TextBlock Text="{Binding ToolTip}" />
