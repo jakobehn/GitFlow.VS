@@ -135,19 +135,24 @@ namespace GitFlow.VS
 
         public GitFlowCommandResult PublishFeature(string featureName)
         {
-            string gitArguments = "feature publish \"" + featureName + "\"";
+            string gitArguments = "feature publish \"" + TrimBranchName(featureName) + "\"";
             return RunGitFlow(gitArguments);
         }
 
-        public GitFlowCommandResult TrackFeature(ICloneable featureName)
+        private string TrimBranchName(string branchName)
         {
-            string gitArguments = "feature track \"" + featureName + "\"";
+            return branchName.Trim().Replace(" ", "_");
+        }
+
+        public GitFlowCommandResult TrackFeature(string featureName)
+        {
+            string gitArguments = "feature track \"" + TrimBranchName(featureName) + "\"";
             return RunGitFlow(gitArguments);
         }
 
-        public GitFlowCommandResult CheckoutFeature(ICloneable featureName)
+        public GitFlowCommandResult CheckoutFeature(string featureName)
         {
-            string gitArguments = "feature checkout \"" + featureName + "\"";
+            string gitArguments = "feature checkout \"" + TrimBranchName(featureName) + "\"";
             return RunGitFlow(gitArguments);
         }
 
@@ -254,13 +259,13 @@ namespace GitFlow.VS
 
         public GitFlowCommandResult StartFeature(string featureName)
         {
-            string gitArguments = "feature start \"" + featureName + "\"";
+            string gitArguments = "feature start \"" + TrimBranchName(featureName) + "\"";
             return RunGitFlow(gitArguments);
         }
 
         public GitFlowCommandResult FinishFeature(string featureName, bool rebaseOnDevelopment = false, bool deleteBranch = true)
         {
-            string gitArguments = "feature finish \"" + featureName + "\"";
+            string gitArguments = "feature finish \"" + TrimBranchName(featureName) + "\"";
             if (rebaseOnDevelopment)
                 gitArguments += " -r";
             if (!deleteBranch)
@@ -272,13 +277,13 @@ namespace GitFlow.VS
 
         public GitFlowCommandResult StartRelease(string releaseName)
         {
-            string gitArguments = "release start \"" + releaseName + "\"";
+            string gitArguments = "release start \"" + TrimBranchName(releaseName) + "\"";
             return RunGitFlow(gitArguments);
         }
 
         public GitFlowCommandResult FinishRelease(string releaseName, string tagMessage = null, bool deleteBranch = true, bool forceDeletion=false, bool pushChanges = false)
         {
-            string gitArguments = "release finish -n \"" + releaseName + "\"";
+            string gitArguments = "release finish -n \"" + TrimBranchName(releaseName) + "\"";
             if (!String.IsNullOrEmpty(tagMessage))
             {
                 gitArguments += " -m  + \"" + tagMessage + "\"";
@@ -301,13 +306,13 @@ namespace GitFlow.VS
 
         public GitFlowCommandResult StartHotfix(string hotfixName)
         {
-            string gitArguments = "hotfix start \"" + hotfixName + "\"";
+            string gitArguments = "hotfix start \"" + TrimBranchName(hotfixName) + "\"";
             return RunGitFlow(gitArguments);
         }
 
-        public GitFlowCommandResult FinishHotfix(string releaseName, string tagMessage = null, bool deleteBranch = true, bool forceDeletion = false, bool pushChanges = false)
+        public GitFlowCommandResult FinishHotfix(string hotifxName, string tagMessage = null, bool deleteBranch = true, bool forceDeletion = false, bool pushChanges = false)
         {
-            string gitArguments = "hotfix finish -n \"" + releaseName + "\"";
+            string gitArguments = "hotfix finish -n \"" + TrimBranchName(hotifxName) + "\"";
             if (!String.IsNullOrEmpty(tagMessage))
             {
                 gitArguments += " -m  + \"" + tagMessage + "\"";

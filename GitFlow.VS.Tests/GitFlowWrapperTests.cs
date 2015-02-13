@@ -155,9 +155,8 @@ namespace GitFlow.VS.Tests
             var gf = new GitFlowWrapper(sampleRepoPath);
             gf.Init(new GitFlowRepoSettings());
             gf.StartRelease("1.0");
-            gf.StartRelease("2.0");
 
-            Assert.AreEqual(2, gf.AllReleases.Count());
+            Assert.AreEqual(1, gf.AllReleases.Count());
         }
 
         [TestMethod]
@@ -166,9 +165,8 @@ namespace GitFlow.VS.Tests
             var gf = new GitFlowWrapper(sampleRepoPath);
             gf.Init(new GitFlowRepoSettings());
             gf.StartHotfix("hf1");
-            gf.StartHotfix("hf2");
 
-            Assert.AreEqual(2, gf.AllHotfixes.Count());
+            Assert.AreEqual(1, gf.AllHotfixes.Count());
         }
 
         [TestMethod]
@@ -181,6 +179,19 @@ namespace GitFlow.VS.Tests
             using (var repo = new Repository(sampleRepoPath))
             {
                 Assert.IsTrue(repo.Branches.Any(b => !b.IsRemote && b.Name == "feature/X"));
+            }
+        }
+
+        [TestMethod]
+        public void StartFeatureWithSpaceShouldReplaceSpaceWithUnderscore()
+        {
+            var gf = new GitFlowWrapper(sampleRepoPath);
+            gf.Init(new GitFlowRepoSettings());
+            gf.StartFeature("Feature X");
+
+            using (var repo = new Repository(sampleRepoPath))
+            {
+                Assert.IsTrue(repo.Branches.Any(b => !b.IsRemote && b.Name == "feature/Feature_X"));
             }
         }
 
