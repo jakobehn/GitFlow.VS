@@ -10,7 +10,7 @@ namespace GitFlowVS.Extension.ViewModels
 {
     public class InitModel : INotifyPropertyChanged
     {
-        private readonly IGitFlowSection parent;
+        private readonly TeamExplorerBaseSection parent;
         private string master;
         private string develop;
         private string featurePrefix;
@@ -24,7 +24,7 @@ namespace GitFlowVS.Extension.ViewModels
         public ICommand OkCommand { get; private set; }
         public ICommand CancelCommand { get; private set; }
 
-        public InitModel(IGitFlowSection parent)
+        public InitModel(TeamExplorerBaseSection parent)
         {
             this.parent = parent;
             InitializeModel();
@@ -87,7 +87,7 @@ namespace GitFlowVS.Extension.ViewModels
                 ProgressVisibility = Visibility.Visible;
 
                 var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepo.RepositoryPath, GitFlowPage.OutputWindow);
-                var result = gf.Init(new GitFlowRepoSettings
+                gf.Init(new GitFlowRepoSettings
                 {
                     DevelopBranch = Develop,
                     MasterBranch = Master,
@@ -96,10 +96,6 @@ namespace GitFlowVS.Extension.ViewModels
                     HotfixBranch = HotfixPrefix,
                     VersionTag = VersionTagPrefix
                 });
-                if (!result.Success)
-                {
-                    parent.ShowErrorNotification(result.CommandOutput);
-                }
 
                 ProgressVisibility = Visibility.Hidden;
                 InitGridVisibility = Visibility.Hidden;

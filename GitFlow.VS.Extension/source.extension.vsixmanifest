@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="19ffe08d-8c71-4125-a024-6296bd27fce8" Version="0.9.13" Language="en-US" Publisher="Jakob Ehn" />
+    <Identity Id="19ffe08d-8c71-4125-a024-6296bd27fce8" Version="0.9.12" Language="en-US" Publisher="Jakob Ehn" />
     <DisplayName>GitFlow for Visual Studio</DisplayName>
-    <Description xml:space="preserve">Integrates GitFlow in Visual Studio Team Explorer 2015</Description>
+    <Description xml:space="preserve">Integrates GitFlow in Visual Studio Team Explorer 2013. Requires VS 2013 Update 3 or higher</Description>
     <License>License.rtf</License>
     <Icon>icon.png</Icon>
     <PreviewImage>icon.png</PreviewImage>
     <Tags>VisualStudio git gitflow TeamExplorer</Tags>
   </Metadata>
   <Installation InstalledByMsi="false">
-    <InstallationTarget Version="[14.0,15.0)" Id="Microsoft.VisualStudio.Pro" />
+    <InstallationTarget Version="[12.0.30723,13.0)" Id="Microsoft.VisualStudio.Pro" />
   </Installation>
   <Dependencies>
     <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />

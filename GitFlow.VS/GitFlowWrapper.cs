@@ -453,7 +453,7 @@ namespace GitFlow.VS
         }
         private void OnErrorReceived(object sender, DataReceivedEventArgs dataReceivedEventArgs)
         {
-            if (dataReceivedEventArgs.Data != null && dataReceivedEventArgs.Data.StartsWith("fatal:", StringComparison.OrdinalIgnoreCase))
+            if (dataReceivedEventArgs.Data != null && dataReceivedEventArgs.Data.StartsWith("Fatal:"))
             {
                 Error = new StringBuilder();
                 Error.Append(dataReceivedEventArgs.Data);
