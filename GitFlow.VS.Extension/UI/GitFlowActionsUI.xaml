@@ -23,13 +23,19 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <WrapPanel Grid.Row="0">
-            <teamExplorer:DropDownLink Margin="3,6,3,0"  Text="Start Feature" DropDownMenuCommand="{Binding Path=StartFeatureDropDownCommand}" Visibility="{Binding Path=StartFeatureVisible}" />
-            <teamExplorer:DropDownLink Margin="3,6,3,0"  Text="Start Release" DropDownMenuCommand="{Binding Path=StartReleaseDropDownCommand}"  Visibility="{Binding Path=StartReleaseVisible}"/>
-            <teamExplorer:DropDownLink Margin="3,6,3,0"  Text="Start Hotfix" DropDownMenuCommand="{Binding Path=StartHotfixDropDownCommand}"  Visibility="{Binding Path=StartHotfixVisible}"/>
-            <teamExplorer:DropDownLink Margin="3,6,3,0"  Text="Finish Feature" DropDownMenuCommand="{Binding Path=FinishFeatureDropDownCommand}"  Visibility="{Binding Path=FinishFeatureVisible}"/>
-            <teamExplorer:DropDownLink Margin="3,6,3,0"  Text="Finish Release" DropDownMenuCommand="{Binding Path=FinishReleaseDropDownCommand}"  Visibility="{Binding Path=FinishReleaseVisible}"/>
-            <teamExplorer:DropDownLink Margin="3,6,3,0"  Text="Finish Hotfix" DropDownMenuCommand="{Binding Path=FinishHotfixDropDownCommand}"  Visibility="{Binding Path=FinishHotfixVisible}"/>
-            <teamExplorer:DropDownLink Margin="3,6,3,0" Name="OtherActions" Text="Other">
+            <teamExplorer:DropDownLink Text="Start Feature" DropDownMenuCommand="{Binding Path=StartFeatureDropDownCommand}" Visibility="{Binding Path=StartFeatureVisible}" />
+            <Separator Style="{StaticResource VerticalSeparator}" Visibility="{Binding Path=StartFeatureVisible}" Margin="4,0,-1,0"/>
+            <teamExplorer:DropDownLink Text="Start Release" DropDownMenuCommand="{Binding Path=StartReleaseDropDownCommand}"  Visibility="{Binding Path=StartReleaseVisible}" />
+            <Separator Style="{StaticResource VerticalSeparator}" Visibility="{Binding Path=StartReleaseVisible}" Margin="4,0,-1,0"/>
+            <teamExplorer:DropDownLink Text="Start Hotfix" DropDownMenuCommand="{Binding Path=StartHotfixDropDownCommand}"  Visibility="{Binding Path=StartHotfixVisible}"/>
+            <Separator Style="{StaticResource VerticalSeparator}" Visibility="{Binding Path=StartHotfixVisible}" Margin="4,0,-1,0"/>
+            <teamExplorer:DropDownLink Text="Finish Feature" DropDownMenuCommand="{Binding Path=FinishFeatureDropDownCommand}"  Visibility="{Binding Path=FinishFeatureVisible}" />
+            <Separator Style="{StaticResource VerticalSeparator}" Visibility="{Binding Path=FinishFeatureVisible}" Margin="4,0,-1,0"/>
+            <teamExplorer:DropDownLink Text="Finish Release" DropDownMenuCommand="{Binding Path=FinishReleaseDropDownCommand}"  Visibility="{Binding Path=FinishReleaseVisible}" />
+            <Separator Style="{StaticResource VerticalSeparator}" Visibility="{Binding Path=FinishReleaseVisible}" Margin="4,0,-1,0"/>
+            <teamExplorer:DropDownLink Text="Finish Hotfix" DropDownMenuCommand="{Binding Path=FinishHotfixDropDownCommand}"  Visibility="{Binding Path=FinishHotfixVisible}" />
+            <Separator Style="{StaticResource VerticalSeparator}" Visibility="{Binding Path=FinishHotfixVisible}" Margin="4,0,-1,0"/>
+            <teamExplorer:DropDownLink Name="OtherActions" Text="Other" >
                 <teamExplorer:DropDownLink.DropDownMenu>
                     <ContextMenu>
                         <MenuItem Header="Start Feature" Command="{Binding Path=StartFeatureDropDownCommand}" Visibility="{Binding Path=OtherStartFeatureVisible}"></MenuItem>
