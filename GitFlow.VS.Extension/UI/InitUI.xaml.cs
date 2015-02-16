@@ -1,13 +1,7 @@
-﻿using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using GitFlow.VS;
+﻿using System.Windows.Controls;
 using GitFlowVS.Extension.ViewModels;
-using Microsoft.VisualStudio.Shell.Interop;
-using Microsoft.VisualStudio.TeamFoundation.Git.Extensibility;
-using TeamExplorer.Common;
 
-namespace GitFlowVS.Extension
+namespace GitFlowVS.Extension.UI
 {
     public partial class InitUi : UserControl
     {

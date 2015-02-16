@@ -5,7 +5,6 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.TeamFoundation.Controls;
-using MessageBox = System.Windows.Forms.MessageBox;
 using Path = System.IO.Path;
 
 namespace GitFlowVS.Extension.UI

@@ -1,5 +1,6 @@
 using System;
 using System.Windows.Forms;
+using GitFlowVS.Extension.UI;
 using GitFlowVS.Extension.ViewModels;
 using Microsoft.TeamFoundation.Controls;
 using TeamExplorer.Common;
