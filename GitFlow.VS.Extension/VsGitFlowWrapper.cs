@@ -1,5 +1,4 @@
-﻿using System;
-using GitFlow.VS;
+﻿using GitFlow.VS;
 using Microsoft.VisualStudio.Shell.Interop;
 
 namespace GitFlowVS.Extension
