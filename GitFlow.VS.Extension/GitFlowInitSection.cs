@@ -15,7 +15,7 @@ namespace GitFlowVS.Extension
         {
             try
             {
-                this.model = new InitModel(this);
+                model = new InitModel(this);
                 Title = "Recommended actions";
                 SectionContent = new InitUi(model);
 

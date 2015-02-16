@@ -14,7 +14,6 @@ namespace GitFlowVS.Extension
     [TeamExplorerNavigationItem("59168500-14BC-4EE9-BB1F-7B2B970A4AF6",1500)]
     public class GitFlowNavigationItem : TeamExplorerBaseNavigationItem
     {
-        private readonly IServiceProvider serviceProvider;
         private readonly ITeamExplorer teamExplorer;
         private readonly IGitExt gitService;
 
@@ -24,7 +23,6 @@ namespace GitFlowVS.Extension
         {
             try
             {
-                this.serviceProvider = serviceProvider;
                 UpdateVisible();
                 Text = "GitFlow";
                 Image = Resources.LinkIcon;

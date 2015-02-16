@@ -4,7 +4,6 @@ using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Windows.Forms;
 using System.Windows.Threading;
 using Microsoft.TeamFoundation.Controls;
 using Microsoft.VisualStudio.Shell;
