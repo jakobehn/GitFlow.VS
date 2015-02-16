@@ -117,7 +117,7 @@ namespace GitFlow.VS
                     var prefix = repo.Config.Get<string>("gitflow.prefix.feature").Value;
                     return
                         repo.Branches.Where(b => (!b.IsRemote && b.Name.StartsWith(prefix)) /*|| (b.IsRemote && b.Name.Contains(prefix))*/)
-                            .Select(c => new BranchItem()
+                            .Select(c => new BranchItem
                             {
                                 Author = c.Tip.Author.Name,
                                 Name = c.IsRemote ? c.Name :  c.Name.Split('/').Last(),

@@ -4,11 +4,6 @@ namespace GitFlow.VS
 {
     public class CommandOutputEventArgs : EventArgs
     {
-        public CommandOutputEventArgs()
-        {
-            
-        }
-
         public CommandOutputEventArgs(string output)
         {
             Output = output;
