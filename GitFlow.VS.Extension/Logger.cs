@@ -14,7 +14,7 @@ namespace GitFlowVS.Extension
 		static Logger()
 		{
 			TelemetryClient = new TelemetryClient();
-			TelemetryClient.Context.Properties["VisualStudioVersion"] = VSVersion.FullVersion.ToString();
+            TelemetryClient.Context.Properties["VisualStudioVersion"] = VSVersion.FullVersion.ToString();
 		}
 
 		public static void PageView(string page)

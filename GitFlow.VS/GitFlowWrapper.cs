@@ -73,7 +73,8 @@ namespace GitFlow.VS
             {
                 using (var repo = new Repository(repoDirectory))
                 {
-                    return repo.Config.Any(c => c.Key.StartsWith("gitflow."));
+                    return repo.Config.Any(c => c.Key.StartsWith("gitflow.branch.master")) && 
+						repo.Config.Any(c => c.Key.StartsWith("gitflow.branch.develop"));
                 }
             }
         }

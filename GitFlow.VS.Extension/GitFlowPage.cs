@@ -89,5 +89,4 @@ namespace GitFlowVS.Extension
             }
         }
     }
-
 }
