@@ -322,6 +322,9 @@ namespace GitFlowVS.Extension.ViewModels
 
         private void StartFeature()
         {
+			Logger.Event("StartFeature");
+	        DateTime start = DateTime.Now;
+
             if (GitFlowPage.ActiveRepo != null)
             {
                 GitFlowPage.ActiveOutputWindow();
@@ -339,11 +342,15 @@ namespace GitFlowVS.Extension.ViewModels
                 HideAll();
                 OnPropertyChanged("AllFeatures");
             }
+			Logger.Metric("Duration-StartFeature", (DateTime.Now-start).Milliseconds);
         }
 
         private void StartRelease()
         {
-            if (GitFlowPage.ActiveRepo != null)
+			Logger.Event("StartRelease");
+	        DateTime start = DateTime.Now;
+
+			if (GitFlowPage.ActiveRepo != null)
             {
                 GitFlowPage.ActiveOutputWindow();
                 ShowProgressBar();
@@ -360,7 +367,8 @@ namespace GitFlowVS.Extension.ViewModels
                 HideAll();
                 OnPropertyChanged("AllReleases");
             }
-        }
+			Logger.Metric("Duration-StartRelease", (DateTime.Now - start).Milliseconds);
+		}
 
         private void ShowErrorMessage(GitFlowCommandResult result)
         {
@@ -369,7 +377,10 @@ namespace GitFlowVS.Extension.ViewModels
 
         private void StartHotfix()
         {
-            if (GitFlowPage.ActiveRepo != null)
+			Logger.Event("StartHotfix");
+	        DateTime start = DateTime.Now;
+
+			if (GitFlowPage.ActiveRepo != null)
             {
                 GitFlowPage.ActiveOutputWindow();
                 ShowProgressBar();
@@ -388,11 +399,21 @@ namespace GitFlowVS.Extension.ViewModels
                 HideAll();
                 OnPropertyChanged("AllHotfixes");
             }
-        }
+			Logger.Metric("Duration-StartHotfix", (DateTime.Now - start).Milliseconds);
+		}
 
         private void FinishFeature()
         {
-            if (GitFlowPage.ActiveRepo != null)
+			DateTime start = DateTime.Now;
+
+			var properties = new Dictionary<string, string>
+	        {
+		        {"RebaseOnDevelopmentBranch", FeatureRebaseOnDevelopmentBranch.ToString()},
+		        {"DeleteBranch", FeatureDeleteBranch.ToString()}
+	        };
+	        Logger.Event("FinishFeature", properties);
+
+			if (GitFlowPage.ActiveRepo != null)
             {
                 GitFlowPage.ActiveOutputWindow();
 
@@ -412,11 +433,23 @@ namespace GitFlowVS.Extension.ViewModels
                 OnPropertyChanged("AllFeatures");
                 Te.Refresh();
             }
-        }
+
+			Logger.Metric("Duration-FinishFeature", (DateTime.Now - start).Milliseconds);
+		}
 
         private void FinishRelease()
         {
-            if (GitFlowPage.ActiveRepo != null)
+			DateTime start = DateTime.Now;
+			var properties = new Dictionary<string, string>
+			{
+				{"TaggedRelease", (!String.IsNullOrEmpty(ReleaseTagMessage)).ToString()},
+				{"DeleteBranch", ReleaseDeleteBranch.ToString()},
+				{"ForceDeletion", ReleaseForceDeletion.ToString()},
+				{"PushChanges", ReleasePushChanges.ToString()}
+			};
+			Logger.Event("FinishRelease", properties);
+
+			if (GitFlowPage.ActiveRepo != null)
             {
                 GitFlowPage.ActiveOutputWindow();
                 ShowProgressBar();
@@ -434,12 +467,23 @@ namespace GitFlowVS.Extension.ViewModels
                 OnPropertyChanged("AllReleases");
                 UpdateMenus();
             }
-            
-        }
+			Logger.Metric("Duration-FinishRelease", (DateTime.Now - start).Milliseconds);
+
+		}
 
         private void FinishHotfix()
         {
-            if (GitFlowPage.ActiveRepo != null)
+			DateTime start = DateTime.Now;
+			var properties = new Dictionary<string, string>
+			{
+				{"TaggedRelease", (!String.IsNullOrEmpty(HotfixTagMessage)).ToString()},
+				{"DeleteBranch", HotfixDeleteBranch.ToString()},
+				{"ForceDeletion", HotfixForceDeletion.ToString()},
+				{"PushChanges", HotfixPushChanges.ToString()}
+			};
+			Logger.Event("FinishHotfix", properties);
+
+			if (GitFlowPage.ActiveRepo != null)
             {
                 GitFlowPage.ActiveOutputWindow();
                 ShowProgressBar();
@@ -457,8 +501,9 @@ namespace GitFlowVS.Extension.ViewModels
                 OnPropertyChanged("AllHotfixes");
                 UpdateMenus();
             }
-            
-        }
+			Logger.Metric("Duration-FinishHotfix", (DateTime.Now - start).Milliseconds);
+
+		}
 
         public string ReleaseName
         {

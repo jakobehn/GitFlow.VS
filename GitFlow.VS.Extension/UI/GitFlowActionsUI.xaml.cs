@@ -11,6 +11,6 @@ namespace GitFlowVS.Extension.UI
             this.model = model;
             InitializeComponent();
             DataContext = model;
-        }
+		}
     }
 }

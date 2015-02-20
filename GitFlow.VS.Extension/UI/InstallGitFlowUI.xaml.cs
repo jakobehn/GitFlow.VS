@@ -18,6 +18,7 @@ namespace GitFlowVS.Extension.UI
 
         public InstallGitFlowUI(GitFlowInstallSection parent)
         {
+			Logger.PageView("InstallGitFlow");
             this.parent = parent;
             InitializeComponent();
 
@@ -33,6 +34,7 @@ namespace GitFlowVS.Extension.UI
         {
             try
             {
+	            Logger.Event("Install");
                 Error.Visibility = Visibility.Hidden;
                 var installationPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 string cmd = Path.Combine(installationPath, "Dependencies\\install.ps1");
@@ -64,6 +66,7 @@ namespace GitFlowVS.Extension.UI
             catch (Exception ex)
             {
                 parent.ShowNotification(ex.ToString(), NotificationType.Error);
+				Logger.Exception(ex);
             }
         }
     }

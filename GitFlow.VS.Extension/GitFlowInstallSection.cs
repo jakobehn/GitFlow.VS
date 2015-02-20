@@ -20,11 +20,17 @@ namespace GitFlowVS.Extension
             }
             catch (Exception e)
             {
-                ShowNotification(e.ToString(), NotificationType.Error);
+                HandleException(e);
             }
         }
 
-        public override void Refresh()
+		private void HandleException(Exception ex)
+		{
+			Logger.Exception(ex);
+			ShowNotification(ex.Message, NotificationType.Error);
+		}
+
+		public override void Refresh()
         {
             var service = GetService<ITeamExplorerPage>();
             service.Refresh();

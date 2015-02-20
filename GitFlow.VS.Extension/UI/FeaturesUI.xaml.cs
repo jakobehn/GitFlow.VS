@@ -14,7 +14,7 @@ namespace GitFlowVS.Extension.UI
             InitializeComponent();
             DataContext = model;
 
-            FeaturesGrid.Loaded += FeaturesGridOnLoaded;
+			FeaturesGrid.Loaded += FeaturesGridOnLoaded;
         }
 
         private void FeaturesGridOnLoaded(object sender, RoutedEventArgs routedEventArgs)

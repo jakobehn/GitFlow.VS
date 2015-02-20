@@ -9,7 +9,9 @@ namespace GitFlowVS.Extension.UI
 
         public InitUi(InitModel model)
         {
-            this.model = model;
+			Logger.PageView("Init");
+
+			this.model = model;
             InitializeComponent();
             DataContext = model;
         }

@@ -1,10 +1,10 @@
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using GitFlow.VS;
 using GitFlowVS.Extension.Annotations;
-using TeamExplorer.Common;
 
 namespace GitFlowVS.Extension.ViewModels
 {
@@ -81,6 +81,9 @@ namespace GitFlowVS.Extension.ViewModels
 
         private void OnInitialize()
         {
+			DateTime start = DateTime.Now;
+
+			Logger.Event("Init");
             if (GitFlowPage.ActiveRepo != null)
             {
                 GitFlowPage.OutputWindow.Activate();
@@ -105,7 +108,8 @@ namespace GitFlowVS.Extension.ViewModels
                 InitGridVisibility = Visibility.Hidden;
                 parent.Refresh();
             }
-        }
+			Logger.Metric("Duration-Init", (DateTime.Now - start).Milliseconds);
+		}
 
         public event PropertyChangedEventHandler PropertyChanged;
 

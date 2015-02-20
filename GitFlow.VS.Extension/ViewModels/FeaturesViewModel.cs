@@ -48,7 +48,8 @@ namespace GitFlowVS.Extension.ViewModels
 
         public void PublishFeatureBranch()
         {
-            GitFlowPage.ActiveOutputWindow();
+			Logger.Event("PublishFeatureBranch");
+			GitFlowPage.ActiveOutputWindow();
             ShowProgressBar();
             var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
             var result = gf.PublishFeature(SelectedFeature.Name);
@@ -63,7 +64,8 @@ namespace GitFlowVS.Extension.ViewModels
 
         public void TrackFeatureBranch()
         {
-            GitFlowPage.ActiveOutputWindow();
+			Logger.Event("TrackFeatureBranch");
+			GitFlowPage.ActiveOutputWindow();
             ShowProgressBar();
             var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
             var result = gf.TrackFeature(SelectedFeature.Name);
@@ -78,7 +80,8 @@ namespace GitFlowVS.Extension.ViewModels
 
         public void CheckoutFeatureBranch()
         {
-            GitFlowPage.ActiveOutputWindow();
+			Logger.Event("CheckoutFeatureBranch");
+			GitFlowPage.ActiveOutputWindow();
             ShowProgressBar();
             var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
             var result = gf.CheckoutFeature(SelectedFeature.Name);

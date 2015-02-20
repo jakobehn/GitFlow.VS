@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Windows.Forms;
+using Microsoft.ApplicationInsights;
 using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.Controls;
 using Microsoft.VisualStudio.Shell;
@@ -31,13 +32,19 @@ namespace GitFlowVS.Extension
                 gitService = (IGitExt)serviceProvider.GetService(typeof(IGitExt));
                 teamExplorer.PropertyChanged += TeamExplorerOnPropertyChanged;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                MessageBox.Show(e.ToString());
+	            HandleException(ex);
             }
         }
 
-        protected override void ContextChanged(object sender, ContextChangedEventArgs e)
+	    private void HandleException(Exception ex)
+	    {
+		    Logger.Exception(ex);
+		    ShowNotification(ex.Message, NotificationType.Error);
+	    }
+
+	    protected override void ContextChanged(object sender, ContextChangedEventArgs e)
         {
             UpdateVisible();
             base.ContextChanged(sender, e);
@@ -59,6 +66,15 @@ namespace GitFlowVS.Extension
 
         public override void Execute()
         {
+	        try
+	        {
+				Logger.PageView("Navigate");
+	        }
+	        catch (Exception ex)
+	        {
+		       Logger.Exception(ex);
+		       ShowNotification(ex.Message, NotificationType.Error);
+	        }
             teamExplorer.NavigateToPage(new Guid(GuidList.GitFlowPage), null);
         }
     }
