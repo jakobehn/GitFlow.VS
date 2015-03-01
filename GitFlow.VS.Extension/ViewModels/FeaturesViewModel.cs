@@ -6,6 +6,7 @@ using GitFlow.VS;
 
 namespace GitFlowVS.Extension.ViewModels
 {
+
     public class FeaturesViewModel : ViewModelBase
     {
         public ICommand PublishFeatureBranchCommand { get; private set; }

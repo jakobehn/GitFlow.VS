@@ -202,6 +202,7 @@
     <Compile Include="GitFlowPage.cs" />
     <Compile Include="IGitFlowSection.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="UI\Commands.cs" />
     <Compile Include="UI\FeaturesUI.xaml.cs">
       <DependentUpon>FeaturesUI.xaml</DependentUpon>
     </Compile>

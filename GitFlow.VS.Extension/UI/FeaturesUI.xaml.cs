@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using GitFlowVS.Extension.ViewModels;
 
 namespace GitFlowVS.Extension.UI
@@ -24,6 +25,12 @@ namespace GitFlowVS.Extension.UI
                 column.MinWidth = column.ActualWidth;
                 column.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
             }
+        }
+
+        private void FeaturesGrid_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var model = (FeaturesViewModel)DataContext;
+            model.CheckoutFeatureBranch();
         }
     }
 }

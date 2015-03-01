@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" 
+             xmlns:clr="clr-namespace:GitFlowVS.Extension.UI"
              d:DesignHeight="300" d:DesignWidth="300">
 
     <UserControl.Resources>
@@ -18,7 +19,7 @@
         </Grid.RowDefinitions>
 
         <TextBlock FontStyle="Italic" Visibility="{Binding NoItemsMessageVisibility}">No features available</TextBlock>
-        <DataGrid Grid.Row="1" Name="FeaturesGrid" Margin="6,6,6,6" Padding="0,5,0,0" ItemsSource="{Binding AllFeatures}" AutoGenerateColumns="False" GridLinesVisibility="None" HeadersVisibility="None" BorderThickness="0" SelectedItem="{Binding SelectedFeature}" CanUserAddRows="False" Background="{StaticResource ItemBrushKey}">
+        <DataGrid Grid.Row="1" Name="FeaturesGrid" Margin="6,6,6,6" Padding="0,5,0,0" ItemsSource="{Binding AllFeatures}" AutoGenerateColumns="False" GridLinesVisibility="None" HeadersVisibility="None" BorderThickness="0" SelectedItem="{Binding SelectedFeature}" CanUserAddRows="False" Background="{StaticResource ItemBrushKey}" clr:Commands.DataGridDoubleClickCommand="{Binding CheckoutFeatureBranchCommand}">
                 <DataGrid.RowStyle>
                     <Style TargetType="{x:Type DataGridRow}">
                         <Style.Triggers>
@@ -68,7 +69,7 @@
                 <ContextMenu>
                         <MenuItem Command="{Binding Path=PublishFeatureBranchCommand}" Header="Publish" ></MenuItem>
                         <MenuItem Command="{Binding Path=TrackFeatureBranchCommand}" Header="Track" ></MenuItem>
-                        <MenuItem Command="{Binding Path=CheckoutFeatureBranchCommand}" Header="Checkout" ></MenuItem>
+                        <MenuItem Command="{Binding Path=CheckoutFeatureBranchCommand}" Header="Checkout" />
                     </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
