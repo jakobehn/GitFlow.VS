@@ -1,17 +1,22 @@
-﻿#Copy necessary files from the util-linux package into %programfiles(x86)%\Git\bin
+﻿#Copy necessary files from the util-linux package into the bin directory of the msysgit installation
 #Runs gitflow\contrib\msysgit-install.cmd
 #
-# NOTE:This script must be executed with elevated priviledges
+# NOTE:This script must be executed with elevated priviledges, in case Git is installed below program files
 #
+Param
+(
+	[Parameter(Mandatory=$True)] [string] $gitInstallPath
+)
 
 $installationPath = Split-Path $MyInvocation.MyCommand.Path
 $targetFolder = $installationPath
 $binaries = Join-Path $installationPath "binaries"
 $gitFlowFolder = Join-Path $installationPath "gitflow"
-$gitLocation = Join-Path ${Env:ProgramFiles(x86)} "Git\bin"
+$gitLocation = Join-Path $gitInstallPath "bin"
 
-Write-Host "Copy binaries to Git installation directory"
-Copy-Item -Path "$binaries\*.*" -Destination "$gitLocation" -Force
+Write-Host "Copy binaries to Git installation directory " + $gitLocation
+
+Copy-Item -Path "$binaries\*.*" -Destination "$gitLocation" -Force -Verbose
 
 #Check if gitflow need to be installed
 if(Test-Path (Join-Path $gitLocation "git-flow"))
@@ -25,7 +30,7 @@ $installScript = Join-Path $installationPath "gitflow\contrib\msysgit-install.cm
 $pinfo = New-Object System.Diagnostics.ProcessStartInfo
 $pinfo.FileName = $installScript
 $pinfo.UseShellExecute = $true
-$pinfo.Arguments = """c:\program files (x86)\git"""
+$pinfo.Arguments = """$gitInstallPath"""
 
 $p = New-Object System.Diagnostics.Process
 $p.StartInfo = $pinfo

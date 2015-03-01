@@ -75,6 +75,7 @@
     <Compile Include="GitFlowCommandResult.cs" />
     <Compile Include="GitFlowRepoSettings.cs" />
     <Compile Include="GitFlowWrapper.cs" />
+    <Compile Include="GitHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

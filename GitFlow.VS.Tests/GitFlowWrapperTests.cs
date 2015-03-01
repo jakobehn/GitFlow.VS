@@ -35,8 +35,9 @@ namespace GitFlow.VS.Tests
         public void RunInstallScript()
         {
             string installationPath =
-                @"C:\Users\jakobe\AppData\Local\Microsoft\VisualStudio\12.0Exp\Extensions\Jakob Ehn\GitFlow.VS\0.9";
-            string cmd = Path.Combine(installationPath, "Dependencies\\install.ps1");
+                @"C:\Users\jakobe\Source\Repos\GitFlow.VS\GitFlow.VS.Extension";
+
+            var gitInstallPath = GitHelper.GetGitInstallationPath();
             var proc = new Process
             {
                 StartInfo = new ProcessStartInfo
@@ -44,14 +45,13 @@ namespace GitFlow.VS.Tests
                     FileName = "powershell.exe",
                     WorkingDirectory = Path.Combine(installationPath, "Dependencies"),
                     UseShellExecute = true,
-                    Arguments = @"-File ""C:\Users\jakobe\Source\Repos\GitFlow.VS\GitFlow.VS.Extension\Dependencies\Install.ps1""",
+                    Arguments = String.Format(@"-ExecutionPolicy ByPass -NoLogo -NoProfile  -File ""C:\Users\jakobe\Source\Repos\GitFlow.VS\GitFlow.VS.Extension\Dependencies\Install.ps1"" ""{0}""", gitInstallPath),
                     Verb = "runas",
-                    LoadUserProfile = false
+                    LoadUserProfile = true
                 }
             };
             proc.Start();
             proc.WaitForExit();
-            var exit = proc.ExitCode;
         }
 
         [TestMethod]

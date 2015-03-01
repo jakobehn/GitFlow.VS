@@ -81,34 +81,42 @@ namespace GitFlowVS.Extension.ViewModels
 
         private void OnInitialize()
         {
-			DateTime start = DateTime.Now;
-
-			Logger.Event("Init");
-            if (GitFlowPage.ActiveRepo != null)
+            try
             {
-                GitFlowPage.OutputWindow.Activate();
-                ProgressVisibility = Visibility.Visible;
+                DateTime start = DateTime.Now;
 
-                var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepo.RepositoryPath, GitFlowPage.OutputWindow);
-                var result = gf.Init(new GitFlowRepoSettings
+                Logger.Event("Init");
+                if (GitFlowPage.ActiveRepo != null)
                 {
-                    DevelopBranch = Develop,
-                    MasterBranch = Master,
-                    FeatureBranch = FeaturePrefix,
-                    ReleaseBranch = ReleasePrefix,
-                    HotfixBranch = HotfixPrefix,
-                    VersionTag = VersionTagPrefix
-                });
-                if (!result.Success)
-                {
-                    parent.ShowErrorNotification(result.CommandOutput);
+                    GitFlowPage.OutputWindow.Activate();
+                    ProgressVisibility = Visibility.Visible;
+
+                    var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepo.RepositoryPath, GitFlowPage.OutputWindow);
+                    var result = gf.Init(new GitFlowRepoSettings
+                    {
+                        DevelopBranch = Develop,
+                        MasterBranch = Master,
+                        FeatureBranch = FeaturePrefix,
+                        ReleaseBranch = ReleasePrefix,
+                        HotfixBranch = HotfixPrefix,
+                        VersionTag = VersionTagPrefix
+                    });
+                    if (!result.Success)
+                    {
+                        parent.ShowErrorNotification(result.CommandOutput);
+                    }
+
+                    ProgressVisibility = Visibility.Hidden;
+                    InitGridVisibility = Visibility.Hidden;
+                    parent.Refresh();
                 }
-
-                ProgressVisibility = Visibility.Hidden;
-                InitGridVisibility = Visibility.Hidden;
-                parent.Refresh();
+                Logger.Metric("Duration-Init", (DateTime.Now - start).Milliseconds);
             }
-			Logger.Metric("Duration-Init", (DateTime.Now - start).Milliseconds);
+            catch (Exception e)
+            {
+                parent.ShowErrorNotification(e.Message);
+                Logger.Exception(e);
+            }
 		}
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Threading;
+using GitFlow.VS;
 using Microsoft.TeamFoundation.Controls;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
@@ -76,13 +77,17 @@ namespace GitFlowVS.Extension
         {
             get
             {
+                //Read PATH to find git installation path
                 //Check if extension has been configured
-                string binariesPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Dependencies/binaries");
+                string binariesPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Dependencies\\binaries");
                 if (!Directory.Exists(binariesPath))
                     return false;
 
-                string gitFlowFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86),
-                    "Git\\bin\\git-flow");
+                var gitInstallLocation = GitHelper.GetGitInstallationPath();
+                if (gitInstallLocation == null)
+                    return false;
+
+                string gitFlowFile = Path.Combine(gitInstallLocation,"bin\\git-flow");
                 if (!File.Exists(gitFlowFile))
                     return false;
                 return true;

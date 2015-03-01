@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using GitFlow.VS;
 using Microsoft.TeamFoundation.Controls;
 using Path = System.IO.Path;
 
@@ -22,7 +23,7 @@ namespace GitFlowVS.Extension.UI
             this.parent = parent;
             InitializeComponent();
 
-            if (!Directory.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86),"git")))
+            if (GitHelper.GetGitInstallationPath() == null)
             {
                 GitInstallation.Visibility = Visibility.Visible;
                 GitFlowInstallation.Visibility = Visibility.Collapsed;
@@ -38,6 +39,9 @@ namespace GitFlowVS.Extension.UI
                 Error.Visibility = Visibility.Hidden;
                 var installationPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 string cmd = Path.Combine(installationPath, "Dependencies\\install.ps1");
+
+                var gitInstallPath = GitHelper.GetGitInstallationPath();
+
                 var proc = new Process
                 {
                     StartInfo = new ProcessStartInfo
@@ -45,7 +49,7 @@ namespace GitFlowVS.Extension.UI
                         FileName = "powershell.exe",
                         WorkingDirectory = Path.Combine(installationPath, "Dependencies"),
                         UseShellExecute = true,
-                        Arguments = "-ExecutionPolicy ByPass -NoLogo -NoProfile -File \"" + cmd + "\"",
+                        Arguments = String.Format("-ExecutionPolicy ByPass -NoLogo -NoProfile -File \"" + cmd + "\" \"{0}\"", gitInstallPath),
                         Verb = "runas",
                         LoadUserProfile = false
                     }
