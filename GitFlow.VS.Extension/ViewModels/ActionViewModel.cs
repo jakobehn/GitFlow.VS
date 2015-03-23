@@ -86,42 +86,42 @@ namespace GitFlowVS.Extension.ViewModels
 
             StartFeatureDropDownCommand = new DropDownLinkCommand(p => StartFeatureDropDown(), p => CanShowStartFeatureDropDown());
             StartFeatureCommand = new RelayCommand(p => StartFeature(), p => CanCreateFeature);
-            CancelStartFeatureCommand = new RelayCommand(p => CancelStartFeature(), p => true);
+            CancelStartFeatureCommand = new RelayCommand(p => CancelStartFeature(), p => CanCancelFinishCommand());
 
             StartReleaseDropDownCommand = new DropDownLinkCommand(p => StartReleaseDropDown(), p => CanShowStartReleaseDropDown());
             StartReleaseCommand = new RelayCommand(p => StartRelease(), p => CanCreateRelease);
-            CancelStartReleaseCommand = new RelayCommand(p => CancelStartRelease(), p => true);
+            CancelStartReleaseCommand = new RelayCommand(p => CancelStartRelease(), p => CanCancelFinishCommand());
 
             StartHotfixDropDownCommand = new DropDownLinkCommand(p => StartHotfixDropDown(), p => CanShowStartHotfixDropDown());
             StartHotfixCommand = new RelayCommand(p => StartHotfix(), p => CanCreateHotfix);
-            CancelStartHotfixCommand = new RelayCommand(p => CancelStartHotfix(), p => true);
+            CancelStartHotfixCommand = new RelayCommand(p => CancelStartHotfix(), p => CanCancelFinishCommand());
 
             FinishFeatureDropDownCommand = new DropDownLinkCommand(p => FinishFeatureDropDown(), p => CanShowFinishFeatureDropDown());
             FinishFeatureCommand = new RelayCommand(p => FinishFeature(), p => CanFinishFeature);
-            CancelFinishFeatureCommand = new RelayCommand(p => CancelFinishFeature(), p => true);
+            CancelFinishFeatureCommand = new RelayCommand(p => CancelFinishFeature(), p => CanCancelFinishCommand());
 
             FinishReleaseDropDownCommand = new DropDownLinkCommand(p => FinishReleaseDropDown(), p => CanShowFinishReleaseDropDown());
             FinishReleaseCommand = new RelayCommand(p => FinishRelease(), p => CanFinishRelease);
-            CancelFinishReleaseCommand = new RelayCommand(p => CancelFinishRelease(), p => true);
+            CancelFinishReleaseCommand = new RelayCommand(p => CancelFinishRelease(), p => CanCancelFinishCommand());
 
             FinishHotfixDropDownCommand = new DropDownLinkCommand(p => FinishHotfixDropDown(), p => CanShowFinishHotfixDropDown());
             FinishHotfixCommand = new RelayCommand(p => FinishHotfix(), p => CanFinishHotfix);
-            CancelFinishHotfixCommand = new RelayCommand(p => CancelFinishHotfix(), p => true);
+            CancelFinishHotfixCommand = new RelayCommand(p => CancelFinishHotfix(), p => CanCancelFinishCommand());
         }
 
         public bool CanFinishRelease
         {
-            get { return SelectedRelease != null; }
+            get { return SelectedRelease != null && CanCancelFinishCommand(); }
         }
 
         public bool CanFinishHotfix
         {
-            get { return SelectedHotfix != null; }
+            get { return SelectedHotfix != null && CanCancelFinishCommand(); }
         }
 
         public bool CanFinishFeature
         {
-            get { return SelectedFeature != null; }
+            get { return SelectedFeature != null && CanCancelFinishCommand(); }
         }
 
         private void CancelStartFeature()
@@ -156,6 +156,12 @@ namespace GitFlowVS.Extension.ViewModels
         {
             return true;
         }
+
+        private bool CanCancelFinishCommand()
+        {
+            return ProgressVisibility != Visibility.Visible;
+        }
+
         private bool CanShowStartHotfixDropDown()
         {
             return true;
@@ -242,20 +248,20 @@ namespace GitFlowVS.Extension.ViewModels
 
         public bool CanCreateFeature
         {
-            get { return !String.IsNullOrEmpty(FeatureName); }
+            get { return !String.IsNullOrEmpty(FeatureName) && CanCancelFinishCommand(); }
         }
 
         public bool CanCreateRelease
         {
             get
             {
-                return !String.IsNullOrEmpty(ReleaseName);
+                return !String.IsNullOrEmpty(ReleaseName) && CanCancelFinishCommand();
             }
         }
 
         public bool CanCreateHotfix
         {
-            get { return !String.IsNullOrEmpty(HotfixName); }
+            get { return !String.IsNullOrEmpty(HotfixName) && CanCancelFinishCommand(); }
         }
 
         public List<ListItem> AllFeatures

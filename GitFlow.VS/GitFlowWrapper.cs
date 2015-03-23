@@ -544,13 +544,23 @@ namespace GitFlow.VS
 
             using (var p = CreateGitFlowProcess(gitArguments, repoDirectory))
             {
-                OnCommandOutputDataReceived(new CommandOutputEventArgs("Running git " + p.StartInfo.Arguments));
+                OnCommandOutputDataReceived(new CommandOutputEventArgs("Running git " + p.StartInfo.Arguments + "\n"));
                 p.Start();
                 p.ErrorDataReceived += OnErrorReceived;
                 p.OutputDataReceived += OnOutputDataReceived;
                 p.BeginErrorReadLine();
                 p.BeginOutputReadLine();
-                p.WaitForExit();
+                p.WaitForExit(15000);
+                if (!p.HasExited)
+                {
+                    OnCommandOutputDataReceived(new CommandOutputEventArgs("The command is taking longer than expected\n"));
+
+                    p.WaitForExit(15000);
+                    if (!p.HasExited)
+                    {
+                        return new GitFlowTimedOutCommandResult("git " + p.StartInfo.Arguments);
+                    }
+                }
                 if (Error != null && Error.Length > 0)
                 {
                     return new GitFlowCommandResult(false, Error.ToString());
