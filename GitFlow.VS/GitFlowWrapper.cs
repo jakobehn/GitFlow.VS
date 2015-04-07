@@ -32,6 +32,8 @@ namespace GitFlow.VS
                 using (var repo = new Repository(repoDirectory))
                 {
                     var featurePrefix = repo.Config.Get<string>("gitflow.prefix.feature");
+                    if (featurePrefix == null)
+                        return false;
                     return repo.Head.Name.StartsWith(featurePrefix.Value);
                 }
             }
@@ -47,6 +49,8 @@ namespace GitFlow.VS
                 using (var repo = new Repository(repoDirectory))
                 {
                     var hotfixPrefix = repo.Config.Get<string>("gitflow.prefix.hotfix");
+                    if (hotfixPrefix == null)
+                        return false;
                     return repo.Head.Name.StartsWith(hotfixPrefix.Value);
                 }
             }
@@ -62,6 +66,8 @@ namespace GitFlow.VS
                 using (var repo = new Repository(repoDirectory))
                 {
                     var masterBranch = repo.Config.Get<string>("gitflow.branch.master");
+                    if (masterBranch == null)
+                        return false;
                     return repo.Head.Name == masterBranch.Value;
                 }
             }
@@ -195,6 +201,8 @@ namespace GitFlow.VS
                 using (var repo = new Repository(repoDirectory))
                 {
                     var developBranch = repo.Config.Get<string>("gitflow.branch.develop");
+                    if (developBranch == null)
+                        return false;
                     return repo.Head.Name == developBranch.Value;
                 }
             }
@@ -210,6 +218,8 @@ namespace GitFlow.VS
                 using (var repo = new Repository(repoDirectory))
                 {
                     var releasePrefix = repo.Config.Get<string>("gitflow.prefix.release");
+                    if (releasePrefix == null)
+                        return false;
                     return repo.Head.Name.StartsWith(releasePrefix.Value);
                 }
             }
