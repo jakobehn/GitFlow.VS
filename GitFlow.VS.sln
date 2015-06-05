@@ -20,6 +20,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamExplorer.Common", "Team
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{F7864E21-C5D4-4C74-B930-F1991C5DEDE9}"
 	ProjectSection(SolutionItems) = preProject
+		Scripts\ApplyVersionToAssemblies.ps1 = Scripts\ApplyVersionToAssemblies.ps1
 		Scripts\SetVsixVersion.ps1 = Scripts\SetVsixVersion.ps1
 	EndProjectSection
 EndProject
