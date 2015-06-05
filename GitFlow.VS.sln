@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.22310.1
+VisualStudioVersion = 14.0.22907.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{7A31A09F-1E7B-4389-9795-2752C2A6DF40}"
 	ProjectSection(SolutionItems) = preProject
@@ -17,6 +17,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitFlow.VS.Extension", "GitFlow.VS.Extension\GitFlow.VS.Extension.csproj", "{B5F05374-4507-4ACE-A4F5-7AF90ABE9ED4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamExplorer.Common", "TeamExplorer.Common\TeamExplorer.Common.csproj", "{388AC013-C628-4A32-ABBC-A28A68C3A112}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{F7864E21-C5D4-4C74-B930-F1991C5DEDE9}"
+	ProjectSection(SolutionItems) = preProject
+		Scripts\SetVsixVersion.ps1 = Scripts\SetVsixVersion.ps1
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

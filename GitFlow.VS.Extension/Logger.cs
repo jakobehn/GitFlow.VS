@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.Channel;
+using Microsoft.ApplicationInsights.Extensibility;
 
 namespace GitFlowVS.Extension
 {
@@ -13,7 +15,7 @@ namespace GitFlowVS.Extension
 
 		static Logger()
 		{
-			TelemetryClient = new TelemetryClient();
+		    TelemetryConfiguration.Active.InstrumentationKey = "0aafb28d-ec58-4d70-b42c-ad53134bee79";
             TelemetryClient.Context.Properties["VisualStudioVersion"] = VSVersion.FullVersion.ToString();
 		}
 
