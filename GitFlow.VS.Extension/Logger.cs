@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.ApplicationInsights;
-using Microsoft.ApplicationInsights.Channel;
-using Microsoft.ApplicationInsights.Extensibility;
 
 namespace GitFlowVS.Extension
 {
@@ -15,8 +10,11 @@ namespace GitFlowVS.Extension
 
 		static Logger()
 		{
-		    TelemetryConfiguration.Active.InstrumentationKey = "0aafb28d-ec58-4d70-b42c-ad53134bee79";
-            TelemetryClient.Context.Properties["VisualStudioVersion"] = VSVersion.FullVersion.ToString();
+		    TelemetryClient = new TelemetryClient
+		    {
+		        InstrumentationKey = "0aafb28d-ec58-4d70-b42c-ad53134bee79"
+		    };
+		    TelemetryClient.Context.Properties["VisualStudioVersion"] = VSVersion.FullVersion.ToString();
 		}
 
 		public static void PageView(string page)

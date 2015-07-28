@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Threading;
 using GitFlow.VS;
+using GitFlowVS.Extension.UI;
 using Microsoft.TeamFoundation.Controls;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
@@ -18,7 +19,9 @@ namespace GitFlowVS.Extension
     public class GitFlowPage : TeamExplorerBasePage
     {
         private static IGitExt gitService;
+        private static ITeamExplorer teamExplorer;
         private static IVsOutputWindowPane outputWindow;
+        private GitFlowPageUI ui;
 
         public static IGitRepositoryInfo ActiveRepo
         {
@@ -48,6 +51,7 @@ namespace GitFlowVS.Extension
                     new Action(() =>
                         ((IGitFlowSection)section1).UpdateVisibleState()));
             }
+            ui.Refresh();
         }
 
         [ImportingConstructor]
@@ -55,12 +59,18 @@ namespace GitFlowVS.Extension
         {
             Title = "GitFlow";
             gitService = (IGitExt)serviceProvider.GetService(typeof(IGitExt));
+            teamExplorer = (ITeamExplorer) serviceProvider.GetService(typeof (ITeamExplorer));
             gitService.PropertyChanged += OnGitServicePropertyChanged;
             
             var outWindow = Package.GetGlobalService(typeof(SVsOutputWindow)) as IVsOutputWindow;
             var customGuid = new Guid("B85225F6-B15E-4A8A-AF6E-2BE96A4FE672");
             outWindow.CreatePane(ref customGuid, "GitFlow.VS", 1, 1);
             outWindow.GetPane(ref customGuid, out outputWindow);
+
+
+            ui = new GitFlowPageUI();
+            PageContent = ui;
+
         }
 
         private void OnGitServicePropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
@@ -92,6 +102,14 @@ namespace GitFlowVS.Extension
                     return false;
                 return true;
             }
+        }
+
+        public static void ShowPage(string page)
+        {
+            System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+                new Action(() =>
+                    teamExplorer.NavigateToPage(new Guid(page), null)));
+
         }
     }
 }

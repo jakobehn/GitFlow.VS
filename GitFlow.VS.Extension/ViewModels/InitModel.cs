@@ -1,16 +1,12 @@
 using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using GitFlow.VS;
-using GitFlowVS.Extension.Annotations;
 
 namespace GitFlowVS.Extension.ViewModels
 {
-    public class InitModel : INotifyPropertyChanged
+    public class InitModel : ViewModelBase
     {
-        private readonly IGitFlowSection parent;
         private string master;
         private string develop;
         private string featurePrefix;
@@ -25,8 +21,8 @@ namespace GitFlowVS.Extension.ViewModels
         public ICommand CancelCommand { get; private set; }
 
         public InitModel(IGitFlowSection parent)
+            :base(parent)
         {
-            this.parent = parent;
             InitializeModel();
 
             OkCommand = new RelayCommand(p => OnInitialize(), p => true);
@@ -103,30 +99,21 @@ namespace GitFlowVS.Extension.ViewModels
                     });
                     if (!result.Success)
                     {
-                        parent.ShowErrorNotification(result.CommandOutput);
+                        Te.ShowErrorNotification(result.CommandOutput);
                     }
 
                     ProgressVisibility = Visibility.Hidden;
                     InitGridVisibility = Visibility.Hidden;
-                    parent.Refresh();
+                    Te.Refresh();
                 }
                 Logger.Metric("Duration-Init", (DateTime.Now - start).Milliseconds);
             }
             catch (Exception e)
             {
-                parent.ShowErrorNotification(e.Message);
+                Te.ShowErrorNotification(e.ToString());
                 Logger.Exception(e);
             }
 		}
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         public string Master
         {
