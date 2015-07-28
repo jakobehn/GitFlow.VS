@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 using LibGit2Sharp;
 
 namespace GitFlow.VS
@@ -126,7 +127,7 @@ namespace GitFlow.VS
                             .Select(c => new BranchItem
                             {
                                 Author = c.Tip.Author.Name,
-                                Name = c.IsRemote ? c.Name :  c.Name.Split('/').Last(),
+                                Name = c.IsRemote ? c.Name :  c.Name.Replace(prefix,""),
                                 LastCommit = c.Tip.Author.When,
                                 IsTracking = c.IsTracking,
                                 IsCurrentBranch = c.IsCurrentRepositoryHead,
@@ -178,7 +179,7 @@ namespace GitFlow.VS
             }
         }
 
-        private IEnumerable<string> GetAllBranchesThatStartsWithConfigPrefix(string config)
+        public IEnumerable<string> GetAllBranchesThatStartsWithConfigPrefix(string config)
         {
             if (!IsInitialized)
                 return new List<string>();
@@ -186,8 +187,10 @@ namespace GitFlow.VS
             using (var repo = new Repository(repoDirectory))
             {
                 var prefix = repo.Config.Get<string>(config).Value;
-                return
-                    repo.Branches.Where(b => !b.IsRemote && b.Name.StartsWith(prefix)).Select(c => c.Name.Split('/').Last()).ToList();
+                var gitFlowBranches =
+                    repo.Branches.Where(b => !b.IsRemote && b.Name.StartsWith(prefix)).ToList();
+
+                return gitFlowBranches.Select(b => b.Name.Replace(prefix, "")).ToList();
             }   
         }
 
@@ -243,8 +246,21 @@ namespace GitFlow.VS
                 using (var repo = new Repository(repoDirectory))
                 {
                     string fullBranchName = repo.Head.Name;
-                    var parts = fullBranchName.Split('/');
-                    return parts.Last();
+                    ConfigurationEntry<string> prefix = null;
+
+                    if (IsOnFeatureBranch)
+                    {
+                        prefix = repo.Config.Get<string>("gitflow.prefix.feature");
+                    }
+                    if (IsOnReleaseBranch)
+                    {
+                        prefix = repo.Config.Get<string>("gitflow.prefix.release");
+                    }
+                    if (IsOnHotfixBranch)
+                    {
+                        prefix = repo.Config.Get<string>("gitflow.prefix.hotfix");
+                    }
+                    return prefix != null ? fullBranchName.Replace(prefix.Value, "") : null;
                 }
             }
         }

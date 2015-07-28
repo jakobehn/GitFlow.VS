@@ -26,7 +26,7 @@ namespace GitFlowVS.Extension.ViewModels
             if (!String.IsNullOrEmpty(GitFlowPage.ActiveRepoPath))
             {
                 var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
-                CurrentBranch = gf.CurrentBranch;
+                CurrentBranch = gf.CurrentBranchLeafName;
             }
             else
             {
