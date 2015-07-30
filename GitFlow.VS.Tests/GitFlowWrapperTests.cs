@@ -206,6 +206,14 @@ namespace GitFlow.VS.Tests
         }
 
         [TestMethod]
+        public void CurrentBranchName()
+        {
+            var gf = new GitFlowWrapper(sampleRepoPath);
+            gf.Init(new GitFlowRepoSettings());
+            Assert.AreEqual("develop", gf.CurrentBranchLeafName);
+        }
+
+        [TestMethod]
         public void StartTwoFeaturesInParallel()
         {
             var gf = new GitFlowWrapper(sampleRepoPath);

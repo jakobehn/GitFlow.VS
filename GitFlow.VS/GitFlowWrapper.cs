@@ -260,7 +260,7 @@ namespace GitFlow.VS
                     {
                         prefix = repo.Config.Get<string>("gitflow.prefix.hotfix");
                     }
-                    return prefix != null ? fullBranchName.Replace(prefix.Value, "") : null;
+                    return prefix != null ? fullBranchName.Replace(prefix.Value, "") : fullBranchName;
                 }
             }
         }

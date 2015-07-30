@@ -11,27 +11,24 @@ namespace GitFlowVS.Extension.ViewModels
     {
         public ICommand SelectBranchCommand { get; private set; }
 
-        public string CurrentBranch { get; set; }
+        public string CurrentBranch 
+        {
+            get
+            {
+                if (!String.IsNullOrEmpty(GitFlowPage.ActiveRepoPath))
+                {
+                    var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
+                    return gf.CurrentBranchLeafName;
+                }
+                return "No branch selected";
+            }
+            set { ; } }
 
 
         public GitFlowPageModel()
         {
-            InitializeModel();
-        }
-
-        private void InitializeModel()
-        {
             SelectBranchCommand = new RelayCommand(p => SelectBranch(), p => CanSelectBranch);
 
-            if (!String.IsNullOrEmpty(GitFlowPage.ActiveRepoPath))
-            {
-                var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
-                CurrentBranch = gf.CurrentBranchLeafName;
-            }
-            else
-            {
-                CurrentBranch = "No branch selected";
-            }
         }
 
         private void SelectBranch()
