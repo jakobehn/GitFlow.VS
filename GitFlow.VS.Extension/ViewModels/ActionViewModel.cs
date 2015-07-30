@@ -328,6 +328,9 @@ namespace GitFlowVS.Extension.ViewModels
 
         private void StartFeature()
         {
+            if (String.IsNullOrEmpty(FeatureName))
+                return;
+
 			Logger.Event("StartFeature");
 	        DateTime start = DateTime.Now;
 
@@ -353,6 +356,9 @@ namespace GitFlowVS.Extension.ViewModels
 
         private void StartRelease()
         {
+            if (String.IsNullOrEmpty(ReleaseName))
+                return;
+
 			Logger.Event("StartRelease");
 	        DateTime start = DateTime.Now;
 
@@ -383,6 +389,9 @@ namespace GitFlowVS.Extension.ViewModels
 
         private void StartHotfix()
         {
+            if (String.IsNullOrEmpty(HotfixName))
+                return;
+
 			Logger.Event("StartHotfix");
 	        DateTime start = DateTime.Now;
 

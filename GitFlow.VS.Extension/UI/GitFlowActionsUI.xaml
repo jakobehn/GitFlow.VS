@@ -59,7 +59,11 @@
                 <wpf:LabeledTextBox Grid.Row="0" Margin="-2,0,0,6"
                                HintText="Enter a feature name &lt;Required&gt;" NameAndAutomationId="Feature name"
                                Localization.Attributes="HintText (Modifiable Readable Text) NameAndAutomationId (Modifiable Readable Text)"
-                               IsRequired="true" AcceptsReturn="false" Text="{Binding Path=FeatureName, Mode=TwoWay}"/>
+                               IsRequired="true" AcceptsReturn="false" Text="{Binding Path=FeatureName, Mode=TwoWay}">
+                    <wpf:LabeledTextBox.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding StartFeatureCommand}"/>
+                    </wpf:LabeledTextBox.InputBindings>
+                </wpf:LabeledTextBox>
                 <WrapPanel x:Uid="featureActionsPanel" Grid.Row="1" Margin="0,0,0,0">
                     <Button x:Uid="createReleaseButton" VerticalAlignment="Center" Margin="0" Padding="6,2,6,2" MinWidth="75"
                   MinHeight="23" Command="{Binding Path=StartFeatureCommand}">Create _Feature</Button>
@@ -79,7 +83,11 @@
                 <wpf:LabeledTextBox Grid.Row="0" Margin="-2,0,0,6"
                                HintText="Enter a release name &lt;Required&gt;" NameAndAutomationId="Release name"
                                Localization.Attributes="HintText (Modifiable Readable Text) NameAndAutomationId (Modifiable Readable Text)"
-                               IsRequired="true" AcceptsReturn="false" Text="{Binding Path=ReleaseName, Mode=TwoWay}"/>
+                               IsRequired="true" AcceptsReturn="false" Text="{Binding Path=ReleaseName, Mode=TwoWay}">
+                    <wpf:LabeledTextBox.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding StartReleaseCommand}"/>
+                    </wpf:LabeledTextBox.InputBindings>
+                </wpf:LabeledTextBox>
                 <WrapPanel x:Uid="releaseActionsPanel" Grid.Row="1" Margin="0,0,0,0">
                     <Button x:Uid="createReleaseButton" VerticalAlignment="Center" Margin="0" Padding="6,2,6,2" MinWidth="75" MinHeight="23" 
                             Command="{Binding Path=StartReleaseCommand}">Create _Release</Button>
@@ -99,7 +107,12 @@
                 <wpf:LabeledTextBox Grid.Row="0" Margin="-2,0,0,6"
                                HintText="Enter a hotfix name &lt;Required&gt;" NameAndAutomationId="Hotfix name"
                                Localization.Attributes="HintText (Modifiable Readable Text) NameAndAutomationId (Modifiable Readable Text)"
-                               IsRequired="true" AcceptsReturn="false" Text="{Binding Path=HotfixName, Mode=TwoWay}"/>
+                               IsRequired="true" AcceptsReturn="false" Text="{Binding Path=HotfixName, Mode=TwoWay}">
+                    <wpf:LabeledTextBox.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding StartHotfixCommand}"/>
+                    </wpf:LabeledTextBox.InputBindings>
+
+                </wpf:LabeledTextBox>
                 <WrapPanel x:Uid="hotfixActionsPanel" Grid.Row="1" Margin="0,0,0,0">
                     <Button x:Uid="createHotfixButton" VerticalAlignment="Center" Margin="0" Padding="6,2,6,2" MinWidth="75"
                   MinHeight="23" Command="{Binding Path=StartHotfixCommand}">Create _Hotfix</Button>
