@@ -312,7 +312,7 @@ namespace GitFlow.VS
             string gitArguments = "release finish \"" + TrimBranchName(releaseName) + "\"";
             if (!String.IsNullOrEmpty(tagMessage))
             {
-                gitArguments += " -m  + \"" + tagMessage + "\"";
+                gitArguments += " -m \"" + tagMessage + "\"";
             }
             else
             {
@@ -345,7 +345,7 @@ namespace GitFlow.VS
             string gitArguments = "hotfix finish \"" + TrimBranchName(hotifxName) + "\"";
             if (!String.IsNullOrEmpty(tagMessage))
             {
-                gitArguments += " -m  + \"" + tagMessage + "\"";
+                gitArguments += " -m \"" + tagMessage + "\"";
             }
             else
             {
