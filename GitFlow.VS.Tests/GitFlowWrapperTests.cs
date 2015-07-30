@@ -289,6 +289,19 @@ namespace GitFlow.VS.Tests
         }
 
         [TestMethod]
+        public void FinishHotfixWithTagShouldTagRepo()
+        {
+            var gf = new GitFlowWrapper(sampleRepoPath);
+            gf.Init(new GitFlowRepoSettings());
+            gf.StartHotfix("hf1");
+            gf.FinishHotfix("hf1", "1.2.3", false);
+            using (var repo = new Repository(sampleRepoPath))
+            {
+                Assert.AreEqual(1, repo.Tags.Count());
+            }
+        }
+
+        [TestMethod]
         public void GitFlowInitWithInvalidMasterBranchShouldFail()
         {
             try

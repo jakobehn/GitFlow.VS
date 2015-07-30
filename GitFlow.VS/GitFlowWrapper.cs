@@ -309,10 +309,14 @@ namespace GitFlow.VS
 
         public GitFlowCommandResult FinishRelease(string releaseName, string tagMessage = null, bool deleteBranch = true, bool forceDeletion=false, bool pushChanges = false)
         {
-            string gitArguments = "release finish -n \"" + TrimBranchName(releaseName) + "\"";
+            string gitArguments = "release finish \"" + TrimBranchName(releaseName) + "\"";
             if (!String.IsNullOrEmpty(tagMessage))
             {
                 gitArguments += " -m  + \"" + tagMessage + "\"";
+            }
+            else
+            {
+                gitArguments += " -n";
             }
             if (!deleteBranch)
             {
@@ -338,10 +342,14 @@ namespace GitFlow.VS
 
         public GitFlowCommandResult FinishHotfix(string hotifxName, string tagMessage = null, bool deleteBranch = true, bool forceDeletion = false, bool pushChanges = false)
         {
-            string gitArguments = "hotfix finish -n \"" + TrimBranchName(hotifxName) + "\"";
+            string gitArguments = "hotfix finish \"" + TrimBranchName(hotifxName) + "\"";
             if (!String.IsNullOrEmpty(tagMessage))
             {
                 gitArguments += " -m  + \"" + tagMessage + "\"";
+            }
+            else
+            {
+                gitArguments += " -n";
             }
             if (!deleteBranch)
             {
