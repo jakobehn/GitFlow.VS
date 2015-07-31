@@ -1,3 +1,3 @@
 # GitFlow.VS
 
-[![Build status](https://ci.appveyor.com/api/projects/status/jpr24dsp6r34e15u?svg=true)](https://ci.appveyor.com/project/jakobehn/gitflow-vs)
+[![Build status](https://jakob.visualstudio.com/DefaultCollection/_apis/public/build/definitions/da33bffd-4752-4c26-962d-a83d85e71d2f/114/badge)](https://jakob.visualstudio.com/DefaultCollection/_apis/public/build/definitions/da33bffd-4752-4c26-962d-a83d85e71d2f/114/badge)
