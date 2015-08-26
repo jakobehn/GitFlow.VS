@@ -393,42 +393,42 @@ namespace GitFlow.VS
                     }
                     if (IsMasterBranchQuery(input.ToString()))
                     {
-                        p.StandardInput.WriteLine(settings.MasterBranch);
+                        p.StandardInput.Write(settings.MasterBranch + "\n");
                         Output.Append(input);
                         OnCommandOutputDataReceived(new CommandOutputEventArgs(input + Environment.NewLine));
                         input = new StringBuilder();
                     }
                     else if (IsDevelopBranchQuery(input.ToString()))
                     {
-                        p.StandardInput.WriteLine(settings.DevelopBranch);
+                        p.StandardInput.Write(settings.DevelopBranch + "\n");
                         Output.Append(input);
                         OnCommandOutputDataReceived(new CommandOutputEventArgs(input + Environment.NewLine));
                         input = new StringBuilder();
                     }
                     else if (IsFeatureBranchQuery(input.ToString()))
                     {
-                        p.StandardInput.WriteLine(settings.FeatureBranch);
+                        p.StandardInput.Write(settings.FeatureBranch + "\n");
                         Output.Append(input);
                         OnCommandOutputDataReceived(new CommandOutputEventArgs(input + Environment.NewLine));
                         input = new StringBuilder();
                     }
                     else if (IsReleaseBranchQuery(input.ToString()))
                     {
-                        p.StandardInput.WriteLine(settings.ReleaseBranch);
+                        p.StandardInput.Write(settings.ReleaseBranch + "\n");
                         Output.Append(input);
                         OnCommandOutputDataReceived(new CommandOutputEventArgs(input + Environment.NewLine));
                         input = new StringBuilder();
                     }
                     else if (IsHotfixBranchQuery(input.ToString()))
                     {
-                        p.StandardInput.WriteLine(settings.HotfixBranch);
+                        p.StandardInput.Write(settings.HotfixBranch + "\n");
                         Output.Append(input);
                         OnCommandOutputDataReceived(new CommandOutputEventArgs(input + Environment.NewLine));
                         input = new StringBuilder();
                     }
                     else if (IsSupportBranchQuery(input.ToString()))
                     {
-                        p.StandardInput.WriteLine(settings.SupportBranch);
+                        p.StandardInput.Write(settings.SupportBranch + "\n");
                         Output.Append(input);
                         OnCommandOutputDataReceived(new CommandOutputEventArgs(input + Environment.NewLine));
                         input = new StringBuilder();
