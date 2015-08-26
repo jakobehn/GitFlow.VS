@@ -93,11 +93,11 @@ namespace GitFlowVS.Extension
                 if (!Directory.Exists(binariesPath))
                     return false;
 
-                var gitInstallLocation = GitHelper.GetGitInstallationPath();
-                if (gitInstallLocation == null)
+                var gitBinPath = GitHelper.GetGitBinPath();
+                if (gitBinPath == null)
                     return false;
 
-                string gitFlowFile = Path.Combine(gitInstallLocation,"bin\\git-flow");
+                string gitFlowFile = Path.Combine(gitBinPath,"git-flow");
                 if (!File.Exists(gitFlowFile))
                     return false;
                 return true;

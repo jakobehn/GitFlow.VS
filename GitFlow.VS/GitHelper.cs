@@ -7,6 +7,19 @@ namespace GitFlow.VS
 {
     public class GitHelper
     {
+        public static string GetGitBinPath()
+        {
+            var installationPath = GetGitInstallationPath();
+            if (installationPath == null)
+                return null;
+
+            var binPath = Path.Combine(installationPath, "usr/bin");
+            if (Directory.Exists(binPath))
+            {
+                return binPath;
+            }
+            return Path.Combine(installationPath, "bin");
+        }
         public static string GetGitInstallationPath()
         {
             string gitPath = GetInstallPathFromEnvironmentVariable();

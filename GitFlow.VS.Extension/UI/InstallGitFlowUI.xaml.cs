@@ -41,6 +41,10 @@ namespace GitFlowVS.Extension.UI
                 string cmd = Path.Combine(installationPath, "Dependencies\\install.ps1");
 
                 var gitInstallPath = GitHelper.GetGitInstallationPath();
+                if (Directory.Exists(Path.Combine(gitInstallPath, "usr")))
+                {
+                    gitInstallPath = Path.Combine(gitInstallPath, "usr");
+                }
 
                 var proc = new Process
                 {

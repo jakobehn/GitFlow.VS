@@ -458,8 +458,8 @@ namespace GitFlow.VS
 
         private static Process CreateGitFlowProcess(string arguments, string repoDirectory)
         {
-            var gitInstallPath = GitHelper.GetGitInstallationPath();
-            string pathToGit = Path.Combine(gitInstallPath,@"bin\git.exe");
+            var gitInstallationPath = GitHelper.GetGitInstallationPath();
+            string pathToGit = Path.Combine(Path.Combine(gitInstallationPath,"bin\\git.exe"));
             return new Process
             {
                 StartInfo =
