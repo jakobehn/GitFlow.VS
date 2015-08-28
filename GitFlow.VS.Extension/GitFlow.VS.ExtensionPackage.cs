@@ -2,6 +2,8 @@
 using Microsoft.ApplicationInsights;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Settings;
+using TeamExplorer.Common;
 
 namespace GitFlowVS.Extension
 {
@@ -11,5 +13,14 @@ namespace GitFlowVS.Extension
     [Guid(GuidList.GuidGitFlowVsExtensionPkgString)]
     public sealed class GitFlowVSExtension : Package
     {
+        public GitFlowVSExtension()
+        {
+            
+        }
+        protected override void Initialize()
+        {
+            base.Initialize();
+            UserSettings.ServiceProvider = this;
+        }
     }
 }

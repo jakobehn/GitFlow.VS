@@ -11,6 +11,10 @@ namespace TeamExplorer.Common
     /// </summary>
     public class TeamExplorerBase : IDisposable, INotifyPropertyChanged
     {
+        public TeamExplorerBase()
+        {
+            
+        }
         #region Members
 
         private bool m_contextSubscribed = false;
@@ -37,6 +41,7 @@ namespace TeamExplorer.Common
                 if (m_serviceProvider != null)
                 {
                     SubscribeContextChanges();
+                    UserSettings.ServiceProvider = ServiceProvider;
                 }
             }
         }
