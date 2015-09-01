@@ -41,7 +41,7 @@ namespace GitFlow.VS
             var path = Environment.GetEnvironmentVariable("PATH");
             var allPaths = path.Split(';');
             string gitPath = allPaths.FirstOrDefault(p => p.ToLower().TrimEnd('\\').EndsWith("git\\cmd"));
-            if (gitPath != null)
+            if (gitPath != null && Directory.Exists(gitPath))
             {
                 gitPath = Directory.GetParent(gitPath).FullName.TrimEnd('\\');
             }
@@ -52,13 +52,13 @@ namespace GitFlow.VS
         {
             var installLocation = Registry.GetValue(
                 @"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Git_is1", "InstallLocation", null);
-            if (installLocation != null)
+            if (installLocation != null && Directory.Exists(installLocation.ToString().TrimEnd('\\')))
                 return installLocation.ToString().TrimEnd('\\');
 
             //try 32-bit OS
             installLocation = Registry.GetValue(
                 @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Git_is1", "InstallLocation", null);
-            if (installLocation != null)
+            if (installLocation != null && Directory.Exists(installLocation.ToString().TrimEnd('\\')))
                 return installLocation.ToString().TrimEnd('\\');
             return null;
         }
