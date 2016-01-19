@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using GitFlow.VS;
+using System;
 
 namespace GitFlowVS.Extension.ViewModels
 {
@@ -49,50 +50,76 @@ namespace GitFlowVS.Extension.ViewModels
 
         public void PublishFeatureBranch()
         {
-			Logger.Event("PublishFeatureBranch");
-			GitFlowPage.ActiveOutputWindow();
-            ShowProgressBar();
-            var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
-            var result = gf.PublishFeature(SelectedFeature.Name);
-            if (!result.Success)
+            try
+            { 
+			    Logger.Event("PublishFeatureBranch");
+			    GitFlowPage.ActiveOutputWindow();
+                ShowProgressBar();
+                var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
+                var result = gf.PublishFeature(SelectedFeature.Name);
+                if (!result.Success)
+                {
+                    Te.ShowErrorNotification(result.CommandOutput);
+                }
+
+                HideProgressBar();
+                Update();
+            }
+            catch (Exception ex)
             {
-                Te.ShowErrorNotification(result.CommandOutput);
+                ShowErrorMessage(ex.ToString());
+                Logger.Exception(ex);
             }
 
-            HideProgressBar();
-            Update();
         }
 
         public void TrackFeatureBranch()
         {
-			Logger.Event("TrackFeatureBranch");
-			GitFlowPage.ActiveOutputWindow();
-            ShowProgressBar();
-            var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
-            var result = gf.TrackFeature(SelectedFeature.Name);
-            if (!result.Success)
+            try
+            { 
+			    Logger.Event("TrackFeatureBranch");
+			    GitFlowPage.ActiveOutputWindow();
+                ShowProgressBar();
+                var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
+                var result = gf.TrackFeature(SelectedFeature.Name);
+                if (!result.Success)
+                {
+                    Te.ShowErrorNotification(result.CommandOutput);
+                }
+
+                HideProgressBar();
+                Update();
+            }
+            catch (Exception ex)
             {
-                Te.ShowErrorNotification(result.CommandOutput);
+                ShowErrorMessage(ex.ToString());
+                Logger.Exception(ex);
             }
 
-            HideProgressBar();
-            Update();
         }
 
         public void CheckoutFeatureBranch()
         {
-			Logger.Event("CheckoutFeatureBranch");
-			GitFlowPage.ActiveOutputWindow();
-            ShowProgressBar();
-            var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
-            var result = gf.CheckoutFeature(SelectedFeature.Name);
-            if (!result.Success)
-            {
-                Te.ShowErrorNotification(result.CommandOutput);
-            }
+            try
+            { 
+			    Logger.Event("CheckoutFeatureBranch");
+			    GitFlowPage.ActiveOutputWindow();
+                ShowProgressBar();
+                var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
+                var result = gf.CheckoutFeature(SelectedFeature.Name);
+                if (!result.Success)
+                {
+                    Te.ShowErrorNotification(result.CommandOutput);
+                }
 
-            HideProgressBar();
-            Update();
+                HideProgressBar();
+                Update();
+            }
+            catch (Exception ex)
+            {
+                ShowErrorMessage(ex.ToString());
+                Logger.Exception(ex);
+            }
         }
 
 
@@ -119,5 +146,11 @@ namespace GitFlowVS.Extension.ViewModels
             get { return AllFeatures.Any() ? Visibility.Collapsed : Visibility.Visible; }
 
         }
+
+        private void ShowErrorMessage(string message)
+        {
+            Te.ShowErrorNotification(message);
+        }
+
     }
 }

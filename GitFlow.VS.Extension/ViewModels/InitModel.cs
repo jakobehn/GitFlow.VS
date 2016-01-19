@@ -13,7 +13,6 @@ namespace GitFlowVS.Extension.ViewModels
         private string releasePrefix;
         private string hotfixPrefix;
         private string versionTagPrefix;
-        private Visibility progressVisibility;
         private Visibility initGridVisibility;
 
         public ICommand OnShowInitCommand { get; private set; }
@@ -55,17 +54,6 @@ namespace GitFlowVS.Extension.ViewModels
             {
                 if (value == initGridVisibility) return;
                 initGridVisibility = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public Visibility ProgressVisibility
-        {
-            get { return progressVisibility; }
-            set
-            {
-                if (value == progressVisibility) return;
-                progressVisibility = value;
                 OnPropertyChanged();
             }
         }

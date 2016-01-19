@@ -328,197 +328,251 @@ namespace GitFlowVS.Extension.ViewModels
 
         private void StartFeature()
         {
-            if (String.IsNullOrEmpty(FeatureName))
-                return;
+            try
+            { 
+                if (String.IsNullOrEmpty(FeatureName))
+                    return;
 
-			Logger.Event("StartFeature");
-	        DateTime start = DateTime.Now;
+			    Logger.Event("StartFeature");
+	            DateTime start = DateTime.Now;
 
-            if (GitFlowPage.ActiveRepo != null)
-            {
-                GitFlowPage.ActiveOutputWindow();
-                ShowProgressBar();
-                var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
-                var result = gf.StartFeature(FeatureName);
-                if (!result.Success)
+                if (GitFlowPage.ActiveRepo != null)
                 {
-                    ShowErrorMessage(result);
-                }
+                    GitFlowPage.ActiveOutputWindow();
+                    ShowProgressBar();
+                    var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
+                    var result = gf.StartFeature(FeatureName);
+                    if (!result.Success)
+                    {
+                        ShowErrorMessage(result);
+                    }
 
-                HideProgressBar();
-                FeatureName = String.Empty;
-                UpdateMenus();
-                HideAll();
-                OnPropertyChanged("AllFeatures");
+                    HideProgressBar();
+                    FeatureName = String.Empty;
+                    UpdateMenus();
+                    HideAll();
+                    OnPropertyChanged("AllFeatures");
+                }
+			    Logger.Metric("Duration-StartFeature", (DateTime.Now-start).Milliseconds);
             }
-			Logger.Metric("Duration-StartFeature", (DateTime.Now-start).Milliseconds);
+            catch (Exception ex)
+            {
+                ShowErrorMessage(ex.ToString());
+                Logger.Exception(ex);
+            }
+
         }
 
         private void StartRelease()
         {
-            if (String.IsNullOrEmpty(ReleaseName))
-                return;
+            try
+            { 
+                if (String.IsNullOrEmpty(ReleaseName))
+                    return;
 
-			Logger.Event("StartRelease");
-	        DateTime start = DateTime.Now;
+			    Logger.Event("StartRelease");
+	            DateTime start = DateTime.Now;
 
-			if (GitFlowPage.ActiveRepo != null)
-            {
-                GitFlowPage.ActiveOutputWindow();
-                ShowProgressBar();
-                var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
-                var result = gf.StartRelease(ReleaseName);
-                if (!result.Success)
+			    if (GitFlowPage.ActiveRepo != null)
                 {
-                    ShowErrorMessage(result);
+                    GitFlowPage.ActiveOutputWindow();
+                    ShowProgressBar();
+                    var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
+                    var result = gf.StartRelease(ReleaseName);
+                    if (!result.Success)
+                    {
+                        ShowErrorMessage(result);
+                    }
+                    HideProgressBar();
+                    ShowStartRelease = Visibility.Collapsed;
+                    ReleaseName = String.Empty;
+                    UpdateMenus();
+                    HideAll();
+                    OnPropertyChanged("AllReleases");
                 }
-                HideProgressBar();
-                ShowStartRelease = Visibility.Collapsed;
-                ReleaseName = String.Empty;
-                UpdateMenus();
-                HideAll();
-                OnPropertyChanged("AllReleases");
+			    Logger.Metric("Duration-StartRelease", (DateTime.Now - start).Milliseconds);
             }
-			Logger.Metric("Duration-StartRelease", (DateTime.Now - start).Milliseconds);
-		}
+            catch (Exception ex)
+            {
+                ShowErrorMessage(ex.ToString());
+                Logger.Exception(ex);
+            }
+
+        }
 
         private void ShowErrorMessage(GitFlowCommandResult result)
         {
             Te.ShowErrorNotification(result.CommandOutput);
         }
+        private void ShowErrorMessage(string message)
+        {
+            Te.ShowErrorNotification(message);
+        }
 
         private void StartHotfix()
         {
-            if (String.IsNullOrEmpty(HotfixName))
-                return;
+            try
+            { 
+                if (String.IsNullOrEmpty(HotfixName))
+                    return;
 
-			Logger.Event("StartHotfix");
-	        DateTime start = DateTime.Now;
+			    Logger.Event("StartHotfix");
+	            DateTime start = DateTime.Now;
 
-			if (GitFlowPage.ActiveRepo != null)
-            {
-                GitFlowPage.ActiveOutputWindow();
-                ShowProgressBar();
-
-                var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
-                var result = gf.StartHotfix(HotfixName);
-                if (!result.Success)
+			    if (GitFlowPage.ActiveRepo != null)
                 {
-                    ShowErrorMessage(result);
-                }
+                    GitFlowPage.ActiveOutputWindow();
+                    ShowProgressBar();
 
-                HideProgressBar();
-                ShowStartHotfix = Visibility.Collapsed;
-                HotfixName = String.Empty;
-                UpdateMenus();
-                HideAll();
-                OnPropertyChanged("AllHotfixes");
+                    var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
+                    var result = gf.StartHotfix(HotfixName);
+                    if (!result.Success)
+                    {
+                        ShowErrorMessage(result);
+                    }
+
+                    HideProgressBar();
+                    ShowStartHotfix = Visibility.Collapsed;
+                    HotfixName = String.Empty;
+                    UpdateMenus();
+                    HideAll();
+                    OnPropertyChanged("AllHotfixes");
+                }
+			    Logger.Metric("Duration-StartHotfix", (DateTime.Now - start).Milliseconds);
             }
-			Logger.Metric("Duration-StartHotfix", (DateTime.Now - start).Milliseconds);
-		}
+            catch (Exception ex)
+            {
+                ShowErrorMessage(ex.ToString());
+                Logger.Exception(ex);
+            }
+
+        }
 
         private void FinishFeature()
         {
-			DateTime start = DateTime.Now;
-
-			var properties = new Dictionary<string, string>
-	        {
-		        {"RebaseOnDevelopmentBranch", FeatureRebaseOnDevelopmentBranch.ToString()},
-		        {"DeleteBranch", FeatureDeleteBranch.ToString()}
-	        };
-	        Logger.Event("FinishFeature", properties);
-
-			if (GitFlowPage.ActiveRepo != null)
+            try
             {
-                GitFlowPage.ActiveOutputWindow();
+                DateTime start = DateTime.Now;
 
-                ShowProgressBar();
-
-                var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
-                var result = gf.FinishFeature(SelectedFeature.Name, FeatureRebaseOnDevelopmentBranch, FeatureDeleteBranch);
-                if (!result.Success)
+                var properties = new Dictionary<string, string>
                 {
-                    ShowErrorMessage(result);
+                    {"RebaseOnDevelopmentBranch", FeatureRebaseOnDevelopmentBranch.ToString()},
+                    {"DeleteBranch", FeatureDeleteBranch.ToString()}
+                };
+                Logger.Event("FinishFeature", properties);
+
+                if (GitFlowPage.ActiveRepo != null)
+                {
+                    GitFlowPage.ActiveOutputWindow();
+
+                    ShowProgressBar();
+
+                    var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
+                    var result = gf.FinishFeature(SelectedFeature.Name, FeatureRebaseOnDevelopmentBranch, FeatureDeleteBranch);
+                    if (!result.Success)
+                    {
+                        ShowErrorMessage(result);
+                    }
+
+                    HideProgressBar();
+                    ShowFinishFeature = Visibility.Collapsed;
+                    UpdateMenus();
+                    HideAll();
+                    OnPropertyChanged("AllFeatures");
+                    Te.Refresh();
                 }
 
-                HideProgressBar();
-                ShowFinishFeature = Visibility.Collapsed;
-                UpdateMenus();
-                HideAll();
-                OnPropertyChanged("AllFeatures");
-                Te.Refresh();
+                Logger.Metric("Duration-FinishFeature", (DateTime.Now - start).Milliseconds);
             }
-
-			Logger.Metric("Duration-FinishFeature", (DateTime.Now - start).Milliseconds);
+            catch( Exception ex)
+            {
+                ShowErrorMessage(ex.ToString());
+                Logger.Exception(ex);
+            }
 		}
 
         private void FinishRelease()
         {
-			DateTime start = DateTime.Now;
-			var properties = new Dictionary<string, string>
-			{
-				{"TaggedRelease", (!String.IsNullOrEmpty(ReleaseTagMessage)).ToString()},
-				{"DeleteBranch", ReleaseDeleteBranch.ToString()},
-				{"ForceDeletion", ReleaseForceDeletion.ToString()},
-				{"PushChanges", ReleasePushChanges.ToString()}
-			};
-			Logger.Event("FinishRelease", properties);
+            try
+            { 
+			    DateTime start = DateTime.Now;
+			    var properties = new Dictionary<string, string>
+			    {
+				    {"TaggedRelease", (!String.IsNullOrEmpty(ReleaseTagMessage)).ToString()},
+				    {"DeleteBranch", ReleaseDeleteBranch.ToString()},
+				    {"ForceDeletion", ReleaseForceDeletion.ToString()},
+				    {"PushChanges", ReleasePushChanges.ToString()}
+			    };
+			    Logger.Event("FinishRelease", properties);
 
-			if (GitFlowPage.ActiveRepo != null)
-            {
-                GitFlowPage.ActiveOutputWindow();
-                ShowProgressBar();
-
-                var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
-                var result = gf.FinishRelease(SelectedRelease.Name, ReleaseTagMessage, ReleaseDeleteBranch, ReleaseForceDeletion, ReleasePushChanges);
-                if (!result.Success)
+			    if (GitFlowPage.ActiveRepo != null)
                 {
-                    ShowErrorMessage(result);
+                    GitFlowPage.ActiveOutputWindow();
+                    ShowProgressBar();
+
+                    var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
+                    var result = gf.FinishRelease(SelectedRelease.Name, ReleaseTagMessage, ReleaseDeleteBranch, ReleaseForceDeletion, ReleasePushChanges);
+                    if (!result.Success)
+                    {
+                        ShowErrorMessage(result);
+                    }
+
+                    HideAll();
+                    HideProgressBar();
+                    ShowFinishRelease = Visibility.Collapsed;
+                    OnPropertyChanged("AllReleases");
+                    UpdateMenus();
                 }
-
-                HideAll();
-                HideProgressBar();
-                ShowFinishRelease = Visibility.Collapsed;
-                OnPropertyChanged("AllReleases");
-                UpdateMenus();
+			    Logger.Metric("Duration-FinishRelease", (DateTime.Now - start).Milliseconds);
             }
-			Logger.Metric("Duration-FinishRelease", (DateTime.Now - start).Milliseconds);
-
-		}
+            catch (Exception ex)
+            {
+                ShowErrorMessage(ex.ToString());
+                Logger.Exception(ex);
+            }
+        }
 
         private void FinishHotfix()
         {
-			DateTime start = DateTime.Now;
-			var properties = new Dictionary<string, string>
-			{
-				{"TaggedRelease", (!String.IsNullOrEmpty(HotfixTagMessage)).ToString()},
-				{"DeleteBranch", HotfixDeleteBranch.ToString()},
-				{"ForceDeletion", HotfixForceDeletion.ToString()},
-				{"PushChanges", HotfixPushChanges.ToString()}
-			};
-			Logger.Event("FinishHotfix", properties);
+            try
+            { 
+			    DateTime start = DateTime.Now;
+			    var properties = new Dictionary<string, string>
+			    {
+				    {"TaggedRelease", (!String.IsNullOrEmpty(HotfixTagMessage)).ToString()},
+				    {"DeleteBranch", HotfixDeleteBranch.ToString()},
+				    {"ForceDeletion", HotfixForceDeletion.ToString()},
+				    {"PushChanges", HotfixPushChanges.ToString()}
+			    };
+			    Logger.Event("FinishHotfix", properties);
 
-			if (GitFlowPage.ActiveRepo != null)
-            {
-                GitFlowPage.ActiveOutputWindow();
-                ShowProgressBar();
-
-                var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
-                var result = gf.FinishHotfix(SelectedHotfix.Name, HotfixTagMessage, HotfixDeleteBranch, HotfixForceDeletion, HotfixPushChanges);
-                if (!result.Success)
+			    if (GitFlowPage.ActiveRepo != null)
                 {
-                    ShowErrorMessage(result);
+                    GitFlowPage.ActiveOutputWindow();
+                    ShowProgressBar();
+
+                    var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
+                    var result = gf.FinishHotfix(SelectedHotfix.Name, HotfixTagMessage, HotfixDeleteBranch, HotfixForceDeletion, HotfixPushChanges);
+                    if (!result.Success)
+                    {
+                        ShowErrorMessage(result);
+                    }
+
+                    HideAll();
+                    HideProgressBar();
+                    ShowFinishHotfix = Visibility.Collapsed;
+                    OnPropertyChanged("AllHotfixes");
+                    UpdateMenus();
                 }
-
-                HideAll();
-                HideProgressBar();
-                ShowFinishHotfix = Visibility.Collapsed;
-                OnPropertyChanged("AllHotfixes");
-                UpdateMenus();
+			    Logger.Metric("Duration-FinishHotfix", (DateTime.Now - start).Milliseconds);
             }
-			Logger.Metric("Duration-FinishHotfix", (DateTime.Now - start).Milliseconds);
+            catch (Exception ex)
+            {
+                ShowErrorMessage(ex.ToString());
+                Logger.Exception(ex);
+            }
 
-		}
+        }
 
         public string ReleaseName
         {

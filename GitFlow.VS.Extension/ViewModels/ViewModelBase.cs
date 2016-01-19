@@ -21,7 +21,7 @@ namespace GitFlowVS.Extension.ViewModels
         public Visibility ProgressVisibility
         {
             get { return progressVisibility; }
-            private set
+            protected set
             {
                 if (value == progressVisibility) return;
                 progressVisibility = value;
