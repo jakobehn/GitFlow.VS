@@ -122,12 +122,12 @@ namespace GitFlow.VS
                 using (var repo = new Repository(repoDirectory))
                 {
                     var prefix = repo.Config.Get<string>("gitflow.prefix.feature").Value;
-                    return
-                        repo.Branches.Where(b => (!b.IsRemote && b.Name.StartsWith(prefix)) /*|| (b.IsRemote && b.Name.Contains(prefix))*/)
+                    var featureBranches = 
+                        repo.Branches.Where(b => !b.IsRemote && b.Name.StartsWith(prefix) )
                             .Select(c => new BranchItem
                             {
                                 Author = c.Tip.Author.Name,
-                                Name = c.IsRemote ? c.Name :  c.Name.Replace(prefix,""),
+                                Name = c.Name.Replace(prefix,""),
                                 LastCommit = c.Tip.Author.When,
                                 IsTracking = c.IsTracking,
                                 IsCurrentBranch = c.IsCurrentRepositoryHead,
@@ -135,6 +135,24 @@ namespace GitFlow.VS
                                 CommitId = c.Tip.Id.ToString(),
                                 Message = c.Tip.MessageShort
                             }).ToList();
+
+                    var remoteFeatureBranches =
+                        repo.Branches.Where(b => b.IsRemote && b.Name.Contains(prefix)
+                        && !repo.Branches.Any(br => !br.IsRemote && br.IsTracking && br.TrackedBranch.CanonicalName== b.CanonicalName))
+                            .Select(c => new BranchItem
+                            {
+                                Author = c.Tip.Author.Name,
+                                Name = c.Name,
+                                LastCommit = c.Tip.Author.When,
+                                IsTracking = c.IsTracking,
+                                IsCurrentBranch = c.IsCurrentRepositoryHead,
+                                IsRemote = c.IsRemote,
+                                CommitId = c.Tip.Id.ToString(),
+                                Message = c.Tip.MessageShort
+                            }).ToList();
+
+                    featureBranches.AddRange(remoteFeatureBranches);
+                    return featureBranches;
                 }   
 
             }
@@ -148,6 +166,10 @@ namespace GitFlow.VS
 
         private string TrimBranchName(string branchName)
         {
+            if( branchName.LastIndexOf('/') >= 0)
+            {
+                branchName = branchName.Substring(branchName.LastIndexOf('/')+1);
+            }
             return branchName.Trim().Replace(" ", "_");
         }
 

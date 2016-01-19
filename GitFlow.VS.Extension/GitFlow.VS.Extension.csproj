@@ -444,6 +444,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Resource Include="Resources\upstreambranch.png" />
     <None Include="packages.config" />
     <None Include="source.extension.2013.vsixmanifest">
       <SubType>Designer</SubType>

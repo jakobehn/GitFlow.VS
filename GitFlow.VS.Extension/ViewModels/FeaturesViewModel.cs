@@ -44,7 +44,7 @@ namespace GitFlowVS.Extension.ViewModels
         {
             get
             {
-                return SelectedFeature != null && !SelectedFeature.IsCurrentBranch;
+                return SelectedFeature != null && !SelectedFeature.IsCurrentBranch && !SelectedFeature.IsRemote;
             }
         }
 

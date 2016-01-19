@@ -1,4 +1,5 @@
 using System;
+using System.Windows;
 
 namespace GitFlow.VS
 {
@@ -22,6 +23,16 @@ namespace GitFlow.VS
                     return timeSpan.Hours + " hours ago";
                 }
                 return daysSince + " days ago";
+            }
+        }
+
+        public Visibility IsRemoteBranchVisibility
+        {
+            get
+            {
+                if (IsRemote)
+                    return Visibility.Visible;
+                return Visibility.Hidden;
             }
         }
 

@@ -14,17 +14,6 @@ namespace GitFlowVS.Extension.UI
         {
             InitializeComponent();
             DataContext = model;
-
-			FeaturesGrid.Loaded += FeaturesGridOnLoaded;
-        }
-
-        private void FeaturesGridOnLoaded(object sender, RoutedEventArgs routedEventArgs)
-        {
-            foreach (var column in FeaturesGrid.Columns)
-            {
-                column.MinWidth = column.ActualWidth;
-                column.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
-            }
         }
 
         private void FeaturesGrid_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)

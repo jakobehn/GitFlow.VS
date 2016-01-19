@@ -22,11 +22,8 @@
         <DataGrid Grid.Row="1" Name="FeaturesGrid" Margin="6,6,6,6" Padding="0,5,0,0" ItemsSource="{Binding AllFeatures}" AutoGenerateColumns="False" GridLinesVisibility="None" HeadersVisibility="None" BorderThickness="0" SelectedItem="{Binding SelectedFeature}" CanUserAddRows="False" Background="{StaticResource ItemBrushKey}" clr:Commands.DataGridDoubleClickCommand="{Binding CheckoutFeatureBranchCommand}">
                 <DataGrid.RowStyle>
                     <Style TargetType="{x:Type DataGridRow}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=IsRemote}" Value="True">
-                                <Setter Property="FontStyle" Value="Italic"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Path=IsCurrentBranch}" Value="True">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=IsCurrentBranch}" Value="True">
                                 <Setter Property="FontWeight" Value="Bold"/>
                             </DataTrigger>
                         <Trigger Property="UIElement.IsMouseOver" Value="true">
@@ -45,7 +42,14 @@
                     </Style>
                 </DataGrid.RowStyle>
                 <DataGrid.Columns>
-                <DataGridTemplateColumn Header="Name" Width="SizeToCells"  IsReadOnly="True">
+                <DataGridTemplateColumn Header="" IsReadOnly="True" Width="30">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="/GitFlowVS.Extension;component/Resources/upstreambranch.png" Width="21px" Height="14px" ToolTip="Remote branch. Select Track to create a local branch that tracks this remote branch" Visibility="{Binding IsRemoteBranchVisibility}"></Image>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Name" IsReadOnly="True" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                                 <StackPanel Orientation="Horizontal" >
@@ -56,8 +60,8 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                    
-                <DataGridTemplateColumn Header="Changed" Width="SizeToCells" IsReadOnly="True">
+
+                <DataGridTemplateColumn Header="Changed" IsReadOnly="True" Width="80">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding LastCommitAsString}" HorizontalAlignment="Right" />
