@@ -12,7 +12,7 @@ using TeamExplorer.Common;
 
 namespace GitFlowVS.Extension
 {
-    [TeamExplorerNavigationItem("59168500-14BC-4EE9-BB1F-7B2B970A4AF6",1500)]
+    [TeamExplorerNavigationItem("59168500-14BC-4EE9-BB1F-7B2B970A4AF6",1500, TargetPageId = "1F9974CD-16C3-4AEF-AED2-0CE37988E2F1")]
     public class GitFlowNavigationItem : TeamExplorerBaseNavigationItem
     {
         private readonly ITeamExplorer teamExplorer;
