@@ -1,6 +1,6 @@
 ﻿<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="3CD51F76-D7A1-4745-B750-D966C228A85C" Version="0.10.13.0" Language="en-US" Publisher="Jakob Ehn" />
+    <Identity Id="3CD51F76-D7A1-4745-B750-D966C228A85C" Version="1.0.0.0" Language="en-US" Publisher="Jakob Ehn" />
     <DisplayName>GitFlow for Visual Studio 2015</DisplayName>
     <Description xml:space="preserve">Integrates GitFlow in Visual Studio Team Explorer 2015</Description>
     <MoreInfo>https://github.com/jakobehn/GitFlow.VS</MoreInfo>

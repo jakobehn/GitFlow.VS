@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="19ffe08d-8c71-4125-a024-6296bd27fce8" Version="0.10.13.0" Language="en-US" Publisher="Jakob Ehn" />
+    <Identity Id="19ffe08d-8c71-4125-a024-6296bd27fce8" Version="1.0.0.0" Language="en-US" Publisher="Jakob Ehn" />
     <DisplayName>GitFlow for Visual Studio</DisplayName>
     <Description xml:space="preserve">Integrates GitFlow in Visual Studio Team Explorer 2013. Requires VS 2013 Update 3 or higher</Description>
     <MoreInfo>https://github.com/jakobehn/GitFlow.VS</MoreInfo>
