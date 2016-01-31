@@ -1,7 +1,7 @@
+using Microsoft.Win32;
 using System;
 using System.IO;
 using System.Linq;
-using Microsoft.Win32;
 
 namespace GitFlow.VS
 {
@@ -20,6 +20,7 @@ namespace GitFlow.VS
             }
             return Path.Combine(installationPath, "bin");
         }
+
         public static string GetGitInstallationPath()
         {
             string gitPath = GetInstallPathFromEnvironmentVariable();
@@ -50,7 +51,14 @@ namespace GitFlow.VS
 
         public static string GetInstallPathFromRegistry()
         {
+            //Check reg key for msysGit 2.6.1+
             var installLocation = Registry.GetValue(
+    @"HKEY_LOCAL_MACHINE\SOFTWARE\GitForWindows", "InstallPath", null);
+            if (installLocation != null && Directory.Exists(installLocation.ToString().TrimEnd('\\')))
+                return installLocation.ToString().TrimEnd('\\');
+
+            //Check uninstall key for older versions
+            installLocation = Registry.GetValue(
                 @"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Git_is1", "InstallLocation", null);
             if (installLocation != null && Directory.Exists(installLocation.ToString().TrimEnd('\\')))
                 return installLocation.ToString().TrimEnd('\\');
@@ -60,6 +68,7 @@ namespace GitFlow.VS
                 @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Git_is1", "InstallLocation", null);
             if (installLocation != null && Directory.Exists(installLocation.ToString().TrimEnd('\\')))
                 return installLocation.ToString().TrimEnd('\\');
+
             return null;
         }
 
@@ -72,7 +81,6 @@ namespace GitFlow.VS
             if (Directory.Exists(gitPath))
                 return gitPath.TrimEnd('\\');
             return null;
-
         }
     }
 }
