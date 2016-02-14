@@ -446,6 +446,13 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Resource Include="Resources\upstreambranch.png" />
+    <None Include="Dependencies\gitflow\git-flow-bugfix" />
+    <None Include="Dependencies\gitflow\hooks\post-flow-bugfix-delete" />
+    <None Include="Dependencies\gitflow\hooks\post-flow-bugfix-finish" />
+    <None Include="Dependencies\gitflow\hooks\post-flow-bugfix-publish" />
+    <None Include="Dependencies\gitflow\hooks\post-flow-bugfix-pull" />
+    <None Include="Dependencies\gitflow\hooks\post-flow-bugfix-start" />
+    <None Include="Dependencies\gitflow\hooks\post-flow-bugfix-track" />
     <None Include="packages.config" />
     <None Include="source.extension.2013.vsixmanifest">
       <SubType>Designer</SubType>

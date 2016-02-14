@@ -10,23 +10,30 @@ namespace GitFlow.VS.Tests
     public class GitTests
     {
         private const string InstallPath = @"c:\program files (x86)\git";
+        private const string InstallPath64 = @"c:\program files\git";
 
         [TestMethod]
+        [Ignore]
         public void CheckInstallationPathFromEnvironment()
         {
-            Assert.AreEqual(InstallPath, GitHelper.GetInstallPathFromEnvironmentVariable().ToLower());
+            var installPath = GitHelper.GetInstallPathFromEnvironmentVariable().ToLower();
+            Assert.IsTrue(installPath == InstallPath || installPath == InstallPath64);
         }
 
         [TestMethod]
+        [Ignore]
         public void CheckInstallationPathFromRegistry()
         {
-            Assert.AreEqual(InstallPath, GitHelper.GetInstallPathFromRegistry().ToLower());
+            var installPath = GitHelper.GetInstallPathFromRegistry().ToLower();
+            Assert.IsTrue(installPath == InstallPath || installPath == InstallPath64);
         }
 
         [TestMethod]
+        [Ignore]
         public void CheckInstallationPathFromProgramFiles()
         {
-            Assert.AreEqual(InstallPath, GitHelper.GetInstallPathFromProgramFiles().ToLower());
+            var installPath = GitHelper.GetInstallPathFromProgramFiles().ToLower();
+            Assert.IsTrue(installPath == InstallPath || installPath == InstallPath64);
         }
 
 

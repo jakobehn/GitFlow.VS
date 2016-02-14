@@ -26,15 +26,22 @@
  
 # Changelog
 
-#### 1.9.0-dev.27
+#### 1.9.1
 [Peter van der Does][petervanderdoes]
-* Repositories with spaces in path cause the pre * post hook to fail
+* Bugfix: git-flow directories are not set correctly
+
+#### 1.9.0
+[Peter van der Does][petervanderdoes]
+* Add bugfix command.
+* Repositories with spaces in path cause the pre * post hook to fail.
 * Error using git flow log.
 * Using defaults with init fails with existing repository.
 * Allow multiple hotfix branches.
   By setting the config gitflow.multi-hotfix to true, you can have multiple 
   hotfix branches. Example: git config --set gitflow.multi-hotfix true
  * Can't delete branch if the base branch is not the develop branch.
+ * Add squash and squash-info flag to hotfix finish.
+ * Problem when the repository directory has multiple spaces.
 
 [Gergely Nagy][algernon]
 * Remove bash code.

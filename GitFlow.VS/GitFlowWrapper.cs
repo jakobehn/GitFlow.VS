@@ -434,6 +434,13 @@ namespace GitFlow.VS
                         OnCommandOutputDataReceived(new CommandOutputEventArgs(input + Environment.NewLine));
                         input = new StringBuilder();
                     }
+                    else if (IsBugfixBranchQuery(input.ToString()))
+                    {
+                        p.StandardInput.Write(settings.FeatureBranch + "\n");
+                        Output.Append(input);
+                        OnCommandOutputDataReceived(new CommandOutputEventArgs(input + Environment.NewLine));
+                        input = new StringBuilder();
+                    }
                     else if (IsReleaseBranchQuery(input.ToString()))
                     {
                         p.StandardInput.Write(settings.ReleaseBranch + "\n");
@@ -534,6 +541,12 @@ namespace GitFlow.VS
         public bool IsFeatureBranchQuery(string input)
         {
             var regex = new Regex(@"Feature branches\? " + GitFlowDefaultValueRegExp);
+            return MatchInput(input, regex);
+        }
+
+        public bool IsBugfixBranchQuery(string input)
+        {
+            var regex = new Regex(@"Bugfix branches\? " + GitFlowDefaultValueRegExp);
             return MatchInput(input, regex);
         }
 
