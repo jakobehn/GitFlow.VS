@@ -23,7 +23,8 @@ namespace GitFlowVS.Extension.ViewModels
         private string hotfixName;
 
         private bool featureRebaseOnDevelopmentBranch;
-        private bool featureDeleteBranch;
+        private bool featureDeleteLocalBranch;
+        private bool featureDeleteRemoteBranch;
         private bool releaseDeleteBranch;
         private string releaseTagMessage;
         private bool releaseForceDeletion;
@@ -68,7 +69,8 @@ namespace GitFlowVS.Extension.ViewModels
         public ActionViewModel(GitFlowActionSection te)
             : base(te)
         {
-            FeatureDeleteBranch = true;
+            FeatureDeleteLocalBranch = true;
+            FeatureDeleteRemoteBranch = true;
             ReleaseDeleteBranch = true;
             ReleaseTagMessageSelected = true;
             HotfixDeleteBranch = true;
@@ -457,7 +459,8 @@ namespace GitFlowVS.Extension.ViewModels
                 var properties = new Dictionary<string, string>
                 {
                     {"RebaseOnDevelopmentBranch", FeatureRebaseOnDevelopmentBranch.ToString()},
-                    {"DeleteBranch", FeatureDeleteBranch.ToString()}
+                    {"DeleteLocalBranch", FeatureDeleteLocalBranch.ToString()},
+                    {"DeleteRemoteBranch", FeatureDeleteRemoteBranch.ToString()}
                 };
                 Logger.Event("FinishFeature", properties);
 
@@ -468,7 +471,7 @@ namespace GitFlowVS.Extension.ViewModels
                     ShowProgressBar();
 
                     var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
-                    var result = gf.FinishFeature(SelectedFeature.Name, FeatureRebaseOnDevelopmentBranch, FeatureDeleteBranch);
+                    var result = gf.FinishFeature(SelectedFeature.Name, FeatureRebaseOnDevelopmentBranch, FeatureDeleteLocalBranch, FeatureDeleteRemoteBranch);
                     if (!result.Success)
                     {
                         ShowErrorMessage(result);
@@ -706,13 +709,23 @@ namespace GitFlowVS.Extension.ViewModels
             }
         }
 
-        public bool FeatureDeleteBranch
+        public bool FeatureDeleteLocalBranch
         {
-            get { return featureDeleteBranch; }
+            get { return featureDeleteLocalBranch; }
             set
             {
-                if (value.Equals(featureDeleteBranch)) return;
-                featureDeleteBranch = value;
+                if (value.Equals(featureDeleteLocalBranch)) return;
+                featureDeleteLocalBranch = value;
+                OnPropertyChanged();
+            }
+        }
+        public bool FeatureDeleteRemoteBranch
+        {
+            get { return featureDeleteRemoteBranch; }
+            set
+            {
+                if (value.Equals(featureDeleteRemoteBranch)) return;
+                featureDeleteRemoteBranch = value;
                 OnPropertyChanged();
             }
         }

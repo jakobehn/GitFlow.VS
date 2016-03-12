@@ -311,13 +311,16 @@ namespace GitFlow.VS
             return RunGitFlow(gitArguments);
         }
 
-        public GitFlowCommandResult FinishFeature(string featureName, bool rebaseOnDevelopment = false, bool deleteBranch = true)
+        public GitFlowCommandResult FinishFeature(string featureName, bool rebaseOnDevelopment = false, bool deleteLocalBranch = true, bool deleteRemoteBranch = true)
         {
             string gitArguments = "feature finish \"" + TrimBranchName(featureName) + "\"";
             if (rebaseOnDevelopment)
                 gitArguments += " -r";
-            if (!deleteBranch)
-                gitArguments += " -k";
+            if (!deleteLocalBranch)
+                gitArguments += " --keeplocal";
+            if (!deleteRemoteBranch)
+                gitArguments += " --keepremote";
+
 
             return RunGitFlow(gitArguments);
 
