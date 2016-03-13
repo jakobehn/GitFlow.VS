@@ -158,6 +158,7 @@
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
                 <ComboBox Grid.Row="0" Margin="-2,0,0,6" VerticalAlignment="Center"
                     IsEditable="false" IsReadOnly="true" DisplayMemberPath="Name"
@@ -171,7 +172,8 @@
                 <CheckBox Grid.Row="3" IsChecked="{Binding ReleaseDeleteBranch}">Delete branch</CheckBox>
                 <CheckBox Grid.Row="4" IsChecked="{Binding ReleaseForceDeletion}">Force deletion</CheckBox>
                 <CheckBox Grid.Row="5" IsChecked="{Binding ReleasePushChanges}">Push changes to remote</CheckBox>
-                <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,10,0,0" >
+                <CheckBox Grid.Row="6" IsChecked="{Binding ReleaseNoBackMerge}">No back merge</CheckBox>
+                <StackPanel Grid.Row="7" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,10,0,0" >
                     <Button Command="{Binding FinishReleaseCommand}">OK</Button>
                     <teamExplorer:TextLink x:Uid="cancelFinishFeature" VerticalAlignment="Center" Margin="6,0,0,0" Text="Cancel"
                           Localization.Attributes="Text (Modifiable Readable Text)"

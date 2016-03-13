@@ -332,7 +332,7 @@ namespace GitFlow.VS
             return RunGitFlow(gitArguments);
         }
 
-        public GitFlowCommandResult FinishRelease(string releaseName, string tagMessage = null, bool deleteBranch = true, bool forceDeletion=false, bool pushChanges = false)
+        public GitFlowCommandResult FinishRelease(string releaseName, string tagMessage = null, bool deleteBranch = true, bool forceDeletion=false, bool pushChanges = false, bool releaseNoBackMerge = false)
         {
             string gitArguments = "release finish \"" + TrimBranchName(releaseName) + "\"";
             if (!String.IsNullOrEmpty(tagMessage))
@@ -355,8 +355,13 @@ namespace GitFlow.VS
             {
                 gitArguments += " -p";
             }
+			if (releaseNoBackMerge)
+			{
+				gitArguments += " -b";
+			}
 
-            return RunGitFlow(gitArguments);
+
+			return RunGitFlow(gitArguments);
         }
 
         public GitFlowCommandResult StartHotfix(string hotfixName)

@@ -29,6 +29,7 @@ namespace GitFlowVS.Extension.ViewModels
         private string releaseTagMessage;
         private bool releaseForceDeletion;
         private bool releasePushChanges;
+		private bool releaseNoBackMerge;
         private bool hotfixDeleteBranch;
         private bool hotfixPushChanges;
         private bool hotfixForceDeletion;
@@ -73,6 +74,7 @@ namespace GitFlowVS.Extension.ViewModels
             FeatureDeleteRemoteBranch = true;
             ReleaseDeleteBranch = true;
             ReleaseTagMessageSelected = true;
+			ReleaseNoBackMerge = false;
             HotfixDeleteBranch = true;
             HotfixTagMessageSelected = true;
 
@@ -504,8 +506,9 @@ namespace GitFlowVS.Extension.ViewModels
 				    {"TaggedRelease", (!String.IsNullOrEmpty(ReleaseTagMessage)).ToString()},
 				    {"DeleteBranch", ReleaseDeleteBranch.ToString()},
 				    {"ForceDeletion", ReleaseForceDeletion.ToString()},
-				    {"PushChanges", ReleasePushChanges.ToString()}
-			    };
+				    {"PushChanges", ReleasePushChanges.ToString()},
+					{"NoBackMerge", ReleaseNoBackMerge.ToString()}
+				};
 			    Logger.Event("FinishRelease", properties);
 
 			    if (GitFlowPage.ActiveRepo != null)
@@ -514,7 +517,7 @@ namespace GitFlowVS.Extension.ViewModels
                     ShowProgressBar();
 
                     var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
-                    var result = gf.FinishRelease(SelectedRelease.Name, ReleaseTagMessage, ReleaseDeleteBranch, ReleaseForceDeletion, ReleasePushChanges);
+                    var result = gf.FinishRelease(SelectedRelease.Name, ReleaseTagMessage, ReleaseDeleteBranch, ReleaseForceDeletion, ReleasePushChanges, ReleaseNoBackMerge);
                     if (!result.Success)
                     {
                         ShowErrorMessage(result);
@@ -789,7 +792,19 @@ namespace GitFlowVS.Extension.ViewModels
             }
         }
 
-        public bool ReleaseForceDeletion
+
+		public bool ReleaseNoBackMerge
+		{
+			get { return releaseNoBackMerge; }
+			set
+			{
+				if (value.Equals(releaseNoBackMerge)) return;
+				releaseNoBackMerge = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public bool ReleaseForceDeletion
         {
             get { return releaseForceDeletion; }
             set
