@@ -5,16 +5,16 @@ using TeamExplorer.Common;
 
 namespace GitFlowVS.Extension
 {
-    [TeamExplorerSection(GuidList.GitFlowFeaturesSection, GuidList.GitFlowPage, 120)]
-    public class GitFlowFeaturesSection : TeamExplorerBaseSection, IGitFlowSection
+    [TeamExplorerSection(GuidList.GitFlowReleasesSection, GuidList.GitFlowPage, 125)]
+    public class GitFlowReleasesSection : TeamExplorerBaseSection, IGitFlowSection
     {
-        private readonly FeaturesViewModel model;
+        private readonly ReleasesViewModel model;
 
-        public GitFlowFeaturesSection()
+        public GitFlowReleasesSection()
         {
-            Title = "Current Features";
+            Title = "Current Release";
             IsVisible = false;
-            model = new FeaturesViewModel(this);
+            model = new ReleasesViewModel(this);
             UpdateVisibleState();
         }
 
@@ -37,7 +37,7 @@ namespace GitFlowVS.Extension
             {
                 if (!IsVisible)
                 {
-                    SectionContent = new FeaturesUI(model);
+                    SectionContent = new ReleasesUI(model);
                     IsVisible = true;
                 }
                 model.Update();
@@ -54,6 +54,4 @@ namespace GitFlowVS.Extension
         }
 
     }
-
-
 }

@@ -14,5 +14,6 @@ namespace GitFlowVS.Extension
         public const string GitFlowFeaturesSection = "FED30B30-AEB3-4CCA-963B-1D044A9B90E5";
         public const string GitFlowInitSection = "12760882-D1DE-46FF-8965-045017C7472D";
         public const string GitFlowInstallSection = "9D57DC9D-5B59-4B0B-B581-809E6C973D57";
-    };
+		public const string GitFlowReleasesSection = "C75DDD57-0FD1-425D-A06F-B18F24968EA2";
+	};
 }

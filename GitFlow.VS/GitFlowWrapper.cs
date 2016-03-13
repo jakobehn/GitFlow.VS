@@ -158,13 +158,49 @@ namespace GitFlow.VS
             }
         }
 
-        public GitFlowCommandResult PublishFeature(string featureName)
+		public IEnumerable<BranchItem> AllReleaseBranches
+		{
+			get
+			{
+				if (!IsInitialized)
+					return new List<BranchItem>();
+
+				using (var repo = new Repository(repoDirectory))
+				{
+					var prefix = repo.Config.Get<string>("gitflow.prefix.release").Value;
+					var releaseBranches =
+						repo.Branches.Where(b => !b.IsRemote && b.Name.StartsWith(prefix))
+							.Select(c => new BranchItem
+							{
+								Author = c.Tip.Author.Name,
+								Name = c.Name.Replace(prefix, ""),
+								LastCommit = c.Tip.Author.When,
+								IsTracking = c.IsTracking,
+								IsCurrentBranch = c.IsCurrentRepositoryHead,
+								IsRemote = c.IsRemote,
+								CommitId = c.Tip.Id.ToString(),
+								Message = c.Tip.MessageShort
+							}).ToList();
+
+					return releaseBranches;
+				}
+
+			}
+		}
+
+		public GitFlowCommandResult PublishFeature(string featureName)
         {
             string gitArguments = "feature publish \"" + TrimBranchName(featureName) + "\"";
             return RunGitFlow(gitArguments);
         }
 
-        private string TrimBranchName(string branchName)
+		public GitFlowCommandResult PublishRelease(string releaseName)
+		{
+			string gitArguments = "release publish \"" + TrimBranchName(releaseName) + "\"";
+			return RunGitFlow(gitArguments);
+		}
+
+		private string TrimBranchName(string branchName)
         {
             if( branchName.LastIndexOf('/') >= 0)
             {
@@ -192,6 +228,7 @@ namespace GitFlow.VS
                 return GetAllBranchesThatStartsWithConfigPrefix("gitflow.prefix.release");
             }
         }
+
 
         public IEnumerable<string> AllHotfixes
         {
