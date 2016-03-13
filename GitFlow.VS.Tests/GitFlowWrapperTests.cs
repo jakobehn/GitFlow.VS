@@ -138,7 +138,25 @@ namespace GitFlow.VS.Tests
             Assert.AreEqual(1, gf.AllFeatures.Count());
         }
 
-        [TestMethod]
+		[TestMethod]
+		public void FinishFeatureKeepLocalBranch()
+		{
+			var gf = new GitFlowWrapper(sampleRepoPath);
+			gf.Init(new GitFlowRepoSettings());
+			gf.StartFeature("X");
+
+			Assert.AreEqual(1, gf.AllFeatures.Count());
+
+			gf.FinishFeature("X", deleteLocalBranch: false);
+
+			using (var repo = new Repository(sampleRepoPath))
+			{
+				Assert.IsTrue(repo.Branches.Any(b => !b.IsRemote && b.Name == "feature/X"));
+			}
+		}
+
+
+		[TestMethod]
         public void GetAllFeatures()
         {
             var gf = new GitFlowWrapper(sampleRepoPath);
@@ -269,7 +287,7 @@ namespace GitFlow.VS.Tests
             }
         }
 
-        [TestMethod]
+		[TestMethod]
         public void StartHotfix()
         {
             var gf = new GitFlowWrapper(sampleRepoPath);
