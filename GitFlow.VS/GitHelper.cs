@@ -74,12 +74,24 @@ namespace GitFlow.VS
 
         public static string GetInstallPathFromProgramFiles()
         {
+            // If this is a 64bit OS, and the user installed 64bit git, then explictly search that folder.
+            if (Environment.Is64BitOperatingSystem)
+            {
+                var x64ProgramFiles = Registry.GetValue(
+                    @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion", "ProgramW6432Dir", null);
+                if (x64ProgramFiles != null)
+                {
+                    string gitPathX64 = Path.Combine(x64ProgramFiles.ToString(), "git");
+                    if (Directory.Exists(gitPathX64))
+                        return gitPathX64.TrimEnd('\\');
+                }
+            }
+
+            // Else, this is a 64bit or a 32bit machine, and the user installed 32bit git
             string gitPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "git");
             if (Directory.Exists(gitPath))
                 return gitPath.TrimEnd('\\');
-            gitPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "git");
-            if (Directory.Exists(gitPath))
-                return gitPath.TrimEnd('\\');
+
             return null;
         }
     }
