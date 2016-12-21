@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.VisualStudio.Settings;
+﻿using Microsoft.VisualStudio.Settings;
 using Microsoft.VisualStudio.Shell.Settings;
+using System;
 
 namespace TeamExplorer.Common
 {
