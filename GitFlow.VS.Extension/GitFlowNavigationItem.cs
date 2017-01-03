@@ -58,7 +58,7 @@ namespace GitFlowVS.Extension
         private void UpdateVisible()
         {
             IsVisible = false;
-            if (gitService != null && gitService.ActiveRepositories.Any())
+            if (gitService != null)
             {
                 IsVisible = true;
             }

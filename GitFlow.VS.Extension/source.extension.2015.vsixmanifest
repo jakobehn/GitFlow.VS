@@ -1,7 +1,7 @@
 ﻿<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="F05E7F70-033C-4A36-93C3-4B8DB5C51DF8" Version="1.1.0.0" Language="en-US" Publisher="Jakob Ehn" />
-    <DisplayName>GitFlow for Visual Studio 2017</DisplayName>
+    <Identity Id="3CD51F76-D7A1-4745-B750-D966C228A85C" Version="1.1.0.0" Language="en-US" Publisher="Jakob Ehn" />
+    <DisplayName>GitFlow for Visual Studio 2015</DisplayName>
     <Description xml:space="preserve">Integrates GitFlow in Visual Studio Team Explorer 2015</Description>
     <MoreInfo>https://github.com/jakobehn/GitFlow.VS</MoreInfo>
     <License>License.rtf</License>
@@ -11,7 +11,7 @@
     <Tags>VisualStudio git gitflow TeamExplorer</Tags>
   </Metadata>
   <Installation InstalledByMsi="false">
-    <InstallationTarget Version="[15.0,16.0)" Id="Microsoft.VisualStudio.Community" />
+    <InstallationTarget Version="[14.0,15.0)" Id="Microsoft.VisualStudio.Pro" />
   </Installation>
   <Dependencies>
     <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" Version="[4.5,)" />
@@ -21,7 +21,4 @@
     <Asset Type="Microsoft.VisualStudio.VsPackage" Path="GitFlowVS.Extension.pkgdef" />
     <Asset Type="Microsoft.VisualStudio.MefComponent" Path="GitFlowVS.Extension.dll" />
   </Assets>
-  <Prerequisites>
-    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0.25904.2,16.0)" DisplayName="Visual Studio core editor" />
-  </Prerequisites>
 </PackageManifest>

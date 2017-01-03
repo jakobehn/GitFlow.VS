@@ -9,6 +9,7 @@
     
     <StackPanel Margin="10" Orientation="Vertical">
         <TextBlock Name="GitInstallation" TextWrapping="Wrap" Text="Could not locate Git for Windows on this machine. This is required by GitFlow. Please install it and try again" Visibility="Collapsed"></TextBlock>
+        <TextBlock Name="GitNoRepo" TextWrapping="Wrap" Text="Connect to a Git repo to start use the GitFlow extension" Visibility="Collapsed"></TextBlock>
         <TextBlock Name="GitFlowInstallation" TextWrapping="Wrap" Text="It looks like you don't have GitFlow installed. Let me do that for you"></TextBlock>
         <Button Name="GitFlowInstallationButton" Width="100px" Margin="0,10,0,0" Click="Button_Click" HorizontalAlignment="Left">Install</Button>
         <TextBlock Name="Error" Visibility="Hidden" Foreground="Red" FontStyle="Italic" Margin="0,10,0,0">An error occurred while configure GitFlow extension. Exit Code: {0}</TextBlock>
