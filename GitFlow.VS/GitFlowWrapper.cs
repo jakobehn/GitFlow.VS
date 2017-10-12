@@ -348,7 +348,7 @@ namespace GitFlow.VS
             return RunGitFlow(gitArguments);
         }
 
-        public GitFlowCommandResult FinishFeature(string featureName, bool rebaseOnDevelopment = false, bool deleteLocalBranch = true, bool deleteRemoteBranch = true)
+        public GitFlowCommandResult FinishFeature(string featureName, bool rebaseOnDevelopment = false, bool deleteLocalBranch = true, bool deleteRemoteBranch = true, bool squash = false, bool noFastForward = false)
         {
             string gitArguments = "feature finish \"" + TrimBranchName(featureName) + "\"";
             if (rebaseOnDevelopment)
@@ -357,6 +357,10 @@ namespace GitFlow.VS
                 gitArguments += " --keeplocal";
             if (!deleteRemoteBranch)
                 gitArguments += " --keepremote";
+            if (squash)
+                gitArguments += " --squash";
+            if (noFastForward)
+                gitArguments += " --no-ff";
 
 
             return RunGitFlow(gitArguments);
