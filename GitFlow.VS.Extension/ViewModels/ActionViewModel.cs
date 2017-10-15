@@ -25,6 +25,8 @@ namespace GitFlowVS.Extension.ViewModels
         private bool featureRebaseOnDevelopmentBranch;
         private bool featureDeleteLocalBranch;
         private bool featureDeleteRemoteBranch;
+        private bool featureSquash;
+        private bool featureNoFastForward;
         private bool releaseDeleteBranch;
         private string releaseTagMessage;
         private bool releaseForceDeletion;
@@ -72,6 +74,8 @@ namespace GitFlowVS.Extension.ViewModels
         {
             FeatureDeleteLocalBranch = true;
             FeatureDeleteRemoteBranch = true;
+            FeatureSquash = true;
+            FeatureNoFastForward = true;
             ReleaseDeleteBranch = true;
             ReleaseTagMessageSelected = true;
 			ReleaseNoBackMerge = false;
@@ -462,7 +466,9 @@ namespace GitFlowVS.Extension.ViewModels
                 {
                     {"RebaseOnDevelopmentBranch", FeatureRebaseOnDevelopmentBranch.ToString()},
                     {"DeleteLocalBranch", FeatureDeleteLocalBranch.ToString()},
-                    {"DeleteRemoteBranch", FeatureDeleteRemoteBranch.ToString()}
+                    {"DeleteRemoteBranch", FeatureDeleteRemoteBranch.ToString()},
+                    {"Squash", FeatureSquash.ToString()},
+                    {"NoFastForward", FeatureNoFastForward.ToString()}
                 };
                 Logger.Event("FinishFeature", properties);
 
@@ -473,7 +479,7 @@ namespace GitFlowVS.Extension.ViewModels
                     ShowProgressBar();
 
                     var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
-                    var result = gf.FinishFeature(SelectedFeature.Name, FeatureRebaseOnDevelopmentBranch, FeatureDeleteLocalBranch, FeatureDeleteRemoteBranch);
+                    var result = gf.FinishFeature(SelectedFeature.Name, FeatureRebaseOnDevelopmentBranch, FeatureDeleteLocalBranch, FeatureDeleteRemoteBranch, FeatureSquash, FeatureNoFastForward);
                     if (!result.Success)
                     {
                         ShowErrorMessage(result);
@@ -729,6 +735,28 @@ namespace GitFlowVS.Extension.ViewModels
             {
                 if (value.Equals(featureDeleteRemoteBranch)) return;
                 featureDeleteRemoteBranch = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool FeatureSquash
+        {
+            get { return featureSquash; }
+            set
+            {
+                if (value.Equals(featureSquash)) return;
+                featureSquash = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool FeatureNoFastForward
+        {
+            get { return featureNoFastForward; }
+            set
+            {
+                if (value.Equals(featureNoFastForward)) return;
+                featureNoFastForward = value;
                 OnPropertyChanged();
             }
         }

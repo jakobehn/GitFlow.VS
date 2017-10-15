@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:teamExplorer="clr-namespace:Microsoft.TeamFoundation.Controls.WPF.TeamExplorer;assembly=Microsoft.TeamFoundation.Controls"
              xmlns:wpf="clr-namespace:Microsoft.TeamFoundation.Controls.WPF;assembly=Microsoft.TeamFoundation.Controls"
-             mc:Ignorable="d" d:DesignWidth="200">
+             mc:Ignorable="d" d:DesignWidth="230">
 
     <UserControl.Resources>
         <ResourceDictionary Source="/GitFlowVS.Extension;component/Resources/Dictionary.xaml" />
@@ -132,6 +132,8 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
                 <ComboBox Grid.Row="0" Margin="-2,0,0,6" VerticalAlignment="Center"
                     IsEditable="false" IsReadOnly="true" DisplayMemberPath="Name"
@@ -140,7 +142,9 @@
                 <CheckBox Grid.Row="1" IsChecked="{Binding FeatureRebaseOnDevelopmentBranch}">Rebase on development branch</CheckBox>
             <CheckBox Grid.Row="2"  IsChecked="{Binding FeatureDeleteLocalBranch}">Delete local branch</CheckBox>
             <CheckBox Grid.Row="3"  IsChecked="{Binding FeatureDeleteRemoteBranch}">Delete remote branch</CheckBox>
-            <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,10,0,0" >
+            <CheckBox Grid.Row="4"  IsChecked="{Binding Squash}">Squash feature during merge</CheckBox>
+            <CheckBox Grid.Row="5"  IsChecked="{Binding NoFastForward}">Never fast-forward during the merge</CheckBox>
+            <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,10,0,0" >
                 <Button Command="{Binding FinishFeatureCommand}">OK</Button>
                     <teamExplorer:TextLink x:Uid="cancelFinishFeature" VerticalAlignment="Center" Margin="6,0,0,0" Text="Cancel"
                           Localization.Attributes="Text (Modifiable Readable Text)"
