@@ -9,7 +9,7 @@ pool:
 variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
-  buildConfiguration: '2017'
+  buildConfiguration: 'VS2017'
 
 steps:
 - task: NuGetToolInstaller@0
