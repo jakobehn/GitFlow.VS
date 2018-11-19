@@ -12,7 +12,7 @@ namespace GitFlowVS.Extension
         {
             try
             {
-                Title = "Install GitFlow";
+                Title = "GitFlow";
                 SectionContent = new InstallGitFlowUI(this);
 
                 UpdateVisibleState();
@@ -43,7 +43,7 @@ namespace GitFlowVS.Extension
 
         public void UpdateVisibleState()
         {
-            IsVisible = !GitFlowPage.GitFlowIsInstalled;
+            IsVisible = !GitFlowPage.GitFlowIsInstalled || GitFlowPage.ActiveRepo == null;
         }
     }
 }

@@ -38,7 +38,7 @@ namespace GitFlowVS.Extension
 
         public static string ActiveRepoPath
         {
-            get { return ActiveRepo.RepositoryPath; }
+            get { return ActiveRepo?.RepositoryPath; }
         }
 
         public override void Refresh()

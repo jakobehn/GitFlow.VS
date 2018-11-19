@@ -14,7 +14,10 @@ namespace GitFlowVS.Extension
         {
             Title = "Recommended actions";
             IsVisible = false;
-            model = new ActionViewModel(this);
+            if (GitFlowPage.ActiveRepoPath != null)
+            {
+                model = new ActionViewModel(this);
+            }
             UpdateVisibleState();
         }
 
@@ -26,7 +29,7 @@ namespace GitFlowVS.Extension
 
         public void UpdateVisibleState()
         {
-            if (!GitFlowPage.GitFlowIsInstalled)
+            if (!GitFlowPage.GitFlowIsInstalled || GitFlowPage.ActiveRepo == null)
             {
                 IsVisible = false;
                 return;

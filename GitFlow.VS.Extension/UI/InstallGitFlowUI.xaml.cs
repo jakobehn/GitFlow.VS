@@ -28,6 +28,14 @@ namespace GitFlowVS.Extension.UI
                 GitInstallation.Visibility = Visibility.Visible;
                 GitFlowInstallation.Visibility = Visibility.Collapsed;
                 GitFlowInstallationButton.Visibility = Visibility.Collapsed;
+                GitNoRepo.Visibility = Visibility.Collapsed;
+            }
+            else if(GitFlowPage.ActiveRepo == null)
+            {
+                GitNoRepo.Visibility = Visibility.Visible;
+                GitInstallation.Visibility = Visibility.Collapsed;
+                GitFlowInstallation.Visibility = Visibility.Collapsed;
+                GitFlowInstallationButton.Visibility = Visibility.Collapsed;
             }
         }
 
