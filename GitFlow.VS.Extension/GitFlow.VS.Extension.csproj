@@ -266,6 +266,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GitFlowActionSection.cs" />
+    <Compile Include="GitFlowBugfixesSection.cs" />
     <Compile Include="GitFlowReleasesSection.cs" />
     <Compile Include="GitFlowFeaturesSection.cs" />
     <Compile Include="GitFlowInitSection.cs" />
@@ -275,6 +276,9 @@
     <Compile Include="IGitFlowSection.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="UI\Commands.cs" />
+    <Compile Include="UI\BugfixesUI.xaml.cs">
+      <DependentUpon>BugfixesUI.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\ReleasesUI.xaml.cs">
       <DependentUpon>ReleasesUI.xaml</DependentUpon>
     </Compile>
@@ -291,6 +295,7 @@
       <DependentUpon>InstallGitFlowUI.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ActionViewModel.cs" />
+    <Compile Include="ViewModels\BugfixesViewModel.cs" />
     <Compile Include="ViewModels\ReleasesViewModel.cs" />
     <Compile Include="ViewModels\FeaturesViewModel.cs" />
     <Compile Include="ViewModels\GitFlowPageModel.cs" />
@@ -559,6 +564,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="UI\BugfixesUI.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UI\ReleasesUI.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

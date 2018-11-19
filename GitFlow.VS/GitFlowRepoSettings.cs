@@ -8,6 +8,7 @@ namespace GitFlow.VS
         public string ReleaseBranch { get; set; }
         public string HotfixBranch { get; set; }
         public string SupportBranch { get; set; }
+        public string BugfixBranch { get; set; }
         public string VersionTag { get; set; }
 
         public GitFlowRepoSettings()
@@ -18,6 +19,7 @@ namespace GitFlow.VS
             ReleaseBranch = "release/";
             HotfixBranch = "hotfix/";
             SupportBranch = "support/";
+            BugfixBranch = "bugfix/";
             VersionTag = "";
         }
     }

@@ -7,56 +7,55 @@ using System;
 
 namespace GitFlowVS.Extension.ViewModels
 {
-
-    public class FeaturesViewModel : ViewModelBase
+    public class BugfixesViewModel : ViewModelBase
     {
-        public ICommand PublishFeatureBranchCommand { get; private set; }
-        public ICommand TrackFeatureBranchCommand { get; private set; }
-        public ICommand CheckoutFeatureBranchCommand { get; private set; }
+        public ICommand PublishBugfixBranchCommand { get; private set; }
+        public ICommand TrackBugfixBranchCommand { get; private set; }
+        public ICommand CheckoutBugfixBranchCommand { get; private set; }
 
-        public FeaturesViewModel(IGitFlowSection te)
+        public BugfixesViewModel(IGitFlowSection te)
             : base(te)
         {
-            PublishFeatureBranchCommand = new RelayCommand(p => PublishFeatureBranch(), p => CanPublishFeatureBranch);
-            TrackFeatureBranchCommand = new RelayCommand(p => TrackFeatureBranch(), p => CanTrackFeatureBranch);
-            CheckoutFeatureBranchCommand = new RelayCommand(p => CheckoutFeatureBranch(), p => CanCheckoutFeatureBranch);
+            PublishBugfixBranchCommand = new RelayCommand(p => PublishBugfixBranch(), p => CanPublishBugfixBranch);
+            TrackBugfixBranchCommand = new RelayCommand(p => TrackBugfixBranch(), p => CanTrackBugfixBranch);
+            CheckoutBugfixBranchCommand = new RelayCommand(p => CheckoutBugfixBranch(), p => CanCheckoutBugfixBranch);
 
             HideProgressBar();
         }
 
-        public bool CanPublishFeatureBranch
+        public bool CanPublishBugfixBranch
         {
             get
             {
-                return SelectedFeature != null && !SelectedFeature.IsRemote && !SelectedFeature.IsTracking;
+                return SelectedBugfix != null && !SelectedBugfix.IsRemote && !SelectedBugfix.IsTracking;
             }
         }
 
-        public bool CanTrackFeatureBranch
+        public bool CanTrackBugfixBranch
         {
             get
             {
-                return SelectedFeature != null && SelectedFeature.IsRemote && !SelectedFeature.IsTracking;
+                return SelectedBugfix != null && SelectedBugfix.IsRemote && !SelectedBugfix.IsTracking;
             }
         }
 
-        public bool CanCheckoutFeatureBranch
+        public bool CanCheckoutBugfixBranch
         {
             get
             {
-                return SelectedFeature != null && !SelectedFeature.IsCurrentBranch && !SelectedFeature.IsRemote;
+                return SelectedBugfix != null && !SelectedBugfix.IsCurrentBranch && !SelectedBugfix.IsRemote;
             }
         }
 
-        public void PublishFeatureBranch()
+        public void PublishBugfixBranch()
         {
             try
             { 
-                Logger.Event("PublishFeatureBranch");
+                Logger.Event("PublishBugfixBranch");
                 GitFlowPage.ActiveOutputWindow();
                 ShowProgressBar();
                 var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
-                var result = gf.PublishFeature(SelectedFeature.Name);
+                var result = gf.PublishBugfix(SelectedBugfix.Name);
                 if (!result.Success)
                 {
                     Te.ShowErrorNotification(result.CommandOutput);
@@ -73,15 +72,15 @@ namespace GitFlowVS.Extension.ViewModels
 
         }
 
-        public void TrackFeatureBranch()
+        public void TrackBugfixBranch()
         {
             try
             { 
-                Logger.Event("TrackFeatureBranch");
+                Logger.Event("TrackBugfixBranch");
                 GitFlowPage.ActiveOutputWindow();
                 ShowProgressBar();
                 var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
-                var result = gf.TrackFeature(SelectedFeature.Name);
+                var result = gf.TrackBugfix(SelectedBugfix.Name);
                 if (!result.Success)
                 {
                     Te.ShowErrorNotification(result.CommandOutput);
@@ -98,15 +97,15 @@ namespace GitFlowVS.Extension.ViewModels
 
         }
 
-        public void CheckoutFeatureBranch()
+        public void CheckoutBugfixBranch()
         {
             try
             { 
-                Logger.Event("CheckoutFeatureBranch");
+                Logger.Event("CheckoutBugfixBranch");
                 GitFlowPage.ActiveOutputWindow();
                 ShowProgressBar();
                 var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
-                var result = gf.CheckoutFeature(SelectedFeature.Name);
+                var result = gf.CheckoutBugfix(SelectedBugfix.Name);
                 if (!result.Success)
                 {
                     Te.ShowErrorNotification(result.CommandOutput);
@@ -123,27 +122,27 @@ namespace GitFlowVS.Extension.ViewModels
         }
 
 
-        public List<BranchItem> AllFeatures
+        public List<BranchItem> AllBugfixes
         {
             get
             {
                 var gf = new GitFlowWrapper(GitFlowPage.ActiveRepoPath);
-                var list = gf.AllFeatureBranches.ToList();
+                var list = gf.AllBugfixBranches.ToList();
                 return list;
             }
         }
 
-        public BranchItem SelectedFeature { get; set; }
+        public BranchItem SelectedBugfix { get; set; }
 
         public void Update()
         {
-            OnPropertyChanged("AllFeatures");
+            OnPropertyChanged("AllBugfixes");
             OnPropertyChanged("NoItemsMessageVisibility");
         }
 
         public Visibility NoItemsMessageVisibility
         {
-            get { return AllFeatures.Any() ? Visibility.Collapsed : Visibility.Visible; }
+            get { return AllBugfixes.Any() ? Visibility.Collapsed : Visibility.Visible; }
 
         }
 
@@ -151,6 +150,5 @@ namespace GitFlowVS.Extension.ViewModels
         {
             Te.ShowErrorNotification(message);
         }
-
     }
 }
