@@ -363,6 +363,10 @@ namespace GitFlowVS.Extension.ViewModels
                 }
 			    Logger.Metric("Duration-StartFeature", (DateTime.Now-start).Milliseconds);
             }
+            catch (ArgumentException ex)
+            {
+                ShowErrorMessage(ex.Message);
+            }
             catch (Exception ex)
             {
                 ShowErrorMessage(ex.ToString());
@@ -399,6 +403,10 @@ namespace GitFlowVS.Extension.ViewModels
                     OnPropertyChanged("AllReleases");
                 }
 			    Logger.Metric("Duration-StartRelease", (DateTime.Now - start).Milliseconds);
+            }
+            catch (ArgumentException ex)
+            {
+                ShowErrorMessage(ex.Message);
             }
             catch (Exception ex)
             {
@@ -447,6 +455,10 @@ namespace GitFlowVS.Extension.ViewModels
                     OnPropertyChanged("AllHotfixes");
                 }
 			    Logger.Metric("Duration-StartHotfix", (DateTime.Now - start).Milliseconds);
+            }
+            catch(ArgumentException ex)
+            {
+                ShowErrorMessage(ex.Message);
             }
             catch (Exception ex)
             {

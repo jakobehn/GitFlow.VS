@@ -201,6 +201,15 @@ namespace GitFlow.VS.Tests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void CreateFeatureWithApostropheShouldReportAsInvalidWork()
+        {
+            var gf = new GitFlowWrapper(sampleRepoPath);
+            gf.Init(new GitFlowRepoSettings());
+            gf.StartFeature("X'");
+        }
+
+        [TestMethod]
         public void StartFeatureWithSpaceShouldReplaceSpaceWithUnderscore()
         {
             var gf = new GitFlowWrapper(sampleRepoPath);

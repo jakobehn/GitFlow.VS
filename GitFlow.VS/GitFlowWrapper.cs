@@ -344,6 +344,7 @@ namespace GitFlow.VS
 
         public GitFlowCommandResult StartFeature(string featureName)
         {
+            ValidateGitFlowActionName(featureName);
             string gitArguments = "feature start \"" + TrimBranchName(featureName) + "\"";
             return RunGitFlow(gitArguments);
         }
@@ -369,6 +370,7 @@ namespace GitFlow.VS
 
         public GitFlowCommandResult StartRelease(string releaseName)
         {
+            ValidateGitFlowActionName(releaseName);
             string gitArguments = "release start \"" + TrimBranchName(releaseName) + "\"";
             return RunGitFlow(gitArguments);
         }
@@ -407,6 +409,7 @@ namespace GitFlow.VS
 
         public GitFlowCommandResult StartHotfix(string hotfixName)
         {
+            ValidateGitFlowActionName(hotfixName);
             string gitArguments = "hotfix start \"" + TrimBranchName(hotfixName) + "\"";
             return RunGitFlow(gitArguments);
         }
@@ -436,6 +439,18 @@ namespace GitFlow.VS
             }
 
             return RunGitFlow(gitArguments);
+        }
+
+        private void ValidateGitFlowActionName(string name)
+        {
+            if( String.IsNullOrEmpty(name))
+            {
+                throw new ArgumentException("Name cannot be empty");
+            }
+            if( name.Contains("'"))
+            {
+                throw new ArgumentException("Name cannot contain single quotes");
+            }
         }
 
         public GitFlowCommandResult Init(GitFlowRepoSettings settings)
