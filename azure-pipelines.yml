@@ -1,25 +1,61 @@
-# .NET Desktop
-# Build and run tests for .NET Desktop or Windows classic desktop solutions.
-# Add steps that publish symbols, save build artifacts, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
-
-pool:
-  vmImage: 'VS2017-Win2016'
+resources:
+- repo: self
+queue:
+  name: Hosted VS2017
+  demands: 
+  - msbuild
+  - visualstudio
 
 variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'VS2017'
-
+  BuildPlatform: 'Any CPU'
+  BuildConfiguration: 'VS2017'
 steps:
+- task: geeklearningio.gl-vsts-tasks-file-patch.json-patch-task.JsonPatch@3
+  displayName: 'Update extension version'
+  inputs:
+    JsonWorkingDir: '$(build.sourcesDirectory)'
+    JsonTargetFilters: extension.manifest.json
+    JsonPatchContent: '= /identity/version=> "$(build.buildNumber)"'
+
 - task: NuGetToolInstaller@0
+  displayName: 'Use NuGet 4.4.1'
+  inputs:
+    versionSpec: 4.4.1
 
 - task: NuGetCommand@2
+  displayName: 'NuGet restore'
   inputs:
-    restoreSolution: '$(solution)'
+    restoreSolution: GitFlow.VS.sln
 
 - task: VSBuild@1
+  displayName: 'Build solution GitFlow.VS.sln'
   inputs:
-    solution: '$(solution)'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    solution: GitFlow.VS.sln
+    platform: '$(BuildPlatform)'
+    configuration: '$(BuildConfiguration)'
+
+- task: VSTest@2
+  displayName: 'VsTest - testAssemblies'
+  inputs:
+    testAssemblyVer2: |
+     **\$(BuildConfiguration)\*test*.dll
+     !**\obj\**
+    platform: '$(BuildPlatform)'
+    configuration: '$(BuildConfiguration)'
+  enabled: false
+
+- task: CopyFiles@2
+  displayName: 'Copy marketplace files'
+  inputs:
+    SourceFolder: '$(system.defaultworkingdirectory)'
+    Contents: |
+     **\bin\$(BuildConfiguration)\*.vsix
+     README.md
+     extension.manifest.json
+    TargetFolder: '$(build.artifactstagingdirectory)'
+    flattenFolders: true
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: drop'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
