@@ -13,7 +13,7 @@ variables:
   BuildConfiguration: 'VS2017'
 steps:
 - task: geeklearningio.gl-vsts-tasks-file-patch.xml-patch-task.XmlPatch@3
-  displayName: 'Patch files source.extension.2017.vsixmanifest'
+  displayName: 'Update VSIX version'
   inputs:
     XmlWorkingDir: GitFlow.VS.Extension
     XmlTargetFilters: source.extension.2017.vsixmanifest

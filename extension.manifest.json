@@ -4,6 +4,25 @@
   "identity": {
     "internalName": "GitFlowforVisualStudio2017"
   },
+  "assetFiles": [
+    {
+        "pathOnDisk": "\\images\\gf_features.png",
+        "targetPath": "images/gf_features.png"
+    },
+    {
+        "pathOnDisk": "\\images\\gf_finishfeature.png",
+        "targetPath": "images/gf_finishfeature.png"
+    },
+    {
+      "pathOnDisk": "\\images\\gf_init.png",
+      "targetPath": "images/gf_init.png"
+    },
+    {
+      "pathOnDisk": "\\images\\gf_startfeature.png",
+      "targetPath": "images/gf_startfeature.png"
+    }  
+      
+],  
   "overview": "README.md",
   "priceCategory": "free",
   "publisher": "vs-publisher-57624",
