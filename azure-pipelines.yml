@@ -5,7 +5,8 @@ queue:
   demands: 
   - msbuild
   - visualstudio
-
+trigger:
+- master
 variables:
   BuildPlatform: 'Any CPU'
   BuildConfiguration: 'VS2017'
