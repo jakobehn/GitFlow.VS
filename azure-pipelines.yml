@@ -12,12 +12,15 @@ variables:
   BuildPlatform: 'Any CPU'
   BuildConfiguration: 'VS2017'
 steps:
-- task: geeklearningio.gl-vsts-tasks-file-patch.json-patch-task.JsonPatch@3
-  displayName: 'Update extension version'
+- task: geeklearningio.gl-vsts-tasks-file-patch.xml-patch-task.XmlPatch@3
+  displayName: 'Patch files source.extension.2017.vsixmanifest'
   inputs:
-    JsonWorkingDir: '$(build.sourcesDirectory)'
-    JsonTargetFilters: extension.manifest.json
-    JsonPatchContent: '= /identity/version=> "$(build.buildNumber)"'
+    XmlWorkingDir: GitFlow.VS.Extension
+    XmlTargetFilters: source.extension.2017.vsixmanifest
+    Namespaces: 'vsix => http://schemas.microsoft.com/developer/vsx-schema/2011'
+    JsonPatchContent: '= /vsix:PackageManifest/vsix:Metadata/vsix:Identity/@Version=> "$(build.buildNumber)"'
+    OutputPatchFile: true
+    FailIfNoPatchApplied: true
 
 - task: NuGetToolInstaller@0
   displayName: 'Use NuGet 4.4.1'

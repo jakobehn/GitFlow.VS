@@ -2,19 +2,7 @@
   "$schema": "http://json.schemastore.org/vsix-publish",
   "categories": [ "Coding", "Source Control", "Team Development" ],
   "identity": {
-    "internalName": "GitFlowforVisualStudio2017",
-    "displayName": "GitFlow for Visual Studio 2017",
-    "description": "Integrates GitFlow in Visual Studio 2017",
-    "vsixId": "cf9a97a9-f7c4-4ca0-bf48-f56b0d816451",
-    "installTargets": [             
-        {
-            "sku": "Microsoft.VisualStudio.Community",
-            "version": "[15.0, 16.0)"
-        }
-    ],
-    "icon": "icon.png",
-    "tags": ["Git", "Source Control", "Team Explorer", "GitFlow", "TFS", "Visual Studio", "AzureDevOps"],
-    "version": "1.2.3.0"
+    "internalName": "GitFlowforVisualStudio2017"
   },
   "overview": "README.md",
   "priceCategory": "free",
