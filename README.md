@@ -15,16 +15,20 @@ http://blog.ehn.nu/2015/02/introducing-gitflow-for-visual-studio/
 The extension requires Visual Studio 2017. It will install GitFlow for you if it is not found on the machine. Since GitFlow depends on Git for Windows, this must be installed before using the extension 
  
 
-### Screenshots
+## Screenshots
 
-**Initialize repo for GitFlow**
-![](./Images/gf_init.png)
+### Initialize repo for GitFlow
 
-**Start New Feature**
-![](./Images/gf_startfeature.png)
+![Initialize](Images/gf_init.png)
 
-**Finish Feature**
-![](./Images/gf_finishfeature.png)
+### Start New Feature
 
-**List of current features**
-![](./Images/gf_features.png)
+![Start feature](Images/gf_startfeature.png)
+
+### Finish Feature
+
+![Finish feature](Images/gf_finishfeature.png)
+
+### List of current features
+
+![List features](Images/gf_features.png)
