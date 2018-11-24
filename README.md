@@ -1,5 +1,11 @@
 # GitFlow for Visual Studio 2017
 
+[![Build Status](https://dev.azure.com/gitflowvs/GitFlowVS/_apis/build/status/GitFlow.VS)](https://dev.azure.com/gitflowvs/GitFlowVS/_build/latest?definitionId=1)
+
+[![Release Status](https://vsrm.dev.azure.com/gitflowvs/_apis/public/Release/badge/5a9a320c-6abf-47d7-9c95-3befcfc93113/1/1)](https://vsrm.dev.azure.com/gitflowvs/_apis/public/Release/badge/5a9a320c-6abf-47d7-9c95-3befcfc93113/1/1)
+
+
+
 
 ### Features 
 This Team Explorer extension integrates GitFlow into your development workflow. It lets you easily create and finish feature, release and hotfix branches right from Team Explorer. 
