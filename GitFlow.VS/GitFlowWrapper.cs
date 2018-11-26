@@ -206,7 +206,7 @@ namespace GitFlow.VS
             {
                 branchName = branchName.Substring(branchName.LastIndexOf('/')+1);
             }
-            return branchName.Trim().Replace(" ", "_");
+            return branchName.Trim().Replace(" ", "-");
         }
 
         public GitFlowCommandResult TrackFeature(string featureName)
