@@ -142,8 +142,8 @@
                 <CheckBox Grid.Row="1" IsChecked="{Binding FeatureRebaseOnDevelopmentBranch}">Rebase on development branch</CheckBox>
             <CheckBox Grid.Row="2"  IsChecked="{Binding FeatureDeleteLocalBranch}">Delete local branch</CheckBox>
             <CheckBox Grid.Row="3"  IsChecked="{Binding FeatureDeleteRemoteBranch}">Delete remote branch</CheckBox>
-            <CheckBox Grid.Row="4"  IsChecked="{Binding Squash}">Squash feature during merge</CheckBox>
-            <CheckBox Grid.Row="5"  IsChecked="{Binding NoFastForward}">Never fast-forward during the merge</CheckBox>
+            <CheckBox Grid.Row="4"  IsChecked="{Binding FeatureSquash}">Squash feature during merge</CheckBox>
+                <CheckBox Grid.Row="5"  IsChecked="{Binding FeatureNoFastForward}">Never fast-forward during the merge</CheckBox>
             <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,10,0,0" >
                 <Button Command="{Binding FinishFeatureCommand}">OK</Button>
                     <teamExplorer:TextLink x:Uid="cancelFinishFeature" VerticalAlignment="Center" Margin="6,0,0,0" Text="Cancel"

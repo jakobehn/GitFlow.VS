@@ -89,6 +89,12 @@ namespace TeamExplorer.Common
         /// </summary>
         public virtual void Refresh()
         {
+            var service = GetService<ITeamExplorerPage>();
+            if(service != null)
+            {           
+                service.Refresh();
+            }
+            ClearNotifications();
         }
 
         /// <summary>
@@ -108,5 +114,14 @@ namespace TeamExplorer.Common
         }
 
         #endregion
+
+        public void ShowErrorNotification(string message)
+        {
+            ShowNotification(message, NotificationType.Error);
+        }
+        public void ShowInfoNotification(string message)
+        {
+            ShowNotification(message, NotificationType.Information);
+        }
     }
 }

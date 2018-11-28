@@ -155,8 +155,25 @@ namespace GitFlow.VS.Tests
 			}
 		}
 
+        [TestMethod]
+        public void FinishFeatureSquashChanges()
+        {
+            var gf = new GitFlowWrapper(sampleRepoPath);
+            gf.Init(new GitFlowRepoSettings());
+            gf.StartFeature("X");
 
-		[TestMethod]
+            Assert.AreEqual(1, gf.AllFeatures.Count());
+
+            gf.FinishFeature("X", squash: true);
+
+            using (var repo = new Repository(sampleRepoPath))
+            {
+                Assert.IsTrue(repo.Branches.Any(b => !b.IsRemote && b.Name == "feature/X"));
+            }
+        }
+
+
+        [TestMethod]
         public void GetAllFeatures()
         {
             var gf = new GitFlowWrapper(sampleRepoPath);

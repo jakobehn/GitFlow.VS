@@ -29,17 +29,6 @@ namespace GitFlowVS.Extension
             }
         }
 
-        public override void Refresh()
-        {
-            var service = GetService<ITeamExplorerPage>();
-            service.Refresh();
-        }
-
-        public void ShowErrorNotification(string message)
-        {
-            ShowNotification(message, NotificationType.Error);
-        }
-
         public void UpdateVisibleState()
         {
             if (!GitFlowPage.GitFlowIsInstalled || GitFlowPage.ActiveRepo == null)

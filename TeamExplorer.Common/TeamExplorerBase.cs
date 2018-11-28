@@ -77,6 +77,15 @@ namespace TeamExplorer.Common
             return Guid.Empty;
         }
 
+        public void ClearNotifications()
+        {
+            ITeamExplorer teamExplorer = GetService<ITeamExplorer>();
+            if (teamExplorer != null)
+            {
+                teamExplorer.ClearNotifications();
+            }
+        }
+
         #region IDisposable
 
         /// <summary>
