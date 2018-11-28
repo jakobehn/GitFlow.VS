@@ -18,12 +18,6 @@ namespace GitFlowVS.Extension
             UpdateVisibleState();
         }
 
-        public override void Refresh()
-        {
-            var service = GetService<ITeamExplorerPage>();
-            service.Refresh();
-        }
-
         public void UpdateVisibleState()
         {
             if (!GitFlowPage.GitFlowIsInstalled || GitFlowPage.ActiveRepo == null)
@@ -46,11 +40,6 @@ namespace GitFlowVS.Extension
             {
                 IsVisible = false;
             }
-        }
-
-        public void ShowErrorNotification(string message)
-        {
-            ShowNotification(message, NotificationType.Error);
         }
 
     }

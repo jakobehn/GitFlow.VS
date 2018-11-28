@@ -30,17 +30,6 @@ namespace GitFlowVS.Extension
 			ShowNotification(ex.Message, NotificationType.Error);
 		}
 
-		public override void Refresh()
-        {
-            var service = GetService<ITeamExplorerPage>();
-            service.Refresh();
-        }
-
-        public void ShowErrorNotification(string message)
-        {
-            ShowNotification(message, NotificationType.Error);
-        }
-
         public void UpdateVisibleState()
         {
             IsVisible = !GitFlowPage.GitFlowIsInstalled || GitFlowPage.ActiveRepo == null;

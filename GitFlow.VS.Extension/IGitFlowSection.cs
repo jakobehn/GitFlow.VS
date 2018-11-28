@@ -5,6 +5,6 @@ namespace GitFlowVS.Extension
         void UpdateVisibleState();
         void Refresh();
         void ShowErrorNotification(string message);
-
+        void ShowInfoNotification(string message);
     }
 }

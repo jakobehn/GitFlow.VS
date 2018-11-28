@@ -363,9 +363,15 @@ namespace GitFlow.VS
             if (noFastForward)
                 gitArguments += " --no-ff";
 
-
-            return RunGitFlow(gitArguments);
-
+            if( squash)
+            { 
+                //Wait for up to 15 minutes to let the user close the editor for the squashed commit message
+                return RunGitFlow(gitArguments, 15*60*1000);
+            }
+            else
+            {
+                return RunGitFlow(gitArguments);
+            }
         }
 
         public GitFlowCommandResult StartRelease(string releaseName)
@@ -670,7 +676,7 @@ namespace GitFlow.VS
             return true;
         }
 
-        private GitFlowCommandResult RunGitFlow(string gitArguments)
+        private GitFlowCommandResult RunGitFlow(string gitArguments, int timeout = 15000)
         {
             Error = new StringBuilder("");
             Output = new StringBuilder("");
@@ -683,12 +689,12 @@ namespace GitFlow.VS
                 p.OutputDataReceived += OnOutputDataReceived;
                 p.BeginErrorReadLine();
                 p.BeginOutputReadLine();
-                p.WaitForExit(15000);
+                p.WaitForExit(timeout);
                 if (!p.HasExited)
                 {
                     OnCommandOutputDataReceived(new CommandOutputEventArgs("The command is taking longer than expected\n"));
 
-                    p.WaitForExit(15000);
+                    p.WaitForExit(timeout);
                     if (!p.HasExited)
                     {
                         return new GitFlowTimedOutCommandResult("git " + p.StartInfo.Arguments);
