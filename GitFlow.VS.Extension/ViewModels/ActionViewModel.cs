@@ -74,8 +74,8 @@ namespace GitFlowVS.Extension.ViewModels
         {
             FeatureDeleteLocalBranch = true;
             FeatureDeleteRemoteBranch = true;
-            FeatureSquash = true;
-            FeatureNoFastForward = true;
+            FeatureSquash = false;
+            FeatureNoFastForward = false;
             ReleaseDeleteBranch = true;
             ReleaseTagMessageSelected = true;
 			ReleaseNoBackMerge = false;
@@ -360,6 +360,7 @@ namespace GitFlowVS.Extension.ViewModels
                     UpdateMenus();
                     HideAll();
                     OnPropertyChanged("AllFeatures");
+                    Te.Refresh();
                 }
 			    Logger.Metric("Duration-StartFeature", (DateTime.Now-start).Milliseconds);
             }
@@ -372,7 +373,6 @@ namespace GitFlowVS.Extension.ViewModels
                 ShowErrorMessage(ex.ToString());
                 Logger.Exception(ex);
             }
-
         }
 
         private void StartRelease()
@@ -401,6 +401,7 @@ namespace GitFlowVS.Extension.ViewModels
                     UpdateMenus();
                     HideAll();
                     OnPropertyChanged("AllReleases");
+                    Te.Refresh();
                 }
 			    Logger.Metric("Duration-StartRelease", (DateTime.Now - start).Milliseconds);
             }
@@ -424,7 +425,10 @@ namespace GitFlowVS.Extension.ViewModels
         {
             Te.ShowErrorNotification(message);
         }
-
+        private void ShowInfoMessage(string message)
+        {
+            Te.ShowInfoNotification(message);
+        }
         private void StartHotfix()
         {
             try
@@ -453,6 +457,7 @@ namespace GitFlowVS.Extension.ViewModels
                     UpdateMenus();
                     HideAll();
                     OnPropertyChanged("AllHotfixes");
+                    Te.Refresh();
                 }
 			    Logger.Metric("Duration-StartHotfix", (DateTime.Now - start).Milliseconds);
             }
@@ -491,6 +496,10 @@ namespace GitFlowVS.Extension.ViewModels
                     ShowProgressBar();
 
                     var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
+                    if( FeatureSquash)
+                    {
+                        ShowInfoMessage("Waiting for your editor to close the file...");
+                    }
                     var result = gf.FinishFeature(SelectedFeature.Name, FeatureRebaseOnDevelopmentBranch, FeatureDeleteLocalBranch, FeatureDeleteRemoteBranch, FeatureSquash, FeatureNoFastForward);
                     if (!result.Success)
                     {
@@ -546,6 +555,7 @@ namespace GitFlowVS.Extension.ViewModels
                     ShowFinishRelease = Visibility.Collapsed;
                     OnPropertyChanged("AllReleases");
                     UpdateMenus();
+                    Te.Refresh();
                 }
 			    Logger.Metric("Duration-FinishRelease", (DateTime.Now - start).Milliseconds);
             }
@@ -587,6 +597,7 @@ namespace GitFlowVS.Extension.ViewModels
                     ShowFinishHotfix = Visibility.Collapsed;
                     OnPropertyChanged("AllHotfixes");
                     UpdateMenus();
+                    Te.Refresh();
                 }
 			    Logger.Metric("Duration-FinishHotfix", (DateTime.Now - start).Milliseconds);
             }

@@ -67,10 +67,8 @@ namespace GitFlowVS.Extension
             outWindow.CreatePane(ref customGuid, "GitFlow.VS", 1, 1);
             outWindow.GetPane(ref customGuid, out outputWindow);
 
-
             ui = new GitFlowPageUI();
             PageContent = ui;
-
         }
 
         private void OnGitServicePropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
