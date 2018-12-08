@@ -2,7 +2,7 @@
 
 [![Build Status](https://dev.azure.com/gitflowvs/GitFlowVS/_apis/build/status/GitFlow.VS)](https://dev.azure.com/gitflowvs/GitFlowVS/_build/latest?definitionId=1)
 
-[![Release Status](https://vsrm.dev.azure.com/gitflowvs/_apis/public/Release/badge/5a9a320c-6abf-47d7-9c95-3befcfc93113/1/1)](https://vsrm.dev.azure.com/gitflowvs/_apis/public/Release/badge/5a9a320c-6abf-47d7-9c95-3befcfc93113/1/1)
+[![Release Status](https://vsrm.dev.azure.com/gitflowvs/_apis/public/Release/badge/5a9a320c-6abf-47d7-9c95-3befcfc93113/1/1)](https://dev.azure.com/gitflowvs/GitFlowVS/_release?definitionId=1)
 
 
 
