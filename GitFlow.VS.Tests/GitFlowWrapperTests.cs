@@ -227,7 +227,7 @@ namespace GitFlow.VS.Tests
         }
 
         [TestMethod]
-        public void StartFeatureWithSpaceShouldReplaceSpaceWithUnderscore()
+        public void StartFeatureWithSpaceShouldReplaceSpaceWithHyphen()
         {
             var gf = new GitFlowWrapper(sampleRepoPath);
             gf.Init(new GitFlowRepoSettings());
@@ -235,7 +235,7 @@ namespace GitFlow.VS.Tests
 
             using (var repo = new Repository(sampleRepoPath))
             {
-                Assert.IsTrue(repo.Branches.Any(b => !b.IsRemote && b.Name == "feature/Feature_X"));
+                Assert.IsTrue(repo.Branches.Any(b => !b.IsRemote && b.Name == "feature/Feature-X"));
             }
         }
 
