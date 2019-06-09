@@ -2,7 +2,7 @@ name: 1.3$(rev:.r).0
 resources:
 - repo: self
 queue:
-  name: Hosted VS2019
+  name: Hosted Windows 2019 with VS2019
   demands: 
   - msbuild
   - visualstudio
