@@ -47,7 +47,8 @@ steps:
      !**\obj\**
     platform: '$(BuildPlatform)'
     configuration: '$(BuildConfiguration)'
-  enabled: false
+    testFiltercriteria: FullyQualifiedName~GitFlowWrapperTests
+  enabled: true
 
 - task: CopyFiles@2
   displayName: 'Copy marketplace files'
