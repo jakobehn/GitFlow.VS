@@ -384,9 +384,6 @@
     <Content Include="Dependencies\gitflow\AUTHORS">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="Dependencies\gitflow\Changes.mdown">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
     <Content Include="Dependencies\gitflow\contrib\gitflow-installer.sh">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
@@ -541,9 +538,6 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="Dependencies\gitflow\Makefile">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="Dependencies\gitflow\README.mdown">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="License.rtf">
