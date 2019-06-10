@@ -2,15 +2,15 @@
 
 # git-flow make-less installer for *nix systems, by Rick Osborne
 # Based on the git-flow core Makefile:
-# http://github.com/petervanderdoes/gitflow/blob/master/Makefile
+# http://github.com/petervanderdoes/gitflow-avh/blob/master/Makefile
 
 # Licensed under the same restrictions as git-flow:
-# http://github.com/petervanderdoes/gitflow/blob/develop/LICENSE
+# http://github.com/petervanderdoes/gitflow-avh/blob/develop/LICENSE
 
 # Updated for the fork at petervanderdoes
 
 usage() {
-	echo "Usage: [environment] gitflow-installer.sh [install|uninstall] [stable|develop]"
+	echo "Usage: [environment] gitflow-installer.sh [install|uninstall] [stable|develop|version] [tag]"
 	echo "Environment:"
 	echo "   PREFIX=$PREFIX"
 	echo "   REPO_HOME=$REPO_HOME"
@@ -87,6 +87,11 @@ install)
 		git checkout develop
 		cd "$OLDPWD"
 		;;
+	version)
+		cd "$REPO_NAME"
+		git checkout tags/$3
+		cd "$OLDPWD"
+		;;		
 	*)
 		usage
 		exit
