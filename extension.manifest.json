@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/vsix-publish",
   "categories": [ "Coding", "Source Control", "Team Development" ],
   "identity": {
-    "internalName": "GitFlowforVisualStudio2017"
+    "internalName": "GitFlowforVisualStudio2019"
   },
   "assetFiles": [
     {
