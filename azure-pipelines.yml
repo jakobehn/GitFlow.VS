@@ -12,6 +12,14 @@ variables:
   BuildPlatform: 'Any CPU'
   BuildConfiguration: 'VS2019'
 steps:
+
+- task: bleddynrichards.Assembly-Info-Task.Assembly-Info-Task.Assembly-Info-NetFramework@2
+  displayName: 'Set Assembly Manifest Data'
+  inputs:
+    FileNames: '**\AssemblyInfo.cs'
+    VersionNumber: '$(build.buildnumber)'
+    FileVersionNumber: '$(build.buildnumber)'
+
 - task: geeklearningio.gl-vsts-tasks-file-patch.xml-patch-task.XmlPatch@3
   displayName: 'Update VSIX version'
   inputs:
