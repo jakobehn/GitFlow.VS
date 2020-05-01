@@ -15,6 +15,14 @@ namespace GitFlow.VS
         public delegate void CommandOutputReceivedEventHandler(object sender, CommandOutputEventArgs args);
         public delegate void CommandErrorReceivedEventHandler(object sender, CommandOutputEventArgs args);
 
+        private const string branch_master = "gitflow.branch.master";
+        private const string branch_develop = "gitflow.branch.develop";
+        private const string prefix_feature = "gitflow.prefix.feature";
+        private const string prefix_bugfix = "gitflow.prefix.bugfix";
+        private const string prefix_hotfix = "gitflow.prefix.hotfix";
+        private const string prefix_release = "gitflow.prefix.release";
+
+
         private readonly string repoDirectory;
         public static StringBuilder Output = new StringBuilder("");
         public static StringBuilder Error = new StringBuilder("");
@@ -32,13 +40,33 @@ namespace GitFlow.VS
 
                 using (var repo = new Repository(repoDirectory))
                 {
-                    var featurePrefix = repo.Config.Get<string>("gitflow.prefix.feature");
+                    var featurePrefix = repo.Config.Get<string>(prefix_feature);
                     if (featurePrefix == null)
                         return false;
                     return repo.Head.Name.StartsWith(featurePrefix.Value);
                 }
             }
         }
+
+        public bool IsOnBugfixBranch
+        {
+            get
+            {
+                if (!IsInitialized)
+                    return false;
+
+                using (var repo = new Repository(repoDirectory))
+                {
+                    var bugFixPrefix = repo.Config.Get<string>(prefix_bugfix);
+                    if (bugFixPrefix == null)
+                        return false;
+                    return repo.Head.Name.StartsWith(bugFixPrefix.Value);
+                }
+            }
+        }
+
+
+        
 
         public bool IsOnHotfixBranch
         {
@@ -49,7 +77,7 @@ namespace GitFlow.VS
 
                 using (var repo = new Repository(repoDirectory))
                 {
-                    var hotfixPrefix = repo.Config.Get<string>("gitflow.prefix.hotfix");
+                    var hotfixPrefix = repo.Config.Get<string>(prefix_hotfix);
                     if (hotfixPrefix == null)
                         return false;
                     return repo.Head.Name.StartsWith(hotfixPrefix.Value);
@@ -66,7 +94,7 @@ namespace GitFlow.VS
 
                 using (var repo = new Repository(repoDirectory))
                 {
-                    var masterBranch = repo.Config.Get<string>("gitflow.branch.master");
+                    var masterBranch = repo.Config.Get<string>(branch_master);
                     if (masterBranch == null)
                         return false;
                     return repo.Head.Name == masterBranch.Value;
@@ -80,8 +108,8 @@ namespace GitFlow.VS
             {
                 using (var repo = new Repository(repoDirectory))
                 {
-                    return repo.Config.Any(c => c.Key.StartsWith("gitflow.branch.master")) && 
-						repo.Config.Any(c => c.Key.StartsWith("gitflow.branch.develop"));
+                    return repo.Config.Any(c => c.Key.StartsWith(branch_master)) && 
+						repo.Config.Any(c => c.Key.StartsWith(branch_develop));
                 }
             }
         }
@@ -95,6 +123,8 @@ namespace GitFlow.VS
                     status = "Develop: " + CurrentBranchLeafName;
                 else if (IsOnFeatureBranch)
                     status = "Feature: " + CurrentBranchLeafName;
+                else if (IsOnBugfixBranch)
+                    status = "Bugfix: " + CurrentBranchLeafName;
                 else if (IsOnHotfixBranch)
                     status = "Hotfix: " + CurrentBranchLeafName;
                 else if (IsOnReleaseBranch)
@@ -108,7 +138,7 @@ namespace GitFlow.VS
         {
             get
             {
-                return GetAllBranchesThatStartsWithConfigPrefix("gitflow.prefix.feature");
+                return GetAllBranchesThatStartsWithConfigPrefix(prefix_feature);
             }
         }
 
@@ -121,7 +151,7 @@ namespace GitFlow.VS
 
                 using (var repo = new Repository(repoDirectory))
                 {
-                    var prefix = repo.Config.Get<string>("gitflow.prefix.feature").Value;
+                    var prefix = repo.Config.Get<string>(prefix_feature).Value;
                     var featureBranches = 
                         repo.Branches.Where(b => !b.IsRemote && b.Name.StartsWith(prefix) )
                             .Select(c => new BranchItem
@@ -158,7 +188,54 @@ namespace GitFlow.VS
             }
         }
 
-		public IEnumerable<BranchItem> AllReleaseBranches
+
+        public IEnumerable<BranchItem> AllBugfixBranches
+        {
+            get
+            {
+                if (!IsInitialized)
+                    return new List<BranchItem>();
+
+                using (var repo = new Repository(repoDirectory))
+                {
+                    var prefix = repo.Config.Get<string>(prefix_bugfix).Value;
+                    var featureBranches =
+                        repo.Branches.Where(b => !b.IsRemote && b.Name.StartsWith(prefix))
+                            .Select(c => new BranchItem
+                            {
+                                Author = c.Tip.Author.Name,
+                                Name = c.Name.Replace(prefix, ""),
+                                LastCommit = c.Tip.Author.When,
+                                IsTracking = c.IsTracking,
+                                IsCurrentBranch = c.IsCurrentRepositoryHead,
+                                IsRemote = c.IsRemote,
+                                CommitId = c.Tip.Id.ToString(),
+                                Message = c.Tip.MessageShort
+                            }).ToList();
+
+                    var remoteFeatureBranches =
+                        repo.Branches.Where(b => b.IsRemote && b.Name.Contains(prefix)
+                        && !repo.Branches.Any(br => !br.IsRemote && br.IsTracking && br.TrackedBranch.CanonicalName == b.CanonicalName))
+                            .Select(c => new BranchItem
+                            {
+                                Author = c.Tip.Author.Name,
+                                Name = c.Name,
+                                LastCommit = c.Tip.Author.When,
+                                IsTracking = c.IsTracking,
+                                IsCurrentBranch = c.IsCurrentRepositoryHead,
+                                IsRemote = c.IsRemote,
+                                CommitId = c.Tip.Id.ToString(),
+                                Message = c.Tip.MessageShort
+                            }).ToList();
+
+                    featureBranches.AddRange(remoteFeatureBranches);
+                    return featureBranches;
+                }
+
+            }
+        }
+
+        public IEnumerable<BranchItem> AllReleaseBranches
 		{
 			get
 			{
@@ -167,7 +244,7 @@ namespace GitFlow.VS
 
 				using (var repo = new Repository(repoDirectory))
 				{
-					var prefix = repo.Config.Get<string>("gitflow.prefix.release").Value;
+					var prefix = repo.Config.Get<string>(prefix_release).Value;
 					var releaseBranches =
 						repo.Branches.Where(b => !b.IsRemote && b.Name.StartsWith(prefix))
 							.Select(c => new BranchItem
@@ -194,7 +271,13 @@ namespace GitFlow.VS
             return RunGitFlow(gitArguments);
         }
 
-		public GitFlowCommandResult PublishRelease(string releaseName)
+        public GitFlowCommandResult PublishBugfix(string bugfixName)
+        {
+            string gitArguments = "bugfix publish \"" + TrimBranchName(bugfixName) + "\"";
+            return RunGitFlow(gitArguments);
+        }
+
+        public GitFlowCommandResult PublishRelease(string releaseName)
 		{
 			string gitArguments = "release publish \"" + TrimBranchName(releaseName) + "\"";
 			return RunGitFlow(gitArguments);
@@ -202,16 +285,18 @@ namespace GitFlow.VS
 
 		private string TrimBranchName(string branchName)
         {
-            if( branchName.LastIndexOf('/') >= 0)
-            {
-                branchName = branchName.Substring(branchName.LastIndexOf('/')+1);
-            }
-            return branchName.Trim().Replace(" ", "-");
+            return branchName.Trim().Replace(" ", "_");
         }
 
         public GitFlowCommandResult TrackFeature(string featureName)
         {
             string gitArguments = "feature track \"" + TrimBranchName(featureName) + "\"";
+            return RunGitFlow(gitArguments);
+        }
+
+        public GitFlowCommandResult TrackBugfix(string bugfixName)
+        {
+            string gitArguments = "bugfix track \"" + TrimBranchName(bugfixName) + "\"";
             return RunGitFlow(gitArguments);
         }
 
@@ -221,11 +306,17 @@ namespace GitFlow.VS
             return RunGitFlow(gitArguments);
         }
 
+        public GitFlowCommandResult CheckoutBugfix(string bugfixName)
+        {
+            string gitArguments = "bugfix checkout \"" + TrimBranchName(bugfixName) + "\"";
+            return RunGitFlow(gitArguments);
+        }
+
         public IEnumerable<string> AllReleases
         {
             get
             {
-                return GetAllBranchesThatStartsWithConfigPrefix("gitflow.prefix.release");
+                return GetAllBranchesThatStartsWithConfigPrefix(prefix_release);
             }
         }
 
@@ -234,7 +325,17 @@ namespace GitFlow.VS
         {
             get
             {
-                return GetAllBranchesThatStartsWithConfigPrefix("gitflow.prefix.hotfix");
+                return GetAllBranchesThatStartsWithConfigPrefix(prefix_hotfix);
+            }
+        }
+
+
+
+        public IEnumerable<string> AllBugfixes
+        {
+            get
+            {
+                return GetAllBranchesThatStartsWithConfigPrefix(prefix_bugfix);
             }
         }
 
@@ -262,7 +363,7 @@ namespace GitFlow.VS
 
                 using (var repo = new Repository(repoDirectory))
                 {
-                    var developBranch = repo.Config.Get<string>("gitflow.branch.develop");
+                    var developBranch = repo.Config.Get<string>(branch_develop);
                     if (developBranch == null)
                         return false;
                     return repo.Head.Name == developBranch.Value;
@@ -279,7 +380,7 @@ namespace GitFlow.VS
 
                 using (var repo = new Repository(repoDirectory))
                 {
-                    var releasePrefix = repo.Config.Get<string>("gitflow.prefix.release");
+                    var releasePrefix = repo.Config.Get<string>(prefix_release);
                     if (releasePrefix == null)
                         return false;
                     return repo.Head.Name.StartsWith(releasePrefix.Value);
@@ -309,15 +410,19 @@ namespace GitFlow.VS
 
                     if (IsOnFeatureBranch)
                     {
-                        prefix = repo.Config.Get<string>("gitflow.prefix.feature");
+                        prefix = repo.Config.Get<string>(prefix_feature);
                     }
                     if (IsOnReleaseBranch)
                     {
-                        prefix = repo.Config.Get<string>("gitflow.prefix.release");
+                        prefix = repo.Config.Get<string>(prefix_release);
                     }
                     if (IsOnHotfixBranch)
                     {
-                        prefix = repo.Config.Get<string>("gitflow.prefix.hotfix");
+                        prefix = repo.Config.Get<string>(prefix_hotfix);
+                    }
+                    if (IsOnBugfixBranch)
+                    {
+                        prefix = repo.Config.Get<string>(prefix_bugfix);
                     }
                     return prefix != null ? fullBranchName.Replace(prefix.Value, "") : fullBranchName;
                 }
@@ -367,6 +472,38 @@ namespace GitFlow.VS
             { 
                 //Wait for up to 15 minutes to let the user close the editor for the squashed commit message
                 return RunGitFlow(gitArguments, 15*60*1000);
+            }
+            else
+            {
+                return RunGitFlow(gitArguments);
+            }
+        }
+
+        public GitFlowCommandResult StartBugfix(string bugfixName)
+        {
+            ValidateGitFlowActionName(bugfixName);
+            string gitArguments = "bugfix start \"" + TrimBranchName(bugfixName) + "\"";
+            return RunGitFlow(gitArguments);
+        }
+
+        public GitFlowCommandResult FinishBugfix(string bugfiName, bool rebaseOnDevelopment = false, bool deleteLocalBranch = true, bool deleteRemoteBranch = true, bool squash = false, bool noFastForward = false)
+        {
+            string gitArguments = "bugfix finish \"" + TrimBranchName(bugfiName) + "\"";
+            if (rebaseOnDevelopment)
+                gitArguments += " -r";
+            if (!deleteLocalBranch)
+                gitArguments += " --keeplocal";
+            if (!deleteRemoteBranch)
+                gitArguments += " --keepremote";
+            if (squash)
+                gitArguments += " --squash";
+            if (noFastForward)
+                gitArguments += " --no-ff";
+
+            if (squash)
+            {
+                //Wait for up to 15 minutes to let the user close the editor for the squashed commit message
+                return RunGitFlow(gitArguments, 15 * 60 * 1000);
             }
             else
             {
@@ -506,7 +643,7 @@ namespace GitFlow.VS
                     }
                     else if (IsBugfixBranchQuery(input.ToString()))
                     {
-                        p.StandardInput.Write(settings.FeatureBranch + "\n");
+                        p.StandardInput.Write(settings.BugfixBranch + "\n");
                         Output.Append(input);
                         OnCommandOutputDataReceived(new CommandOutputEventArgs(input + Environment.NewLine));
                         input = new StringBuilder();

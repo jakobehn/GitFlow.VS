@@ -10,6 +10,7 @@ namespace GitFlowVS.Extension.ViewModels
         private string master;
         private string develop;
         private string featurePrefix;
+        private string bugfixPrefix;
         private string releasePrefix;
         private string hotfixPrefix;
         private string versionTagPrefix;
@@ -34,6 +35,7 @@ namespace GitFlowVS.Extension.ViewModels
             Master = "master";
             Develop = "develop";
             FeaturePrefix = "feature/";
+            BugfixPrefix = "bugfix/";
             ReleasePrefix = "release/";
             HotfixPrefix = "hotfix/";
             VersionTagPrefix = "";
@@ -81,6 +83,7 @@ namespace GitFlowVS.Extension.ViewModels
                         DevelopBranch = Develop,
                         MasterBranch = Master,
                         FeatureBranch = FeaturePrefix,
+                        BugfixBranch = BugfixPrefix,
                         ReleaseBranch = ReleasePrefix,
                         HotfixBranch = HotfixPrefix,
                         VersionTag = VersionTagPrefix
@@ -135,6 +138,19 @@ namespace GitFlowVS.Extension.ViewModels
                 OnPropertyChanged();
             }
         }
+
+
+        public string BugfixPrefix
+        {
+            get { return bugfixPrefix; }
+            set
+            {
+                if (value == bugfixPrefix) return;
+                bugfixPrefix = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         public string ReleasePrefix
         {

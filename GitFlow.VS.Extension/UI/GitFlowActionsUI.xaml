@@ -20,17 +20,23 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <WrapPanel Grid.Row="0">
             <teamExplorer:DropDownLink Text="Start Feature" DropDownMenuCommand="{Binding Path=StartFeatureDropDownCommand}" Visibility="{Binding Path=StartFeatureVisible}" />
             <Separator Style="{StaticResource VerticalSeparator}" Visibility="{Binding Path=StartFeatureVisible}" Margin="4,0,-1,0"/>
+            <teamExplorer:DropDownLink Text="Start Bugfix" DropDownMenuCommand="{Binding Path=StartBugfixDropDownCommand}" Visibility="{Binding Path=StartBugfixVisible}" />
+            <Separator Style="{StaticResource VerticalSeparator}" Visibility="{Binding Path=StartBugfixVisible}" Margin="4,0,-1,0"/>
             <teamExplorer:DropDownLink Text="Start Release" DropDownMenuCommand="{Binding Path=StartReleaseDropDownCommand}"  Visibility="{Binding Path=StartReleaseVisible}" />
             <Separator Style="{StaticResource VerticalSeparator}" Visibility="{Binding Path=StartReleaseVisible}" Margin="4,0,-1,0"/>
             <teamExplorer:DropDownLink Text="Start Hotfix" DropDownMenuCommand="{Binding Path=StartHotfixDropDownCommand}"  Visibility="{Binding Path=StartHotfixVisible}"/>
             <Separator Style="{StaticResource VerticalSeparator}" Visibility="{Binding Path=StartHotfixVisible}" Margin="4,0,-1,0"/>
             <teamExplorer:DropDownLink Text="Finish Feature" DropDownMenuCommand="{Binding Path=FinishFeatureDropDownCommand}"  Visibility="{Binding Path=FinishFeatureVisible}" />
             <Separator Style="{StaticResource VerticalSeparator}" Visibility="{Binding Path=FinishFeatureVisible}" Margin="4,0,-1,0"/>
+            <teamExplorer:DropDownLink Text="Finish Bugfix" DropDownMenuCommand="{Binding Path=FinishBugfixDropDownCommand}"  Visibility="{Binding Path=FinishBugfixVisible}" />
+            <Separator Style="{StaticResource VerticalSeparator}" Visibility="{Binding Path=FinishBugfixVisible}" Margin="4,0,-1,0"/>
             <teamExplorer:DropDownLink Text="Finish Release" DropDownMenuCommand="{Binding Path=FinishReleaseDropDownCommand}"  Visibility="{Binding Path=FinishReleaseVisible}" />
             <Separator Style="{StaticResource VerticalSeparator}" Visibility="{Binding Path=FinishReleaseVisible}" Margin="4,0,-1,0"/>
             <teamExplorer:DropDownLink Text="Finish Hotfix" DropDownMenuCommand="{Binding Path=FinishHotfixDropDownCommand}"  Visibility="{Binding Path=FinishHotfixVisible}" />
@@ -40,6 +46,9 @@
                     <ContextMenu>
                         <MenuItem Header="Start Feature" Command="{Binding Path=StartFeatureDropDownCommand}" Visibility="{Binding Path=OtherStartFeatureVisible}"></MenuItem>
                         <MenuItem Header="Finish Feature" Command="{Binding Path=FinishFeatureDropDownCommand}" Visibility="{Binding Path=OtherFinishFeatureVisible}"></MenuItem>
+                        <Separator/>
+                        <MenuItem Header="Start Bugfix" Command="{Binding Path=StartBugfixDropDownCommand}" Visibility="{Binding Path=OtherStartBugfixVisible}"></MenuItem>
+                        <MenuItem Header="Finish Bugfix" Command="{Binding Path=FinishBugfixDropDownCommand}" Visibility="{Binding Path=OtherFinishBugfixVisible}"></MenuItem>
                         <Separator/>
                         <MenuItem Header="Start Release" Command="{Binding Path=StartReleaseDropDownCommand}" Visibility="{Binding Path=OtherStartReleaseVisible}"></MenuItem>
                         <MenuItem Header="Finish Release" Command="{Binding Path=FinishReleaseDropDownCommand}" Visibility="{Binding Path=OtherFinishReleaseVisible}"></MenuItem>
@@ -74,7 +83,31 @@
                 </WrapPanel>
             </Grid>
         </Border>
-        <Border Grid.Row="2" Visibility="{Binding ShowStartRelease}"  Style="{StaticResource EmbeddedDialog}">
+        <Border Grid.Row="2" Visibility="{Binding ShowStartBugfix}" Style="{StaticResource EmbeddedDialog}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <wpf:LabeledTextBox Grid.Row="0" Margin="-2,0,0,6"
+                               HintText="Enter a bugfix name &lt;Required&gt;" NameAndAutomationId="Bugfix name"
+                               Localization.Attributes="HintText (Modifiable Readable Text) NameAndAutomationId (Modifiable Readable Text)"
+                               IsRequired="true" AcceptsReturn="false" Text="{Binding Path=BugfixName, Mode=TwoWay}">
+                    <wpf:LabeledTextBox.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding StartBugfixCommand}"/>
+                    </wpf:LabeledTextBox.InputBindings>
+                </wpf:LabeledTextBox>
+                <WrapPanel x:Uid="bugfixActionsPanel" Grid.Row="1" Margin="0,0,0,0">
+                    <Button x:Uid="createReleaseButton" VerticalAlignment="Center" Margin="0" Padding="6,2,6,2" MinWidth="75"
+                  MinHeight="23" Command="{Binding Path=StartBugfixCommand}">Create _Bugfix</Button>
+
+                    <teamExplorer:TextLink x:Uid="cancelCreateBugfixLink" VerticalAlignment="Center" Margin="6,0,0,0" Text="Cancel"
+                          Localization.Attributes="Text (Modifiable Readable Text)"
+                          Command="{Binding Path=CancelStartBugfixCommand}"/>
+                </WrapPanel>
+            </Grid>
+        </Border>
+        <Border Grid.Row="3" Visibility="{Binding ShowStartRelease}"  Style="{StaticResource EmbeddedDialog}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
@@ -98,7 +131,7 @@
                 </WrapPanel>
             </Grid >
         </Border>
-        <Border Grid.Row="3" Visibility="{Binding ShowStartHotfix}"  Style="{StaticResource EmbeddedDialog}">
+        <Border Grid.Row="4" Visibility="{Binding ShowStartHotfix}"  Style="{StaticResource EmbeddedDialog}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
@@ -123,7 +156,7 @@
                 </WrapPanel>
             </Grid >
         </Border>
-        <Border Grid.Row="4" Visibility="{Binding ShowFinishFeature}" Style="{StaticResource EmbeddedDialog}">
+        <Border Grid.Row="5" Visibility="{Binding ShowFinishFeature}" Style="{StaticResource EmbeddedDialog}">
         <Grid >
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
@@ -151,8 +184,37 @@
                           Command="{Binding Path=CancelFinishFeatureCommand}"/>
             </StackPanel>
         </Grid>
-</Border>
-        <Border Grid.Row="5" Visibility="{Binding ShowFinishRelease}" Style="{StaticResource EmbeddedDialog}">
+        </Border>
+        <Border Grid.Row="6" Visibility="{Binding ShowFinishBugfix}" Style="{StaticResource EmbeddedDialog}">
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <ComboBox Grid.Row="0" Margin="-2,0,0,6" VerticalAlignment="Center"
+                    IsEditable="false" IsReadOnly="true" DisplayMemberPath="Name"
+                    ItemsSource="{Binding Path=AllBugfixes, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding Path=SelectedBugfix, Mode=TwoWay}"/>
+                <CheckBox Grid.Row="1" IsChecked="{Binding BugfixRebaseOnDevelopmentBranch}">Rebase on development branch</CheckBox>
+                <CheckBox Grid.Row="2"  IsChecked="{Binding BugfixDeleteLocalBranch}">Delete local branch</CheckBox>
+                <CheckBox Grid.Row="3"  IsChecked="{Binding BugfixDeleteRemoteBranch}">Delete remote branch</CheckBox>
+                <CheckBox Grid.Row="4"  IsChecked="{Binding BugfixSquash}">Squash bugfix during merge</CheckBox>
+                <CheckBox Grid.Row="5"  IsChecked="{Binding BugfixNoFastForward}">Never fast-forward during the merge</CheckBox>
+                <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,10,0,0" >
+                    <Button Command="{Binding FinishBugfixCommand}">OK</Button>
+                    <teamExplorer:TextLink x:Uid="cancelBugfixFeature" VerticalAlignment="Center" Margin="6,0,0,0" Text="Cancel"
+                          Localization.Attributes="Text (Modifiable Readable Text)"
+                          Command="{Binding Path=CancelFinishBugfixCommand}"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Border Grid.Row="7" Visibility="{Binding ShowFinishRelease}" Style="{StaticResource EmbeddedDialog}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
@@ -185,7 +247,7 @@
                 </StackPanel>
             </Grid>
         </Border>
-        <Border Grid.Row="6" Visibility="{Binding ShowFinishHotfix}" Style="{StaticResource EmbeddedDialog}">
+        <Border Grid.Row="8" Visibility="{Binding ShowFinishHotfix}" Style="{StaticResource EmbeddedDialog}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
@@ -216,6 +278,6 @@
                 </StackPanel>
             </Grid>
         </Border>
-        <ProgressBar Grid.Row="7" Margin="0,10,0,0"  Visibility="{Binding Path=ProgressVisibility}" Height="15" Minimum="0" Maximum="100" IsIndeterminate="True" />
+        <ProgressBar Grid.Row="9" Margin="0,10,0,0"  Visibility="{Binding Path=ProgressVisibility}" Height="15" Minimum="0" Maximum="100" IsIndeterminate="True" />
     </Grid>
 </UserControl>

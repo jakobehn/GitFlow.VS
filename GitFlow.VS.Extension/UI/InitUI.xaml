@@ -32,7 +32,8 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
-            </Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="130"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -42,18 +43,19 @@
                 <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Master}"  Margin="0,3,0,0" ></TextBox>
                 <TextBlock Grid.Row="2" Margin="0,3,0,0">Develop branch:</TextBlock>
                 <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Develop}"  Margin="0,3,0,0"></TextBox>
-
                 <TextBlock Grid.ColumnSpan="2" Grid.Row="3" FontWeight="Bold" Margin="0,5,0,0">Use the following prefixes in future:</TextBlock>
                 <TextBlock Grid.Row="4" Margin="0,3,0,0" >Feature branch prefix:</TextBlock>
                 <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding FeaturePrefix}" Margin="0,3,0,0"></TextBox>
-                <TextBlock Grid.Row="5" Margin="0,3,0,0" >Release branch prefix:</TextBlock>
-                <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding ReleasePrefix}" Margin="0,3,0,0"></TextBox>
-                <TextBlock Grid.Row="6" Margin="0,3,0,0" >Hotfix branch prefix:</TextBlock>
-                <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding HotfixPrefix}" Margin="0,3,0,0"></TextBox>
-                <TextBlock Grid.Row="7" Margin="0,3,0,0" >Version branch prefix:</TextBlock>
-                <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding VersionTagPrefix}" Margin="0,3,0,0"></TextBox>
+                <TextBlock Grid.Row="5" Margin="0,3,0,0" >Bugfix branch prefix:</TextBlock>
+                <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding BugfixPrefix}" Margin="0,3,0,0"></TextBox>
+                <TextBlock Grid.Row="6" Margin="0,3,0,0" >Release branch prefix:</TextBlock>
+                <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding ReleasePrefix}" Margin="0,3,0,0"></TextBox>
+                <TextBlock Grid.Row="7" Margin="0,3,0,0" >Hotfix branch prefix:</TextBlock>
+                <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding HotfixPrefix}" Margin="0,3,0,0"></TextBox>
+                <TextBlock Grid.Row="8" Margin="0,3,0,0" >Version branch prefix:</TextBlock>
+                <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding VersionTagPrefix}" Margin="0,3,0,0"></TextBox>
 
-                <WrapPanel x:Uid="featureActionsPanel" Grid.Row="8" Grid.ColumnSpan="2" Margin="0,10,0,0">
+                <WrapPanel x:Uid="featureActionsPanel" Grid.Row="9" Grid.ColumnSpan="2" Margin="0,10,0,0">
                     <Button x:Uid="createReleaseButton" VerticalAlignment="Center" Margin="0" Padding="6,2,6,2" MinWidth="75"
                   MinHeight="23" Command="{Binding Path=OkCommand}">OK</Button>
 
@@ -61,7 +63,7 @@
                           Localization.Attributes="Text (Modifiable Readable Text)"
                           Command="{Binding Path=CancelCommand}"/>
                 </WrapPanel>
-                <ProgressBar Margin="0,5,0,0" Visibility="{Binding Path=ProgressVisibility}" Height="15" Grid.Row="9" Grid.ColumnSpan="2" Minimum="0" Maximum="100" IsIndeterminate="True" />
+                <ProgressBar Margin="0,5,0,0" Visibility="{Binding Path=ProgressVisibility}" Height="15" Grid.Row="10" Grid.ColumnSpan="2" Minimum="0" Maximum="100" IsIndeterminate="True" />
         </Grid>
             </Border>
     </Grid>

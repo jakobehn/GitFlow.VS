@@ -6,7 +6,7 @@ using GitFlowVS.Extension.ViewModels;
 namespace GitFlowVS.Extension.UI
 {
     /// <summary>
-    /// Interaction logic for FeaturesUI.xaml
+    /// Interaction logic for ReleasesUI.xaml
     /// </summary>
     public partial class ReleasesUI : UserControl
     {

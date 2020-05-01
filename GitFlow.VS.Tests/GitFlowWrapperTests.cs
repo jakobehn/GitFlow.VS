@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Text.RegularExpressions;
 using LibGit2Sharp;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -33,8 +34,12 @@ namespace GitFlow.VS.Tests
         [TestMethod]
         public void RunInstallScript()
         {
-            string installationPath =
-                @"C:\Users\jakobe\Source\Repos\GitFlow.VS\GitFlow.VS.Extension";
+
+            var exePath = Path.GetDirectoryName(System.Reflection
+                     .Assembly.GetExecutingAssembly().CodeBase);
+            Regex appPathMatcher = new Regex(@"(?<!fil)[A-Za-z]:\\+[\S\s]*?(?=\\+bin)");
+            var appRoot = appPathMatcher.Match(exePath).Value;
+            var installationPath = appRoot.Replace(".Tests", ".Extension");
 
             var gitInstallPath = GitHelper.GetGitInstallationPath();
             var proc = new Process
@@ -44,13 +49,14 @@ namespace GitFlow.VS.Tests
                     FileName = "powershell.exe",
                     WorkingDirectory = Path.Combine(installationPath, "Dependencies"),
                     UseShellExecute = true,
-                    Arguments = String.Format(@"-ExecutionPolicy ByPass -NoLogo -NoProfile  -File ""C:\Users\jakobe\Source\Repos\GitFlow.VS\GitFlow.VS.Extension\Dependencies\Install.ps1"" ""{0}""", gitInstallPath),
+                    Arguments = String.Format(@"-ExecutionPolicy ByPass -NoLogo -NoProfile  -File ""{0}\Dependencies\Install.ps1"" ""{1}""", installationPath, gitInstallPath),
                     Verb = "runas",
                     LoadUserProfile = true
                 }
             };
             proc.Start();
             proc.WaitForExit();
+
         }
 
         [TestMethod]
@@ -74,6 +80,18 @@ namespace GitFlow.VS.Tests
 
             Assert.IsTrue(gf.IsOnFeatureBranch);
         }
+
+
+        [TestMethod]
+        public void StartBugfixShouldPutUsOnBugfixBranch()
+        {
+            var gf = new GitFlowWrapper(sampleRepoPath);
+            gf.Init(new GitFlowRepoSettings());
+            gf.StartBugfix("X");
+
+            Assert.IsTrue(gf.IsOnBugfixBranch);
+        }
+
 
         [TestMethod]
         public void StartReleaseShouldPutUsOnReleaseBranch()
@@ -137,7 +155,22 @@ namespace GitFlow.VS.Tests
             Assert.AreEqual(1, gf.AllFeatures.Count());
         }
 
-		[TestMethod]
+        [TestMethod]
+        public void FinishBugfixShouldRemoveIt()
+        {
+            var gf = new GitFlowWrapper(sampleRepoPath);
+            gf.Init(new GitFlowRepoSettings());
+            gf.StartBugfix("X");
+            gf.StartBugfix("Y");
+
+            Assert.AreEqual(2, gf.AllBugfixes.Count());
+
+            gf.FinishBugfix("X");
+
+            Assert.AreEqual(1, gf.AllBugfixes.Count());
+        }
+
+        [TestMethod]
 		public void FinishFeatureKeepLocalBranch()
 		{
 			var gf = new GitFlowWrapper(sampleRepoPath);
@@ -153,6 +186,24 @@ namespace GitFlow.VS.Tests
 				Assert.IsTrue(repo.Branches.Any(b => !b.IsRemote && b.Name == "feature/X"));
 			}
 		}
+
+        [TestMethod]
+        public void FinishBugfixKeepLocalBranch()
+        {
+            var gf = new GitFlowWrapper(sampleRepoPath);
+            gf.Init(new GitFlowRepoSettings());
+            gf.StartBugfix("X");
+
+            Assert.AreEqual(1, gf.AllBugfixes.Count());
+
+            gf.FinishBugfix("X", deleteLocalBranch: false);
+
+            using (var repo = new Repository(sampleRepoPath))
+            {
+                Assert.IsTrue(repo.Branches.Any(b => !b.IsRemote && b.Name == "bugfix/X"));
+            }
+        }
+
 
         [TestMethod]
         public void FinishFeatureSquashChanges()
@@ -173,6 +224,24 @@ namespace GitFlow.VS.Tests
 
 
         [TestMethod]
+        public void FinishBugfixSquashChanges()
+        {
+            var gf = new GitFlowWrapper(sampleRepoPath);
+            gf.Init(new GitFlowRepoSettings());
+            gf.StartBugfix("X");
+
+            Assert.AreEqual(1, gf.AllBugfixes.Count());
+
+            gf.FinishBugfix("X", squash: true);
+
+            using (var repo = new Repository(sampleRepoPath))
+            {
+                Assert.IsTrue(repo.Branches.Any(b => !b.IsRemote && b.Name == "bugfix/X"));
+            }
+        }
+
+
+        [TestMethod]
         public void GetAllFeatures()
         {
             var gf = new GitFlowWrapper(sampleRepoPath);
@@ -182,6 +251,18 @@ namespace GitFlow.VS.Tests
 
             Assert.AreEqual(2, gf.AllFeatures.Count());
         }
+
+        [TestMethod]
+        public void GetAllBugfixes()
+        {
+            var gf = new GitFlowWrapper(sampleRepoPath);
+            gf.Init(new GitFlowRepoSettings());
+            gf.StartBugfix("X");
+            gf.StartBugfix("Y");
+
+            Assert.AreEqual(2, gf.AllBugfixes.Count());
+        }
+
 
         [TestMethod]
         public void GetAllReleases()
@@ -216,6 +297,7 @@ namespace GitFlow.VS.Tests
             }
         }
 
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void CreateFeatureWithApostropheShouldReportAsInvalidWork()
@@ -239,6 +321,19 @@ namespace GitFlow.VS.Tests
         }
 
         [TestMethod]
+        public void StartFeatureWithSubFolder()
+        {
+            var gf = new GitFlowWrapper(sampleRepoPath);
+            gf.Init(new GitFlowRepoSettings());
+            gf.StartFeature("fd/Feature X");
+
+            using (var repo = new Repository(sampleRepoPath))
+            {
+                Assert.IsTrue(repo.Branches.Any(b => !b.IsRemote && b.Name == "feature/fd/Feature_X"));
+            }
+        }
+
+        [TestMethod]
         public void GetStatus()
         {
             var gf = new GitFlowWrapper(sampleRepoPath);
@@ -246,6 +341,65 @@ namespace GitFlow.VS.Tests
             gf.StartFeature("X");
             Assert.AreEqual("X", gf.CurrentBranchLeafName);
             Assert.AreEqual(gf.CurrentStatus, "Feature: X");
+        }
+
+
+        [TestMethod]
+        public void StartBugfix()
+        {
+            var gf = new GitFlowWrapper(sampleRepoPath);
+            gf.Init(new GitFlowRepoSettings());
+            gf.StartBugfix("X");
+
+            using (var repo = new Repository(sampleRepoPath))
+            {
+                Assert.IsTrue(repo.Branches.Any(b => !b.IsRemote && b.Name == "bugfix/X"));
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void CreateBugfixWithApostropheShouldReportAsInvalidWork()
+        {
+            var gf = new GitFlowWrapper(sampleRepoPath);
+            gf.Init(new GitFlowRepoSettings());
+            gf.StartBugfix("X'");
+        }
+
+        [TestMethod]
+        public void StartBugfixWithSpaceShouldReplaceSpaceWithUnderscore()
+        {
+            var gf = new GitFlowWrapper(sampleRepoPath);
+            gf.Init(new GitFlowRepoSettings());
+            gf.StartBugfix("Bugfix X");
+
+            using (var repo = new Repository(sampleRepoPath))
+            {
+                Assert.IsTrue(repo.Branches.Any(b => !b.IsRemote && b.Name == "bugfix/Bugfix_X"));
+            }
+        }
+
+        [TestMethod]
+        public void StartBugfixWithSubFolder()
+        {
+            var gf = new GitFlowWrapper(sampleRepoPath);
+            gf.Init(new GitFlowRepoSettings());
+            gf.StartBugfix("fd/Bugfix X");
+
+            using (var repo = new Repository(sampleRepoPath))
+            {
+                Assert.IsTrue(repo.Branches.Any(b => !b.IsRemote && b.Name == "bugfix/fd/Bugfix_X"));
+            }
+        }
+
+        [TestMethod]
+        public void GetStatusBugfix()
+        {
+            var gf = new GitFlowWrapper(sampleRepoPath);
+            gf.Init(new GitFlowRepoSettings());
+            gf.StartBugfix("X");
+            Assert.AreEqual("X", gf.CurrentBranchLeafName);
+            Assert.AreEqual(gf.CurrentStatus, "Bugfix: X");
         }
 
         [TestMethod]
@@ -284,6 +438,36 @@ namespace GitFlow.VS.Tests
                 Assert.IsFalse(repo.Branches.Any(b => !b.IsRemote && b.Name == "feature/X"));
             }
         }
+
+        [TestMethod]
+        public void StartTwoBugfixesInParallel()
+        {
+            var gf = new GitFlowWrapper(sampleRepoPath);
+            gf.Init(new GitFlowRepoSettings());
+            gf.StartBugfix("X");
+            gf.StartBugfix("Y");
+
+            using (var repo = new Repository(sampleRepoPath))
+            {
+                Assert.IsTrue(repo.Branches.Any(b => !b.IsRemote && b.Name == "bugfix/X"));
+                Assert.IsTrue(repo.Branches.Any(b => !b.IsRemote && b.Name == "bugfix/Y"));
+            }
+        }
+
+        [TestMethod]
+        public void FinishBugfix()
+        {
+            var gf = new GitFlowWrapper(sampleRepoPath);
+            gf.Init(new GitFlowRepoSettings());
+            gf.StartBugfix("X");
+            gf.FinishBugfix("X");
+            using (var repo = new Repository(sampleRepoPath))
+            {
+                //Bugfix branch should be deleted (default option)
+                Assert.IsFalse(repo.Branches.Any(b => !b.IsRemote && b.Name == "bugfix/X"));
+            }
+        }
+
 
         [TestMethod]
         public void StartRelease()
@@ -381,6 +565,16 @@ namespace GitFlow.VS.Tests
             const string query = "Feature branches? [feature/]";
             Assert.IsTrue(gf.IsFeatureBranchQuery(query));
         }
+
+
+        [TestMethod]
+        public void ParseBugfixBranchQuery()
+        {
+            var gf = new GitFlowWrapper(sampleRepoPath);
+            const string query = "Bugfix branches? [bugfix/]";
+            Assert.IsTrue(gf.IsBugfixBranchQuery(query));
+        }
+
 
         [TestMethod]
         public void ParseVersionTagPrefixQuery()
