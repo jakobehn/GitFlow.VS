@@ -14,8 +14,8 @@ namespace GitFlowVS.Extension
 		{
 		    TelemetryClient = new TelemetryClient
 		    {
-		        InstrumentationKey = "d4f789f2-d29e-4b15-9635-440018ad3f2d"
-            };
+		        InstrumentationKey = "8c0d675c-556d-4881-8f61-c9b2f5071c7d"
+			};
 		    TelemetryClient.Context.Properties["VisualStudioVersion"] = VSVersion.FullVersion.ToString();
 		    TelemetryClient.Context.Component.Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 		    TelemetryClient.Context.Session.Id = Guid.NewGuid().ToString();
