@@ -454,21 +454,31 @@ namespace GitFlow.VS
             return RunGitFlow(gitArguments);
         }
 
-        public GitFlowCommandResult FinishFeature(string featureName, bool rebaseOnDevelopment = false, bool deleteLocalBranch = true, bool deleteRemoteBranch = true, bool squash = false, bool noFastForward = false)
+        public GitFlowCommandResult FinishFeature(string featureName, bool pull_request = false, string titleMessage = null, bool rebaseOnDevelopment = false, bool deleteLocalBranch = true, bool deleteRemoteBranch = true, bool squash = false, bool noFastForward = false)
         {
             string gitArguments = "feature finish \"" + TrimBranchName(featureName) + "\"";
-            if (rebaseOnDevelopment)
-                gitArguments += " -r";
-            if (!deleteLocalBranch)
-                gitArguments += " --keeplocal";
-            if (!deleteRemoteBranch)
-                gitArguments += " --keepremote";
-            if (squash)
-                gitArguments += " --squash";
-            if (noFastForward)
-                gitArguments += " --no-ff";
+            if (pull_request)
+                gitArguments += " -P";
+            else
+            {
+                if (rebaseOnDevelopment)
+                    gitArguments += " -r";
+                if (!deleteLocalBranch)
+                    gitArguments += " --keeplocal";
+                if (!deleteRemoteBranch)
+                    gitArguments += " --keepremote";
+                if (squash)
+                    gitArguments += " --squash";
+                if (noFastForward)
+                    gitArguments += " --no-ff";
+            }
 
-            if( squash)
+            if (!String.IsNullOrEmpty(titleMessage))
+            {
+                gitArguments += " -t \"" + titleMessage + "\"";
+            }
+
+            if (squash || pull_request)
             { 
                 //Wait for up to 15 minutes to let the user close the editor for the squashed commit message
                 return RunGitFlow(gitArguments, 15*60*1000);

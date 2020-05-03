@@ -316,7 +316,7 @@ namespace GitFlow.VS.Tests
 
             using (var repo = new Repository(sampleRepoPath))
             {
-                Assert.IsTrue(repo.Branches.Any(b => !b.IsRemote && b.Name == "feature/Feature-X"));
+                Assert.IsTrue(repo.Branches.Any(b => !b.IsRemote && b.Name == "feature/Feature_X"));
             }
         }
 

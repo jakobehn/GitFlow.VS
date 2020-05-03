@@ -236,7 +236,7 @@ F,[no]fetch      Fetch from origin before performing local operation
 
 cmd_finish() {
 	OPTIONS_SPEC="\
-git flow feature finish [-h] [-F] [-r] [-p] [-k] [-D] [-S] [--no-ff] <name|nameprefix>
+git flow feature finish [-h] [-F] [-r] [-p] [-k] [-D] [-S] [-P] [-t] [--no-ff] <name|nameprefix>
 
 Finish feature <name>
 --
@@ -251,6 +251,8 @@ keepremote!        	   Keep the remote branch
 keeplocal!             Keep the local branch
 D,[no]force_delete     Force delete feature branch after finish
 S,[no]squash           Squash feature during merge
+P,[no]pull_request	   Create a pullrequest from feature
+t,title!			   Use the given title message in pull request
 no-ff!                 Never fast-forward during the merge
 "
 	local finish_base
@@ -265,6 +267,8 @@ no-ff!                 Never fast-forward during the merge
 	DEFINE_boolean 'keeplocal' false "keep the local branch"
 	DEFINE_boolean 'force_delete' false "force delete feature branch after finish" D
 	DEFINE_boolean 'squash' false "squash feature during merge" S
+	DEFINE_boolean 'pull_request' false "create pull request for feature" P
+	DEFINE_string  'title' "" "use the given title message" t
 	DEFINE_boolean 'squash-info' false "add branch info during squash"
 	DEFINE_boolean 'no-ff!' false "Don't fast-forward ever during merge "
 
@@ -278,6 +282,8 @@ no-ff!                 Never fast-forward during the merge
 	gitflow_override_flag_boolean   "feature.finish.keeplocal"         "keeplocal"
 	gitflow_override_flag_boolean   "feature.finish.force-delete"      "force_delete"
 	gitflow_override_flag_boolean   "feature.finish.squash"            "squash"
+	gitflow_override_flag_boolean   "feature.finish.pull-request"      "pull_request"
+	gitflow_override_flag_string    "feature.finish.title"			   "title"
 	gitflow_override_flag_boolean   "feature.finish.squash-info"       "squash_info"
 	gitflow_override_flag_boolean   "feature.finish.no-ff"             "no_ff"
 
@@ -385,23 +391,37 @@ no-ff!                 Never fast-forward during the merge
 		fi
 	fi
 
+	if flag pull_request; then
+		if ! git flow feature rebase $_rebase_opts "$NAME"; then
+			warn "Finish was aborted due to conflicts during rebase."
+			warn "Please finish the rebase manually now."
+			warn "When finished, re-run:"
+			warn "    git flow feature finish '$NAME' '$BASE_BRANCH'"
+			exit 1
+		fi
+		git_do flow feature publish
+		gitflow_create_pull_request "$BASE_BRANCH" "$BRANCH" "$FLAGS_title"
+	fi
+
 	# Merge into BASE
 	git_do checkout "$BASE_BRANCH" || die "Could not check out branch '$BASE_BRANCH'."
 
-	if noflag squash; then
-		if flag no_ff; then
-			git_do merge --no-ff "$BRANCH"
-		else
-			if [ "$(git rev-list -n2 "$BASE_BRANCH..$BRANCH" | wc -l)" -eq 1 ]; then
-				git_do merge --ff "$BRANCH"
-			else
+	if noflag pull_request; then
+		if noflag squash; then
+			if flag no_ff; then
 				git_do merge --no-ff "$BRANCH"
+			else
+				if [ "$(git rev-list -n2 "$BASE_BRANCH..$BRANCH" | wc -l)" -eq 1 ]; then
+					git_do merge --ff "$BRANCH"
+				else
+					git_do merge --no-ff "$BRANCH"
+				fi
 			fi
+		else
+			git_do merge --squash "$BRANCH"
+			flag squash_info && gitflow_create_squash_message "Merged feature branch '$BRANCH'" "$BASE_BRANCH" "$BRANCH" > "$DOT_GIT_DIR/SQUASH_MSG"
+			git_do commit
 		fi
-	else
-		git_do merge --squash "$BRANCH"
-		flag squash_info && gitflow_create_squash_message "Merged feature branch '$BRANCH'" "$BASE_BRANCH" "$BRANCH" > "$DOT_GIT_DIR/SQUASH_MSG"
-		git_do commit
 	fi
 
 	if [ $? -ne 0 ]; then
@@ -424,8 +444,10 @@ no-ff!                 Never fast-forward during the merge
 	run_post_hook "$NAME" "$ORIGIN" "$BRANCH"
 
 	# When no merge conflict is detected, just clean up the feature branch
-	gitflow_config_remove_base_branch "$BRANCH"
-	helper_finish_cleanup
+	if noflag pull_request; then
+		gitflow_config_remove_base_branch "$BRANCH"
+		helper_finish_cleanup
+	fi
 }
 
 helper_finish_cleanup() {

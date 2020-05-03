@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Reflection;
 using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.Channel;
+using Microsoft.ApplicationInsights.Extensibility;
 using TeamExplorer.Common;
 
 namespace GitFlowVS.Extension
@@ -12,11 +14,21 @@ namespace GitFlowVS.Extension
 
 		static Logger()
 		{
-		    TelemetryClient = new TelemetryClient
-		    {
-		        InstrumentationKey = "8c0d675c-556d-4881-8f61-c9b2f5071c7d"
+			var configuration = new TelemetryConfiguration
+			{
+				InstrumentationKey = "8c0d675c-556d-4881-8f61-c9b2f5071c7d",
+				TelemetryChannel = new InMemoryChannel
+				{
+#if DEBUG
+                    DeveloperMode = true
+#else
+					DeveloperMode = false
+#endif
+				}
 			};
-		    TelemetryClient.Context.Properties["VisualStudioVersion"] = VSVersion.FullVersion.ToString();
+
+			TelemetryClient = new TelemetryClient(configuration);
+			TelemetryClient.Context.GlobalProperties["VisualStudioVersion"] = VSVersion.FullVersion.ToString();
 		    TelemetryClient.Context.Component.Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 		    TelemetryClient.Context.Session.Id = Guid.NewGuid().ToString();
 		    TelemetryClient.Context.User.Id = UserSettings.UserId;
