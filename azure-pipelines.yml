@@ -1,11 +1,9 @@
 name: 1.3$(rev:.r).0
 resources:
 - repo: self
-queue:
-  name: Hosted Windows 2019 with VS2019
-  demands: 
-  - msbuild
-  - visualstudio
+pool:
+  vmImage: 'windows-latest'
+
 trigger:
 - master
 variables:
