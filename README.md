@@ -1,4 +1,4 @@
-# GitFlow for Visual Studio 2017
+# GitFlow for Visual Studio
 
 [![Build Status](https://dev.azure.com/gitflowvs/GitFlowVS/_apis/build/status/GitFlow.VS)](https://dev.azure.com/gitflowvs/GitFlowVS/_build/latest?definitionId=1)
 
@@ -18,7 +18,7 @@ http://blog.ehn.nu/2015/02/introducing-gitflow-for-visual-studio/
  
 
 ### Prerequirements
-The extension requires Visual Studio 2017. It will install GitFlow for you if it is not found on the machine. Since GitFlow depends on Git for Windows, this must be installed before using the extension 
+The extension requires Visual Studio 2019 (it's also available for VS2017 and VS2015). It will install GitFlow for you if it is not found on the machine. Since GitFlow depends on Git for Windows, this must be installed before using the extension 
  
 
 ## Screenshots
