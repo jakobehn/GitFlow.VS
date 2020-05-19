@@ -31,7 +31,7 @@ namespace GitFlowVS.Extension.ViewModels
         private string releaseTagMessage;
         private bool releaseForceDeletion;
         private bool releasePushChanges;
-		private bool releaseNoBackMerge;
+        private bool releaseNoBackMerge;
         private bool hotfixDeleteBranch;
         private bool hotfixPushChanges;
         private bool hotfixForceDeletion;
@@ -78,14 +78,14 @@ namespace GitFlowVS.Extension.ViewModels
             FeatureNoFastForward = false;
             ReleaseDeleteBranch = true;
             ReleaseTagMessageSelected = true;
-			ReleaseNoBackMerge = false;
+            ReleaseNoBackMerge = false;
             HotfixDeleteBranch = true;
             HotfixTagMessageSelected = true;
 
             ShowStartFeature = Visibility.Collapsed;
             ShowStartRelease = Visibility.Collapsed;
             ShowStartHotfix = Visibility.Collapsed;
-            
+
             ShowFinishFeature = Visibility.Collapsed;
             ShowFinishRelease = Visibility.Collapsed;
             ShowFinishHotfix = Visibility.Collapsed;
@@ -277,7 +277,7 @@ namespace GitFlowVS.Extension.ViewModels
             get
             {
                 var gf = new GitFlowWrapper(GitFlowPage.ActiveRepoPath);
-                return gf.AllFeatures.Select(x => new ListItem {Name = x}).ToList();
+                return gf.AllFeatures.Select(x => new ListItem { Name = x }).ToList();
             }
         }
 
@@ -337,12 +337,12 @@ namespace GitFlowVS.Extension.ViewModels
         private void StartFeature()
         {
             try
-            { 
+            {
                 if (String.IsNullOrEmpty(FeatureName))
                     return;
 
-			    Logger.Event("StartFeature");
-	            DateTime start = DateTime.Now;
+                Logger.Event("StartFeature");
+                DateTime start = DateTime.Now;
 
                 if (GitFlowPage.ActiveRepo != null)
                 {
@@ -360,9 +360,12 @@ namespace GitFlowVS.Extension.ViewModels
                     UpdateMenus();
                     HideAll();
                     OnPropertyChanged("AllFeatures");
-                    Te.Refresh();
+                    if (result.Success)
+                    {
+                        Te.Refresh();
+                    }
                 }
-			    Logger.Metric("Duration-StartFeature", (DateTime.Now-start).Milliseconds);
+                Logger.Metric("Duration-StartFeature", (DateTime.Now - start).Milliseconds);
             }
             catch (ArgumentException ex)
             {
@@ -378,14 +381,14 @@ namespace GitFlowVS.Extension.ViewModels
         private void StartRelease()
         {
             try
-            { 
+            {
                 if (String.IsNullOrEmpty(ReleaseName))
                     return;
 
-			    Logger.Event("StartRelease");
-	            DateTime start = DateTime.Now;
+                Logger.Event("StartRelease");
+                DateTime start = DateTime.Now;
 
-			    if (GitFlowPage.ActiveRepo != null)
+                if (GitFlowPage.ActiveRepo != null)
                 {
                     GitFlowPage.ActiveOutputWindow();
                     ShowProgressBar();
@@ -401,9 +404,12 @@ namespace GitFlowVS.Extension.ViewModels
                     UpdateMenus();
                     HideAll();
                     OnPropertyChanged("AllReleases");
-                    Te.Refresh();
+                    if (result.Success)
+                    {
+                        Te.Refresh();
+                    }
                 }
-			    Logger.Metric("Duration-StartRelease", (DateTime.Now - start).Milliseconds);
+                Logger.Metric("Duration-StartRelease", (DateTime.Now - start).Milliseconds);
             }
             catch (ArgumentException ex)
             {
@@ -432,14 +438,14 @@ namespace GitFlowVS.Extension.ViewModels
         private void StartHotfix()
         {
             try
-            { 
+            {
                 if (String.IsNullOrEmpty(HotfixName))
                     return;
 
-			    Logger.Event("StartHotfix");
-	            DateTime start = DateTime.Now;
+                Logger.Event("StartHotfix");
+                DateTime start = DateTime.Now;
 
-			    if (GitFlowPage.ActiveRepo != null)
+                if (GitFlowPage.ActiveRepo != null)
                 {
                     GitFlowPage.ActiveOutputWindow();
                     ShowProgressBar();
@@ -457,11 +463,14 @@ namespace GitFlowVS.Extension.ViewModels
                     UpdateMenus();
                     HideAll();
                     OnPropertyChanged("AllHotfixes");
-                    Te.Refresh();
+                    if (result.Success)
+                    {
+                        Te.Refresh();
+                    }
                 }
-			    Logger.Metric("Duration-StartHotfix", (DateTime.Now - start).Milliseconds);
+                Logger.Metric("Duration-StartHotfix", (DateTime.Now - start).Milliseconds);
             }
-            catch(ArgumentException ex)
+            catch (ArgumentException ex)
             {
                 ShowErrorMessage(ex.Message);
             }
@@ -496,7 +505,7 @@ namespace GitFlowVS.Extension.ViewModels
                     ShowProgressBar();
 
                     var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepoPath, GitFlowPage.OutputWindow);
-                    if( FeatureSquash)
+                    if (FeatureSquash)
                     {
                         ShowInfoMessage("Waiting for your editor to close the file...");
                     }
@@ -511,34 +520,37 @@ namespace GitFlowVS.Extension.ViewModels
                     UpdateMenus();
                     HideAll();
                     OnPropertyChanged("AllFeatures");
-                    Te.Refresh();
+                    if (result.Success)
+                    {
+                        Te.Refresh();
+                    }
                 }
 
                 Logger.Metric("Duration-FinishFeature", (DateTime.Now - start).Milliseconds);
             }
-            catch( Exception ex)
+            catch (Exception ex)
             {
                 ShowErrorMessage(ex.ToString());
                 Logger.Exception(ex);
             }
-		}
+        }
 
         private void FinishRelease()
         {
             try
-            { 
-			    DateTime start = DateTime.Now;
-			    var properties = new Dictionary<string, string>
-			    {
-				    {"TaggedRelease", (!String.IsNullOrEmpty(ReleaseTagMessage)).ToString()},
-				    {"DeleteBranch", ReleaseDeleteBranch.ToString()},
-				    {"ForceDeletion", ReleaseForceDeletion.ToString()},
-				    {"PushChanges", ReleasePushChanges.ToString()},
-					{"NoBackMerge", ReleaseNoBackMerge.ToString()}
-				};
-			    Logger.Event("FinishRelease", properties);
+            {
+                DateTime start = DateTime.Now;
+                var properties = new Dictionary<string, string>
+                {
+                    {"TaggedRelease", (!String.IsNullOrEmpty(ReleaseTagMessage)).ToString()},
+                    {"DeleteBranch", ReleaseDeleteBranch.ToString()},
+                    {"ForceDeletion", ReleaseForceDeletion.ToString()},
+                    {"PushChanges", ReleasePushChanges.ToString()},
+                    {"NoBackMerge", ReleaseNoBackMerge.ToString()}
+                };
+                Logger.Event("FinishRelease", properties);
 
-			    if (GitFlowPage.ActiveRepo != null)
+                if (GitFlowPage.ActiveRepo != null)
                 {
                     GitFlowPage.ActiveOutputWindow();
                     ShowProgressBar();
@@ -555,9 +567,12 @@ namespace GitFlowVS.Extension.ViewModels
                     ShowFinishRelease = Visibility.Collapsed;
                     OnPropertyChanged("AllReleases");
                     UpdateMenus();
-                    Te.Refresh();
+                    if (result.Success)
+                    {
+                        Te.Refresh();
+                    }
                 }
-			    Logger.Metric("Duration-FinishRelease", (DateTime.Now - start).Milliseconds);
+                Logger.Metric("Duration-FinishRelease", (DateTime.Now - start).Milliseconds);
             }
             catch (Exception ex)
             {
@@ -569,18 +584,18 @@ namespace GitFlowVS.Extension.ViewModels
         private void FinishHotfix()
         {
             try
-            { 
-			    DateTime start = DateTime.Now;
-			    var properties = new Dictionary<string, string>
-			    {
-				    {"TaggedRelease", (!String.IsNullOrEmpty(HotfixTagMessage)).ToString()},
-				    {"DeleteBranch", HotfixDeleteBranch.ToString()},
-				    {"ForceDeletion", HotfixForceDeletion.ToString()},
-				    {"PushChanges", HotfixPushChanges.ToString()}
-			    };
-			    Logger.Event("FinishHotfix", properties);
+            {
+                DateTime start = DateTime.Now;
+                var properties = new Dictionary<string, string>
+                {
+                    {"TaggedRelease", (!String.IsNullOrEmpty(HotfixTagMessage)).ToString()},
+                    {"DeleteBranch", HotfixDeleteBranch.ToString()},
+                    {"ForceDeletion", HotfixForceDeletion.ToString()},
+                    {"PushChanges", HotfixPushChanges.ToString()}
+                };
+                Logger.Event("FinishHotfix", properties);
 
-			    if (GitFlowPage.ActiveRepo != null)
+                if (GitFlowPage.ActiveRepo != null)
                 {
                     GitFlowPage.ActiveOutputWindow();
                     ShowProgressBar();
@@ -597,9 +612,12 @@ namespace GitFlowVS.Extension.ViewModels
                     ShowFinishHotfix = Visibility.Collapsed;
                     OnPropertyChanged("AllHotfixes");
                     UpdateMenus();
-                    Te.Refresh();
+                    if (result.Success)
+                    {
+                        Te.Refresh();
+                    }
                 }
-			    Logger.Metric("Duration-FinishHotfix", (DateTime.Now - start).Milliseconds);
+                Logger.Metric("Duration-FinishHotfix", (DateTime.Now - start).Milliseconds);
             }
             catch (Exception ex)
             {
@@ -844,18 +862,18 @@ namespace GitFlowVS.Extension.ViewModels
         }
 
 
-		public bool ReleaseNoBackMerge
-		{
-			get { return releaseNoBackMerge; }
-			set
-			{
-				if (value.Equals(releaseNoBackMerge)) return;
-				releaseNoBackMerge = value;
-				OnPropertyChanged();
-			}
-		}
+        public bool ReleaseNoBackMerge
+        {
+            get { return releaseNoBackMerge; }
+            set
+            {
+                if (value.Equals(releaseNoBackMerge)) return;
+                releaseNoBackMerge = value;
+                OnPropertyChanged();
+            }
+        }
 
-		public bool ReleaseForceDeletion
+        public bool ReleaseForceDeletion
         {
             get { return releaseForceDeletion; }
             set
