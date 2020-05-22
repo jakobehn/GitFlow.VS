@@ -517,7 +517,10 @@ namespace GitFlowVS.Extension.ViewModels
                     UpdateMenus();
                     HideAll();
                     OnPropertyChanged("AllBugfixes");
-                    Te.Refresh();
+                    if (result.Success)
+                    {
+                        Te.Refresh();
+                    }
                 }
                 Logger.Metric("Duration-StartBugfix", (DateTime.Now - start).Milliseconds);
             }
@@ -728,7 +731,10 @@ namespace GitFlowVS.Extension.ViewModels
                     UpdateMenus();
                     HideAll();
                     OnPropertyChanged("AllBugfixes");
-                    Te.Refresh();
+                    if (result.Success)
+                    {
+                        Te.Refresh();
+                    }
                 }
 
                 Logger.Metric("Duration-FinishBugfix", (DateTime.Now - start).Milliseconds);
