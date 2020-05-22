@@ -6,12 +6,12 @@
   },
   "assetFiles": [
     {
-        "pathOnDisk": "images\\gf_features.png",
-        "targetPath": "images/gf_features.png"
+      "pathOnDisk": "images\\gf_features.png",
+      "targetPath": "images/gf_features.png"
     },
     {
-        "pathOnDisk": "images\\gf_finishfeature.png",
-        "targetPath": "images/gf_finishfeature.png"
+      "pathOnDisk": "images\\gf_finishfeature.png",
+      "targetPath": "images/gf_finishfeature.png"
     },
     {
       "pathOnDisk": "images\\gf_init.png",
@@ -20,13 +20,13 @@
     {
       "pathOnDisk": "images\\gf_startfeature.png",
       "targetPath": "images/gf_startfeature.png"
-    }  
-      
-],  
+    }
+
+  ],
   "overview": "README.md",
   "priceCategory": "free",
   "publisher": "vs-publisher-57624",
   "private": false,
   "qna": true,
-  "repo": "https://github.com/jakobehn/GitFlow.VS"
+  "repo": "https://github.com/proge-software/GitFlow.VS"
 }

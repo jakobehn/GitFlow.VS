@@ -24,11 +24,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{F786
 		Scripts\SetVsixVersion.ps1 = Scripts\SetVsixVersion.ps1
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{10527490-C006-41A4-89C7-29347C26CB80}"
-	ProjectSection(SolutionItems) = preProject
-		azure-pipelines.yml = azure-pipelines.yml
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
