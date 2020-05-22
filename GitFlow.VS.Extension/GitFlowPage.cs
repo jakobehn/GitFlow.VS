@@ -57,13 +57,13 @@ namespace GitFlowVS.Extension
         [ImportingConstructor]
         public GitFlowPage([Import(typeof(SVsServiceProvider))] IServiceProvider serviceProvider)
         {
-            Title = "GitFlow";
+            Title = "GitFlow with PR";
             gitService = (IGitExt)serviceProvider.GetService(typeof(IGitExt));
             teamExplorer = (ITeamExplorer) serviceProvider.GetService(typeof (ITeamExplorer));
             gitService.PropertyChanged += OnGitServicePropertyChanged;
             
             var outWindow = Package.GetGlobalService(typeof(SVsOutputWindow)) as IVsOutputWindow;
-            var customGuid = new Guid("B85225F6-B15E-4A8A-AF6E-2BE96A4FE672");
+            var customGuid = new Guid("2AAAB744-47C6-4208-A26C-35937E69BB50");
             outWindow.CreatePane(ref customGuid, "GitFlow.VS", 1, 1);
             outWindow.GetPane(ref customGuid, out outputWindow);
 

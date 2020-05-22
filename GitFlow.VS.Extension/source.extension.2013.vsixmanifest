@@ -1,25 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
-  <Metadata>
-    <Identity Id="19ffe08d-8c71-4125-a024-6296bd27fce8" Version="1.1.0.0" Language="en-US" Publisher="Jakob Ehn" />
-    <DisplayName>GitFlow for Visual Studio</DisplayName>
-    <Description xml:space="preserve">Integrates GitFlow in Visual Studio Team Explorer 2013. Requires VS 2013 Update 3 or higher</Description>
-    <MoreInfo>https://github.com/jakobehn/GitFlow.VS</MoreInfo>
-    <License>License.rtf</License>
-    <GettingStartedGuide>http://blog.ehn.nu/2015/02/introducing-gitflow-for-visual-studio</GettingStartedGuide>
-    <Icon>icon.png</Icon>
-    <PreviewImage>icon.png</PreviewImage>
-    <Tags>VisualStudio git gitflow TeamExplorer</Tags>
-  </Metadata>
-  <Installation InstalledByMsi="false">
-    <InstallationTarget Version="[12.0.30723,13.0)" Id="Microsoft.VisualStudio.Pro" />
-  </Installation>
-  <Dependencies>
-    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
-    <Dependency Id="Microsoft.VisualStudio.MPF.12.0" DisplayName="Visual Studio MPF 12.0" d:Source="Installed" Version="[12.0]" />
-  </Dependencies>
-  <Assets>
-    <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
-    <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" />
-  </Assets>
+    <Metadata>
+        <Identity Id="632375AC-F19B-4F7F-87C8-932B37D45CF2" Version="1.0.0" Language="en-US" Publisher="De Mennato Fernando" />
+        <DisplayName>GitFlow with PR for Visual Studio</DisplayName>
+        <Description xml:space="preserve">Integrates GitFlow with PR in Visual Studio Team Explorer 2013. Requires VS 2013 Update 3 or higher</Description>
+        <MoreInfo>https://github.com/proge-software/GitFlow.VS</MoreInfo>
+        <License>License.rtf</License>
+        <GettingStartedGuide>http://blog.ehn.nu/2015/02/introducing-gitflow-for-visual-studio</GettingStartedGuide>
+        <Icon>icon.png</Icon>
+        <PreviewImage>icon.png</PreviewImage>
+        <Tags>VisualStudio git gitflow pullrequest TeamExplorer</Tags>
+        <Preview>true</Preview>
+    </Metadata>
+    <Installation InstalledByMsi="false">
+        <InstallationTarget Version="[12.0.30723,13.0)" Id="Microsoft.VisualStudio.Pro" />
+    </Installation>
+    <Dependencies>
+        <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
+        <Dependency Id="Microsoft.VisualStudio.MPF.12.0" DisplayName="Visual Studio MPF 12.0" d:Source="Installed" Version="[12.0]" />
+    </Dependencies>
+    <Assets>
+        <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
+        <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" />
+    </Assets>
 </PackageManifest>

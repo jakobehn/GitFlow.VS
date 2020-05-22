@@ -1,13 +1,10 @@
-﻿using System;
-using System.ComponentModel;
-using System.ComponentModel.Composition;
-using System.Linq;
-using System.Windows.Forms;
-using Microsoft.ApplicationInsights;
-using Microsoft.TeamFoundation.Client;
+﻿using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.Controls;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.TeamFoundation.Git.Extensibility;
+using System;
+using System.ComponentModel;
+using System.ComponentModel.Composition;
 using TeamExplorer.Common;
 
 namespace GitFlowVS.Extension
@@ -25,7 +22,7 @@ namespace GitFlowVS.Extension
             try
             {
                 UpdateVisible();
-                Text = "GitFlow";
+                Text = "GitFlow with PR";
                 Image = Resources.LinkIcon;
                 IsVisible = true;
                 teamExplorer = GetService<ITeamExplorer>();
