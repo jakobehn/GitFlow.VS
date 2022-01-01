@@ -1,0 +1,221 @@
+﻿<UserControl x:Class="GitFlowVS.Extension.UI.GitFlowActionsUI"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:teamExplorer="clr-namespace:Microsoft.TeamFoundation.Controls.WPF.TeamExplorer;assembly=Microsoft.TeamFoundation.Controls"
+             xmlns:wpf="clr-namespace:Microsoft.TeamFoundation.Controls.WPF;assembly=Microsoft.TeamFoundation.Controls"
+             mc:Ignorable="d" d:DesignWidth="230">
+
+    <UserControl.Resources>
+        <ResourceDictionary Source="/GitFlowVS.Extension;component/Resources/Dictionary.xaml" />
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <WrapPanel Grid.Row="0">
+            <teamExplorer:DropDownLink Text="Start Feature" DropDownMenuCommand="{Binding Path=StartFeatureDropDownCommand}" Visibility="{Binding Path=StartFeatureVisible}" />
+            <Separator Style="{StaticResource VerticalSeparator}" Visibility="{Binding Path=StartFeatureVisible}" Margin="4,0,-1,0"/>
+            <teamExplorer:DropDownLink Text="Start Release" DropDownMenuCommand="{Binding Path=StartReleaseDropDownCommand}"  Visibility="{Binding Path=StartReleaseVisible}" />
+            <Separator Style="{StaticResource VerticalSeparator}" Visibility="{Binding Path=StartReleaseVisible}" Margin="4,0,-1,0"/>
+            <teamExplorer:DropDownLink Text="Start Hotfix" DropDownMenuCommand="{Binding Path=StartHotfixDropDownCommand}"  Visibility="{Binding Path=StartHotfixVisible}"/>
+            <Separator Style="{StaticResource VerticalSeparator}" Visibility="{Binding Path=StartHotfixVisible}" Margin="4,0,-1,0"/>
+            <teamExplorer:DropDownLink Text="Finish Feature" DropDownMenuCommand="{Binding Path=FinishFeatureDropDownCommand}"  Visibility="{Binding Path=FinishFeatureVisible}" />
+            <Separator Style="{StaticResource VerticalSeparator}" Visibility="{Binding Path=FinishFeatureVisible}" Margin="4,0,-1,0"/>
+            <teamExplorer:DropDownLink Text="Finish Release" DropDownMenuCommand="{Binding Path=FinishReleaseDropDownCommand}"  Visibility="{Binding Path=FinishReleaseVisible}" />
+            <Separator Style="{StaticResource VerticalSeparator}" Visibility="{Binding Path=FinishReleaseVisible}" Margin="4,0,-1,0"/>
+            <teamExplorer:DropDownLink Text="Finish Hotfix" DropDownMenuCommand="{Binding Path=FinishHotfixDropDownCommand}"  Visibility="{Binding Path=FinishHotfixVisible}" />
+            <Separator Style="{StaticResource VerticalSeparator}" Visibility="{Binding Path=FinishHotfixVisible}" Margin="4,0,-1,0"/>
+            <teamExplorer:DropDownLink Name="OtherActions" Text="Other" >
+                <teamExplorer:DropDownLink.DropDownMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Start Feature" Command="{Binding Path=StartFeatureDropDownCommand}" Visibility="{Binding Path=OtherStartFeatureVisible}"></MenuItem>
+                        <MenuItem Header="Finish Feature" Command="{Binding Path=FinishFeatureDropDownCommand}" Visibility="{Binding Path=OtherFinishFeatureVisible}"></MenuItem>
+                        <Separator/>
+                        <MenuItem Header="Start Release" Command="{Binding Path=StartReleaseDropDownCommand}" Visibility="{Binding Path=OtherStartReleaseVisible}"></MenuItem>
+                        <MenuItem Header="Finish Release" Command="{Binding Path=FinishReleaseDropDownCommand}" Visibility="{Binding Path=OtherFinishReleaseVisible}"></MenuItem>
+                        <Separator/>
+                        <MenuItem Header="Start Hotfix" Command="{Binding Path=StartHotfixDropDownCommand}" Visibility="{Binding Path=OtherStartHotfixVisible}"></MenuItem>
+                        <MenuItem Header="Finish Hotfix" Command="{Binding Path=FinishHotfixDropDownCommand}" Visibility="{Binding Path=OtherFinishHotfixVisible}"></MenuItem>
+                    </ContextMenu>
+                </teamExplorer:DropDownLink.DropDownMenu>
+            </teamExplorer:DropDownLink>
+        </WrapPanel>
+        <Border Grid.Row="1" Visibility="{Binding ShowStartFeature}" Style="{StaticResource EmbeddedDialog}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <wpf:LabeledTextBox Grid.Row="0" Margin="-2,0,0,6"
+                               HintText="Enter a feature name &lt;Required&gt;" NameAndAutomationId="Feature name"
+                               Localization.Attributes="HintText (Modifiable Readable Text) NameAndAutomationId (Modifiable Readable Text)"
+                               IsRequired="true" AcceptsReturn="false" Text="{Binding Path=FeatureName, Mode=TwoWay}">
+                    <wpf:LabeledTextBox.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding StartFeatureCommand}"/>
+                    </wpf:LabeledTextBox.InputBindings>
+                </wpf:LabeledTextBox>
+                <WrapPanel x:Uid="featureActionsPanel" Grid.Row="1" Margin="0,0,0,0">
+                    <Button x:Uid="createReleaseButton" VerticalAlignment="Center" Margin="0" Padding="6,2,6,2" MinWidth="75"
+                  MinHeight="23" Command="{Binding Path=StartFeatureCommand}">Create _Feature</Button>
+                    
+                    <teamExplorer:TextLink x:Uid="cancelCreateFeatureLink" VerticalAlignment="Center" Margin="6,0,0,0" Text="Cancel"
+                          Localization.Attributes="Text (Modifiable Readable Text)"
+                          Command="{Binding Path=CancelStartFeatureCommand}"/>
+                </WrapPanel>
+            </Grid>
+        </Border>
+        <Border Grid.Row="2" Visibility="{Binding ShowStartRelease}"  Style="{StaticResource EmbeddedDialog}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <wpf:LabeledTextBox Grid.Row="0" Margin="-2,0,0,6"
+                               HintText="Enter a release name &lt;Required&gt;" NameAndAutomationId="Release name"
+                               Localization.Attributes="HintText (Modifiable Readable Text) NameAndAutomationId (Modifiable Readable Text)"
+                               IsRequired="true" AcceptsReturn="false" Text="{Binding Path=ReleaseName, Mode=TwoWay}">
+                    <wpf:LabeledTextBox.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding StartReleaseCommand}"/>
+                    </wpf:LabeledTextBox.InputBindings>
+                </wpf:LabeledTextBox>
+                <WrapPanel x:Uid="releaseActionsPanel" Grid.Row="1" Margin="0,0,0,0">
+                    <Button x:Uid="createReleaseButton" VerticalAlignment="Center" Margin="0" Padding="6,2,6,2" MinWidth="75" MinHeight="23" 
+                            Command="{Binding Path=StartReleaseCommand}">Create _Release</Button>
+
+                    <teamExplorer:TextLink x:Uid="cancelCreateReleaseLink" VerticalAlignment="Center" Margin="6,0,0,0" Text="Cancel"
+                          Localization.Attributes="Text (Modifiable Readable Text)"
+                          Command="{Binding Path=CancelStartReleaseCommand}"/>
+                </WrapPanel>
+            </Grid >
+        </Border>
+        <Border Grid.Row="3" Visibility="{Binding ShowStartHotfix}"  Style="{StaticResource EmbeddedDialog}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <wpf:LabeledTextBox Grid.Row="0" Margin="-2,0,0,6"
+                               HintText="Enter a hotfix name &lt;Required&gt;" NameAndAutomationId="Hotfix name"
+                               Localization.Attributes="HintText (Modifiable Readable Text) NameAndAutomationId (Modifiable Readable Text)"
+                               IsRequired="true" AcceptsReturn="false" Text="{Binding Path=HotfixName, Mode=TwoWay}">
+                    <wpf:LabeledTextBox.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding StartHotfixCommand}"/>
+                    </wpf:LabeledTextBox.InputBindings>
+
+                </wpf:LabeledTextBox>
+                <WrapPanel x:Uid="hotfixActionsPanel" Grid.Row="1" Margin="0,0,0,0">
+                    <Button x:Uid="createHotfixButton" VerticalAlignment="Center" Margin="0" Padding="6,2,6,2" MinWidth="75"
+                  MinHeight="23" Command="{Binding Path=StartHotfixCommand}">Create _Hotfix</Button>
+
+                    <teamExplorer:TextLink x:Uid="cancelCreateHotfixLink" VerticalAlignment="Center" Margin="6,0,0,0" Text="Cancel"
+                          Localization.Attributes="Text (Modifiable Readable Text)"
+                          Command="{Binding Path=CancelStartHotfixCommand}"/>
+                </WrapPanel>
+            </Grid >
+        </Border>
+        <Border Grid.Row="4" Visibility="{Binding ShowFinishFeature}" Style="{StaticResource EmbeddedDialog}">
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+                <ComboBox Grid.Row="0" Margin="-2,0,0,6" VerticalAlignment="Center"
+                    IsEditable="false" IsReadOnly="true" DisplayMemberPath="Name"
+                    ItemsSource="{Binding Path=AllFeatures, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding Path=SelectedFeature, Mode=TwoWay}"/>
+                <CheckBox Grid.Row="1" IsChecked="{Binding FeatureRebaseOnDevelopmentBranch}">Rebase on development branch</CheckBox>
+            <CheckBox Grid.Row="2"  IsChecked="{Binding FeatureDeleteLocalBranch}">Delete local branch</CheckBox>
+            <CheckBox Grid.Row="3"  IsChecked="{Binding FeatureDeleteRemoteBranch}">Delete remote branch</CheckBox>
+            <CheckBox Grid.Row="4"  IsChecked="{Binding FeatureSquash}">Squash feature during merge</CheckBox>
+                <CheckBox Grid.Row="5"  IsChecked="{Binding FeatureNoFastForward}">Never fast-forward during the merge</CheckBox>
+            <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,10,0,0" >
+                <Button Command="{Binding FinishFeatureCommand}">OK</Button>
+                    <teamExplorer:TextLink x:Uid="cancelFinishFeature" VerticalAlignment="Center" Margin="6,0,0,0" Text="Cancel"
+                          Localization.Attributes="Text (Modifiable Readable Text)"
+                          Command="{Binding Path=CancelFinishFeatureCommand}"/>
+            </StackPanel>
+        </Grid>
+</Border>
+        <Border Grid.Row="5" Visibility="{Binding ShowFinishRelease}" Style="{StaticResource EmbeddedDialog}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <ComboBox Grid.Row="0" Margin="-2,0,0,6" VerticalAlignment="Center"
+                    IsEditable="false" IsReadOnly="true" DisplayMemberPath="Name"
+                    ItemsSource="{Binding Path=AllReleases, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding Path=SelectedRelease, Mode=TwoWay}"/>
+                <wpf:LabeledTextBox Grid.Row="1" Margin="-2,0,0,6"
+                               HintText="Tag with message &lt;Optional&gt;" NameAndAutomationId="Release Tag Message"
+                               Localization.Attributes="HintText (Modifiable Readable Text) NameAndAutomationId (Modifiable Readable Text)"
+                               IsRequired="true" AcceptsReturn="false" Text="{Binding Path=ReleaseTagMessage, Mode=TwoWay}"/>
+                <TextBlock Grid.Row="2">After finishing:</TextBlock>
+                <CheckBox Grid.Row="3" IsChecked="{Binding ReleaseDeleteBranch}">Delete branch</CheckBox>
+                <CheckBox Grid.Row="4" IsChecked="{Binding ReleaseForceDeletion}">Force deletion</CheckBox>
+                <CheckBox Grid.Row="5" IsChecked="{Binding ReleasePushChanges}">Push changes to remote</CheckBox>
+                <CheckBox Grid.Row="6" IsChecked="{Binding ReleaseNoBackMerge}">No back merge</CheckBox>
+                <StackPanel Grid.Row="7" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,10,0,0" >
+                    <Button Command="{Binding FinishReleaseCommand}">OK</Button>
+                    <teamExplorer:TextLink x:Uid="cancelFinishFeature" VerticalAlignment="Center" Margin="6,0,0,0" Text="Cancel"
+                          Localization.Attributes="Text (Modifiable Readable Text)"
+                          Command="{Binding Path=CancelFinishReleaseCommand}"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Border Grid.Row="6" Visibility="{Binding ShowFinishHotfix}" Style="{StaticResource EmbeddedDialog}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <ComboBox Grid.Row="0" Margin="-2,0,0,6" VerticalAlignment="Center"
+                    IsEditable="false" IsReadOnly="true" DisplayMemberPath="Name"
+                    ItemsSource="{Binding Path=AllHotfixes, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding Path=SelectedHotfix, Mode=TwoWay}"/>
+                <wpf:LabeledTextBox Grid.Row="1" Margin="-2,0,0,6"
+                               HintText="Tag with message &lt;Optional&gt;" NameAndAutomationId="Hotfix Tag Message"
+                               Localization.Attributes="HintText (Modifiable Readable Text) NameAndAutomationId (Modifiable Readable Text)"
+                               IsRequired="true" AcceptsReturn="false" Text="{Binding Path=HotfixTagMessage, Mode=TwoWay}"/>
+                <TextBlock Grid.Row="2">After finishing:</TextBlock>
+                <CheckBox Grid.Row="3" IsChecked="{Binding HotfixDeleteBranch}">Delete branch</CheckBox>
+                <CheckBox Grid.Row="4" IsChecked="{Binding HotfixForceDeletion}">Force deletion</CheckBox>
+                <CheckBox Grid.Row="5" IsChecked="{Binding HotfixPushChanges}">Push changes to remote</CheckBox>
+                <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,10,0,0" >
+                    <Button Command="{Binding FinishHotfixCommand}">OK</Button>
+                    <teamExplorer:TextLink x:Uid="cancelFinishFeature" VerticalAlignment="Center" Margin="6,0,0,0" Text="Cancel"
+                          Localization.Attributes="Text (Modifiable Readable Text)"
+                          Command="{Binding Path=CancelFinishHotfixCommand}"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <ProgressBar Grid.Row="7" Margin="0,10,0,0"  Visibility="{Binding Path=ProgressVisibility}" Height="15" Minimum="0" Maximum="100" IsIndeterminate="True" />
+    </Grid>
+</UserControl>
