@@ -23,7 +23,7 @@ namespace GitFlowVS.Extension
 
         public void UpdateVisibleState()
         {
-            if (!GitFlowPage.GitFlowIsInstalled || GitFlowPage.ActiveRepo == null)
+            if (!GitFlowPage.GitFlowIsInstalled || GitFlowPage.ActiveRepo == null || model == null)
             {
                 IsVisible = false;
                 return;

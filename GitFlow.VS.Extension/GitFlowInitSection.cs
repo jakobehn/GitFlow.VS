@@ -38,7 +38,7 @@ namespace GitFlowVS.Extension
             }
             var gf = new VsGitFlowWrapper(GitFlowPage.ActiveRepo.RepositoryPath, GitFlowPage.OutputWindow);
             IsVisible = !gf.IsInitialized;
-            if (IsVisible)
+            if (IsVisible && model != null)
             {
                 model.Update();
             }
