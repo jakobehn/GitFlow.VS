@@ -8,7 +8,7 @@ trigger:
 - master
 variables:
   BuildPlatform: 'Any CPU'
-  BuildConfiguration: 'VS2019'
+  BuildConfiguration: 'Release'
 steps:
 
 - task: bleddynrichards.Assembly-Info-Task.Assembly-Info-Task.Assembly-Info-NetFramework@2
@@ -22,7 +22,7 @@ steps:
   displayName: 'Update VSIX version'
   inputs:
     XmlWorkingDir: GitFlow.VS.Extension
-    XmlTargetFilters: source.extension.2019.vsixmanifest
+    XmlTargetFilters: source.extension.vsixmanifest
     Namespaces: 'vsix => http://schemas.microsoft.com/developer/vsx-schema/2011'
     JsonPatchContent: '= /vsix:PackageManifest/vsix:Metadata/vsix:Identity/@Version=> "$(build.buildNumber)"'
     OutputPatchFile: true
